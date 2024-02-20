@@ -1,7 +1,10 @@
 
 
 /* header */
-header{width: 100%;}
+header{
+    width: 100%;
+    border-bottom: 1px solid var(--camel-500);
+}
 header .inner{
     width: 1200px;
     margin: 0 auto;

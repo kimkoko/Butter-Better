@@ -16,7 +16,6 @@ time, mark, audio, video {
 	border: 0;
 	font-size: 100%;
 	font: inherit;
-	vertical-align: baseline;
 }
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure, 
@@ -52,11 +51,32 @@ button{
     cursor:pointer;
 }
 
-
+/* a tag */
 a { color: #000; text-decoration: none; outline: none}
 a:hover, a:active {text-decoration: none;   color: #000;}
 
 
+/* input check */
+input[type="checkbox"] {
+    width: 26px;
+    height: 26px;
+	border: 1px solid var(--camel-500);
+	appearance:none;
+	border-radius: 2px;
+	background: #fff;
+}
+input[type="checkbox"]:checked {
+    background-color: var(--orange-500);
+	color:#fff;
+	position:relative;
+}
+input[type="checkbox"]:checked:after{
+	position: absolute;
+	content: url("/views/cart/check_icon.png");
+	left: 50%;
+	top: 53%;
+	transform: translate(-50%, -50%)
+}
 
 /* font */
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css");

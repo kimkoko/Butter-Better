@@ -5,14 +5,87 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Butter and Better</title>
 
+    <!-- 아이콘 -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    <!-- Link Swiper's CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    
+    <!-- 커스텀 css -->
     <link rel="stylesheet" href="home.css">
     <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../public/header/header.css">
+    <link rel="stylesheet" href="../public/footer/footer.css">
     <script type="text/javascript" src="./home.js"></script>
+    <script src="../public/loadHTML.js"></script>
+
 </head>
 <body>
-    <header>
-        <!-- 헤더 -->
-    </header>    
+    <!-- header -->
+    <script>
+        loadHTML("../public/header/header.html");
+    </script>
+    
+    <!-- main_banner -->
+    <div class="swiper mySwiper">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide swiper-slide-1">
+                <div class="slide_inner">
+                    <div class="textBox">
+                        <h3>
+                            MAIN HEADING<br>AT LEAST<br>THREE SENTCES HERE
+                        </h3>
+                        <button type="button">See More</button>
+                    </div>
+
+                    <div class="imgBox">
+                        <img src="../public/img/bn_ex_01.jpeg" alt="표지">
+                    </div>
+                </div>
+            </div>
+
+            <div class="swiper-slide swiper-slide-2">
+                <div class="slide_inner">
+                    <div class="textBox">
+                        <h3>
+                            MAIN HEADING<br>AT LEAST<br>THREE SENTCES HERE
+                        </h3>
+                        <button type="button">See More</button>
+                    </div>
+
+                    <div class="imgBox">
+                        <img src="../public/img/bn_ex_02.jpeg" alt="표지">
+                    </div>
+                </div>
+            </div>
+
+            <div class="swiper-slide swiper-slide-3">
+                <div class="slide_inner">
+                    <div class="textBox">
+                        <h3>
+                            MAIN HEADING<br>AT LEAST<br>THREE SENTCES HERE
+                        </h3>
+                        <button type="button">See More</button>
+                    </div>
+
+                    <div class="imgBox">
+                        <img src="../public/img/bn_ex_03.jpeg" alt="표지">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- arrow -->
+        <div class="arrowBox">
+            <div class="swiper-button-next"><ion-icon name="arrow-forward-sharp"></ion-icon></div>
+            <div class="swiper-button-prev"><ion-icon name="arrow-back-sharp"></ion-icon></div>
+        </div>
+        
+    </div>
     
     <main>
         <section class="Best-Sellers">
@@ -39,6 +112,27 @@
             </ul>
         </section>
     </main>
+
+    <!-- footer -->
+    <script>
+        loadHTML("../public/footer/footer.html");
+    </script>
 </body>
+
+<script>
+
+
+    var swiper = new Swiper(".mySwiper", {
+        navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+        },
+        loop: true,
+
+    });
+
+    
+</script>
+
 </html>
 
