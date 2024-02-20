@@ -1,4 +1,5 @@
- 
+
+
 /* header */
 header{width: 100%;}
 header .inner{
@@ -11,6 +12,7 @@ header .inner .top{
     align-items: center;
     box-sizing: border-box;
     padding: 40px 0;
+    margin-bottom: 10px;
 }
 header .inner .top .logo a{
     width: 272px;
@@ -20,3 +22,36 @@ header .inner .top .logo a img{
     width: 100%;
     height: auto;
 }
+header .buttons{
+    display: flex;
+}
+header .buttons li{
+    margin-left: 15px;
+}
+header .buttons li a{
+    color: var(--orange-500);
+    font-size: 24px;
+}
+header nav{
+    width: 100%;
+    box-sizing: border-box;
+    padding-bottom: 30px;
+}
+header nav .menus{
+    width: auto;
+    display: flex;
+}
+header nav .menus .menu:hover a{
+    background-color: var(--orange-500);
+    color: #fff;
+    transition: all 0.3s;
+}
+header nav .menus .menu a{
+    box-sizing: border-box;
+    padding: 16px 24px;
+    font-size: 20px;
+    color: var(--orange-500);
+    border-radius: 100px;
+    transition: all 0.3s;
+}
+
