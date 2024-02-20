@@ -52,4 +52,17 @@ table {
     font-style: normal;
 }
 
-body {font-family: 'Pretendard-Regular'; font-size:16px;}
+
+body {
+	font-family: 'Pretendard-Regular';
+	font-size:16px;
+	background-color: var(--bg-color);
+}
+
+:root{
+	--bg-color:#FDF4E6;
+	--orange-500:#FF4F37;
+	--camel-500:#886D4B;
+	--mocha-500:#443523;
+	--cream-300:#FFFDFA
+}
