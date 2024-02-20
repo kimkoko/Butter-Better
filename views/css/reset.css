@@ -43,6 +43,10 @@ table {
 }
 
 
+a { color: #000; text-decoration: none; outline: none}
+a:hover, a:active {text-decoration: none;   color: #000;}
+
+
 
 /* font */
 @font-face {
@@ -66,3 +70,4 @@ body {
 	--mocha-500:#443523;
 	--cream-300:#FFFDFA
 }
+
