@@ -5,9 +5,6 @@ function loadHTML(file, targetElement) {
       if (rawFile.readyState === 4) {
           if (rawFile.status === 200 || rawFile.status == 0) {
               var allText = rawFile.responseText;
-            //   var targetElement = document.getElementById(targetElementId);
-
-              // 생성된 div를 목표 요소에 추가
               targetElement.innerHTML= allText;
           }
       }
