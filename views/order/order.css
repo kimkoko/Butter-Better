@@ -1,10 +1,85 @@
-
-
-
-
-.orderCompletion{
+.mainBox .inner{
+    width: 1200px;
+    margin: 0 auto;
+    box-sizing: border-box;
+    padding: 60px 0;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+.mainBox .inner .inputBox{
+    width: 560px;
+}
+.mainBox .inner .inputBox .box{
+    margin-bottom: 18px;
+}
+.mainBox .inner .inputBox .box h3{
+    font-size: 32px;
+    font-weight: 600;
+    color: var(--camel-500);
+    margin-bottom: 18px;
+}
+.mainBox .inner .inputBox .box input{
+    width: 100%;
+    margin-top: 18px;
+}
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+.mainBox .inner .inputBox .box .phone{
+    margin-top: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
 }
+.mainBox .inner .inputBox .box .radio_select{
+    width: 100%;
+    background: #fff;
+    box-sizing: border-box;
+	padding: 14px 20px;
+	font-size: 18px;
+	border:1px solid var(--cream-700);
+	border-radius: 4px
+}
+.mainBox .inner .inputBox .box .radio_select input{
+    margin-top: 0px;
+    vertical-align: middle;
+}
+.mainBox .inner .inputBox .box .radio_select input + label{
+    margin-bottom: 0px;
+    vertical-align: middle;
+    color: #c4c4c4;
+    margin-left: 5px;
+    cursor: pointer;
+}
+.mainBox .inner .inputBox .box .radio_select input:checked + label{
+    color: #000;
+    position: relative;
+}
+.mainBox .inner .inputBox .box .radio_select input:checked + label:after{
+    position: absolute;
+    content: '';
+    width: 560px;
+    height: 53px;
+    border: 2px solid var(--orange-500);
+    border-radius: 4px;
+    left: -64px;
+    top: -19px;
+}
+
+.payButton{
+    width: 100%;
+    box-sizing: border-box;
+    padding: 18px 0;
+    background: var(--orange-500);
+    font-size: 20px;
+    border-radius: 4px;
+    color: #fff;
+}
+
 .orderCompletion > div{
     width: 1200px;
     margin: 0 auto;

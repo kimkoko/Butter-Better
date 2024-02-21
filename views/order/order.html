@@ -11,17 +11,17 @@
 
     <!-- 커스텀 css -->
     <link rel="stylesheet" href="order.css">
-    <link rel="stylesheet" href="../css/reset.css">
-    <link rel="stylesheet" href="../public/header/header.css">
-    <link rel="stylesheet" href="../public/footer/footer.css">
+    <link rel="stylesheet" href="../common/css/reset.css">
+    <link rel="stylesheet" href="../common/header/header.css">
+    <link rel="stylesheet" href="../common/footer/footer.css">
     <script type="text/javascript" src="./order.js"></script>
-    <script src="../public/loadHTML.js"></script>
+    <script src="../common/loadHTML.js"></script>
 
 
 </head>
 <body>
     <!-- header -->
-    <header data-load-html="../public/header/header.html"></header>
+    <header data-load-html="../common/header/header.html"></header>
 
     <div class="mainBox">
         <div class="inner">
@@ -31,16 +31,16 @@
                     <div class="input">
                         <form action="">
                             <input type="text" placeholder="이름">
-                            <input type="text" placeholder="이메일">
+                            <input type="email" placeholder="이메일">
                             <div class="phone">
-                                <select name="phone" id="phone">
+                                <select name="phone" id="phone" style="width: 170px;">
                                     <option value="010">010</option>
-                                    <option value="010">016</option>
-                                    <option value="010">017</option>
-                                    <option value="010">010</option>
+                                    <option value="016">016</option>
+                                    <option value="017">017</option>
+                                    <option value="017">018</option>
                                 </select>
-                                <input type="text">
-                                <input type="text">
+                                <input type="number" style="width: 170px; margin-top: 0;"> 
+                                <input type="number" style="width: 170px; margin-top: 0;">
                             </div>
                         </form>
                     </div>
@@ -50,19 +50,52 @@
                     <h3>Delivery</h3>
                     <div class="input">
                         <form action="">
-                            <input type="text" placeholder="이름">
-                            <input type="text" placeholder="이메일">
-                            <div class="phone">
-                                <select name="phone" id="phone">
-                                    <option value="010">010</option>
-                                    <option value="010">016</option>
-                                    <option value="010">017</option>
-                                    <option value="010">010</option>
-                                </select>
-                                <input type="text">
-                                <input type="text">
-                            </div>
+                            <input type="number" placeholder="우편번호">
+                            <input type="text" placeholder="기본 주소">
+                            <input type="text" placeholder="나머지 주소 (선택)">
+                            <select name="message" id="message" style="width: 100%; margin-top: 18px;">
+                                <option value="0">배송 메세지 (선택)</option>
+                                <option value="1">부재 시, 경비실에 맡겨주세요.</option>
+                                <option value="2">배송 전에 미리 연락 바랍니다.</option>
+                                <option value="3">부재 시, 문 앞에 놓아주세요.</option>
+                                <option value="4">빠른 배송 부탁드립니다.</option>
+                                <option value="5">택배함에 보관해주세요.</option>
+                                <option value="6">기타 (직접 입력)</option>
+                            </select>
                         </form>
+                    </div>
+                </div>
+
+                <div class="box delivery">
+                    <h3>Payment</h3>
+                    <div class="input">
+                        <div class="radio_select">
+                            <input type="radio" name="pay" id="card">
+                            <label for="card" class="pay_label">카드 결제</label>
+                        </div>
+                        <div class="radio_select">
+                            <input type="radio" name="pay" id="no_card">
+                            <label for="no_card" class="pay_label">무통장 입금</label>
+                        </div>
+
+                    </div>
+                </div>
+
+                <button type="button" class="payButton">PAY NOW</button>
+            </div>
+
+            <div class="checkout">
+                <h3>check Out</h3>
+                <div class="orderBox">
+                    <div>
+                        <ul class="products">
+                            <li class="product">
+                                <p class="img"><img src="" alt=""></p>
+                                <p class="name">Title Here</p>
+                                <p class="num">1</p>
+                                <p class="price">₩17,000</p>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -84,7 +117,7 @@
     </div>
 
     <!-- footer -->
-    <footer data-load-html="../public/footer/footer.html">
+    <footer data-load-html="../common/footer/footer.html">
     </footer>
 </body>
 
