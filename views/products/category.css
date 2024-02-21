@@ -84,3 +84,42 @@
   font-weight: medium;
   color: var(--orange-500);
 }
+
+ /* 페이지네이션  */
+ .pagination-box{
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+ }
+ .pagination {
+  width: 391px;
+  height: 132px;
+  display: flex;
+  list-style: none;
+  padding: 0;
+  justify-content: center;
+  align-items: center;
+}
+
+.pagenation .previouse-page {
+  width: 50px;
+  height: 50px;
+  text-decoration: none;
+}
+.pagenation .next-page {
+  text-decoration: none;
+}
+.current-page {
+  font-size: 24px;
+  font-weight: medium;
+  padding: 32px;
+  color: var(--orange-500);
+}
+/* 추후 수정예정  */
+.pagination .active {
+  color: #fff;
+  cursor: default;
+}
+

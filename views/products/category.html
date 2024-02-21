@@ -24,7 +24,8 @@
     <section class="products-sort">
       <span class="total-count">100products</span>
       <select class="product-filter">
-        <option value="인기순">인기상품</option>
+        <option value="최신상품">인기상품</option>
+        <option value="인기상품">인기상품</option>
         <option value="낮은 가격순">낮은 가격순</option>
         <option value="높은 가격순">높은 가격순</option>
       </select>
@@ -42,9 +43,23 @@
         </li>
       </ul>
     </section>
-    <!--페이지네이션 -->
-    <section>
-  </select>
+    <div class="pagination-box" >
+      <ul class="pagination">
+        <li class="previous-page">
+          <a href="#">
+            <img src="./image/btn-prev.png" alt="Previous">
+          </a>
+        </li>
+        <li class="current-page" id="currentPageInfo">
+          Page 1 of 5
+        </li>
+        <li class="next-page">
+          <a href="#">
+            <img src="./image/btn-next.png" alt="Previous">
+          </a>
+        </li>
+      </ul>
+    </div>
   </main>
 
   <footer>
