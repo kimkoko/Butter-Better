@@ -26,55 +26,55 @@ header nav button.plus:hover{
     width: 1200px;
     margin: 0 auto;
     box-sizing: border-box;
-    padding: 60px 0;
+    padding: 80px 0;
 }
-.tableList table{
+table{
     width: 100%;
     border-top:1px solid var(--camel-500);
     border-bottom:1px solid var(--camel-500);
     font-weight: 600;
 }
-.tableList table .head{
+table .head{
     color: var(--orange-500);
 
 }
-.tableList table th{
+table th{
     font-size: 16px;
     box-sizing: border-box;
     padding: 24px 0px;
 }
-.tableList table th.left{
+table th.left{
     text-align: left;
 }
-.tableList table tr{
+table tr{
     border-top:1px solid var(--camel-500);
 }
-.tableList table tr td{
+table tr td{
     text-align: center;
     box-sizing: border-box;
     padding: 24px 0;
     color: var(--orange-500);
 }
-.tableList table tr td.left{
+table tr td.left{
     text-align: left;
 }
-.tableList table tr td.left .book{
+table tr td.left .book{
     display: flex;
     align-items: center;
 
 }
-.tableList table tr td.left .book p.img{
+table tr td.left .book p.img{
     height: 100px;
     margin-right: 32px;
 }
-.tableList table tr td.left .book p.img img{
+table tr td.left .book p.img img{
     height: 100%;
 }
-.tableList table tr td.left .book h3{
+table tr td.left .book h3{
     font-size: 20px;
     color: var(--orange-500);
 }
-.tableList table tr .quantity input{
+table tr .quantity input{
     width: 49px;
     height: 49px;
     color: var(--orange-500);
