@@ -89,7 +89,7 @@ input[type="text"]:focus{
 /* select */
 select{
 	box-sizing: border-box;
-	padding: 14px 20px;
+	padding: 14px 50px 14px 20px;
 	font-size: 18px;
 	border:1px solid var(--cream-700);
 	border-radius: 4px;
@@ -101,7 +101,37 @@ select{
 }
 select:focus{
 	outline: 2px solid var(--orange-500);
+	color: #000;
+	background:url('../public/img/select_arrow_up.png') no-repeat 97% 50%/32px auto #fff;
 }
+
+
+/* label */
+label{
+	color: var(--orange-500);
+	font-size: 18px;
+	margin-bottom: 10px;
+	display: inline-block;
+}
+
+
+/* radio */
+input[type="radio"]{
+	appearance: none;
+	width:24px;
+	height: 24px;
+	border: 2px solid #c4c4c4;
+	border-radius: 100%;
+	outline: none;
+	cursor: pointer;
+	background: #fff;
+}
+input[type="radio"]:checked{
+	background-color: var(--orange-500);
+	border: 3px solid white;
+	box-shadow: 0 0 0 1.6px var(--orange-500); 
+}
+
 
 
 /* font */
@@ -119,5 +149,6 @@ body {
 	--orange-500:#FF4F37;
 	--camel-500:#886D4B;
 	--mocha-500:#443523;
-	--cream-300:#FFFDFA
+	--cream-300:#FFFDFA;
+	--cream-700: #E6D2B1;
 }
