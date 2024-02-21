@@ -1,4 +1,19 @@
-footer{
+footer {
     background-color: var(--orange-500);
     height: 209px;
+    padding: 20px; /* 푸터 내부 여백을 설정하세요 */
+    text-align: center; /* 푸터 내용을 가운데 정렬합니다 */
+}
+
+footer .logo {
+    display: inline-block; /* 로고를 한 줄로 배치합니다 */
+    margin: 50px 32px; /* 로고 사이의 간격을 설정하세요 */
+	--bg-color:#FDF4E6;
+    color: var(--bg-color);
+    list-style: none;
+}
+
+.copyright {
+    margin-top: 20px; /* 카피라이트 위 여백을 설정하세요 */
+    color: var(--bg-color);
 }
