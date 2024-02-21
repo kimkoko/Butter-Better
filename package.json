@@ -1,7 +1,9 @@
 {
   "name": "e-commerce",
   "version": "0.0.0",
+  "author": "elice-sw-team-4",
   "description": "Butter And Better",
+  "ISC": "ISC",
   "main": "app.js",
   "type": "commonjs",
   "scripts": {
