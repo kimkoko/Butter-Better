@@ -1,15 +1,6 @@
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed, 
-figure, figcaption, footer, header, hgroup, 
-menu, nav, output, ruby, section, summary,
+html, body, div, span, applet, object, iframe,h1, h2, h3, h4, h5, h6, p, blockquote, pre,a, abbr, acronym, address, big, cite, code,del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,b, u, i, center,dl, dt, dd, ol, ul, li,fieldset, form, label, legend,table, caption, tbody, tfoot, thead, tr, th, td,article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary,
 time, mark, audio, video {
 	margin: 0;
 	padding: 0;
@@ -78,12 +69,48 @@ input[type="checkbox"]:checked:after{
 	transform: translate(-50%, -50%)
 }
 
+
+/* input text */
+input[type="text"]{
+	box-sizing: border-box;
+	padding: 14px 20px;
+	font-size: 18px;
+	border:1px solid var(--cream-700);
+	border-radius: 4px
+}
+input::placeholder{
+	color: #C4C4C4;
+}
+input[type="text"]:focus{
+	outline: 2px solid var(--orange-500);
+}
+
+
+/* select */
+select{
+	box-sizing: border-box;
+	padding: 14px 20px;
+	font-size: 18px;
+	border:1px solid var(--cream-700);
+	border-radius: 4px;
+	color:#c4c4c4;
+	appearance:none;
+	width: auto;
+	min-width: 150px;
+	background:url('../public/img/select_arrow.png') no-repeat 97% 50%/32px auto #fff;
+}
+select:focus{
+	outline: 2px solid var(--orange-500);
+}
+
+
 /* font */
-@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css");
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard-dynamic-subset.css");
+
 
 
 body {
-	font-family: 'Pretendard-Regular';
+	font-family: 'Pretendard';
 	font-size:16px;
 	font-weight: normal;
 	background-color: var(--bg-color);
