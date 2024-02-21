@@ -21,10 +21,53 @@
 </head>
 <body>
     <!-- header -->
-    <script>
-        loadHTML("../public/header/header.html");
-    </script>
+    <header data-load-html="../public/header/header.html"></header>
 
+    <div class="mainBox">
+        <div class="inner">
+            <div class="inputBox">
+                <div class="box contact">
+                    <h3>Contact</h3>
+                    <div class="input">
+                        <form action="">
+                            <input type="text" placeholder="이름">
+                            <input type="text" placeholder="이메일">
+                            <div class="phone">
+                                <select name="phone" id="phone">
+                                    <option value="010">010</option>
+                                    <option value="010">016</option>
+                                    <option value="010">017</option>
+                                    <option value="010">010</option>
+                                </select>
+                                <input type="text">
+                                <input type="text">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="box delivery">
+                    <h3>Delivery</h3>
+                    <div class="input">
+                        <form action="">
+                            <input type="text" placeholder="이름">
+                            <input type="text" placeholder="이메일">
+                            <div class="phone">
+                                <select name="phone" id="phone">
+                                    <option value="010">010</option>
+                                    <option value="010">016</option>
+                                    <option value="010">017</option>
+                                    <option value="010">010</option>
+                                </select>
+                                <input type="text">
+                                <input type="text">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- 주문 완료 시 노출 -->
     <div class="orderCompletion"  style="display: none;">
@@ -41,9 +84,8 @@
     </div>
 
     <!-- footer -->
-    <script>
-        loadHTML("../public/footer/footer.html");
-    </script>
+    <footer data-load-html="../public/footer/footer.html">
+    </footer>
 </body>
 
 </html>

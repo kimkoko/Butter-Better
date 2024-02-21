@@ -63,7 +63,7 @@ input[type="checkbox"]:checked {
 }
 input[type="checkbox"]:checked:after{
 	position: absolute;
-	content: url("/views/cart/check_icon.png");
+	content: url("../img/check_icon.png");
 	left: 50%;
 	top: 53%;
 	transform: translate(-50%, -50%)
@@ -131,6 +131,9 @@ input[type="radio"]:checked{
 	border: 3px solid white;
 	box-shadow: 0 0 0 1.6px var(--orange-500); 
 }
+
+/* check */
+
 
 
 
