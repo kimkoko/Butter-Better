@@ -5,13 +5,68 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>관리자</title>
 
-    <link rel="stylesheet" href="./reset.css">
+    <!-- 아이콘 -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+    <!-- custom -->
+    <link rel="stylesheet" href="../../css/reset.css">
+    <link rel="stylesheet" href="../admin.css">
+    <link rel="stylesheet" href="../../public/header/header.css">
+    <script src="../public/loadHTML.js"></script>
+
 </head>
 <body>
-    <input type="text" placeholder="이름">
-    <br><select>
-        <option>asdas</option>
-        <option>asdasasdasasdasasdasasdas</option>
-    </select>
+    <header data-load-html="../public/header/header.html">
+    </header>
+
+
+
+    <div class="mainBox">
+        <div class="inner">
+            <div class="tableList">
+                <table>
+                    <colgroup>
+                        <col style="width:5%">
+                        <col style="width:20%">
+                        <col style="width:20%">
+                        <col style="width:10%">
+                        <col style="width:10%">
+                        <col style="width:15%">
+                        <col style="width:5%">
+                        <col style="width:10%">
+                    </colgroup>
+    
+                    <thead class="head">
+                        <th>카테고리</th>
+                        <th>상품명</th>
+                        <th>상품 설명</th>
+                        <th>가격</th>
+                        <th>이미지</th>
+                        <th>생성 날짜</th>
+                        <th>판매 상태</th>
+                        <th>수정/삭제</th>
+                    </thead>
+                    
+    
+                    <tr>
+                        <td>카테고리</td>
+                        <td>상품명</td>
+                        <td>상품 설명</td>
+                        <td>가격</td>
+                        <td><img src="" alt=""></td>
+                        <td>2024-02-02</td>
+                        <td>Y</td>
+                        <td>
+                            <button type="button">수정</button>
+                            <button type="button">삭제</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        
+    </div>
+
 </body>
 </html>

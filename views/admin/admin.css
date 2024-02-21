@@ -1,0 +1,85 @@
+/* header */
+header nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+header nav .menus{
+    display: inline-block;
+}
+header nav button.plus{
+    box-sizing: border-box;
+    padding: 16px 24px;
+    font-size: 20px;
+    color: var(--orange-500);
+    border-radius: 100px;
+    transition: all 0.3s;
+    border: 1px solid var(--orange-500);
+}
+header nav button.plus:hover{
+    background: var(--orange-500);
+    color: #fff;
+}
+
+/* table */
+.mainBox .inner{
+    width: 1200px;
+    margin: 0 auto;
+    box-sizing: border-box;
+    padding: 80px 0;
+}
+table{
+    width: 100%;
+    border-top:1px solid var(--camel-500);
+    border-bottom:1px solid var(--camel-500);
+    font-weight: 600;
+}
+table .head{
+    color: var(--orange-500);
+
+}
+table th{
+    font-size: 16px;
+    box-sizing: border-box;
+    padding: 24px 0px;
+}
+table th.left{
+    text-align: left;
+}
+table tr{
+    border-top:1px solid var(--camel-500);
+}
+table tr td{
+    text-align: center;
+    box-sizing: border-box;
+    padding: 24px 0;
+    color: var(--orange-500);
+}
+table tr td.left{
+    text-align: left;
+}
+table tr td.left .book{
+    display: flex;
+    align-items: center;
+
+}
+table tr td.left .book p.img{
+    height: 100px;
+    margin-right: 32px;
+}
+table tr td.left .book p.img img{
+    height: 100%;
+}
+table tr td.left .book h3{
+    font-size: 20px;
+    color: var(--orange-500);
+}
+table tr .quantity input{
+    width: 49px;
+    height: 49px;
+    color: var(--orange-500);
+    border: 1px solid var(--mocha-500);
+    border-radius: 2px;
+    font-size: 18px;
+    text-align: center;
+}
