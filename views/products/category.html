@@ -7,13 +7,14 @@
   <link rel="stylesheet" href="./category.css">
   <link rel="stylesheet" href="../css/reset.css">
   <link rel="stylesheet" href="../public/header/header.css">
+  <link rel="stylesheet" href="../public/footer/footer.css">
   <script type="text/javascript" src="./category.js"></script>
   <script src="../public/loadHTML.js"></script>
+
 </head>
 <body>
-  <script>
-    loadHTML("../public/header/header.html");
-  </script>
+  <header data-load-html="../public/header/header.html">
+  </header>
 
   <main>
     <section class="category">
@@ -62,8 +63,7 @@
     </div>
   </main>
 
-  <footer>
-    <!-- 푸터 내용을 여기에 추가 -->
+  <footer data-load-html="../public/footer/footer.html">
   </footer>
 </body>
 </html>
