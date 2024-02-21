@@ -1,37 +1,5 @@
 // home.js 파일
 
-function getBestSellers(id) {
-    // TODO: API를 호출해서 베스트셀러 정보를 가져와서 반환합니다.
-  
-    return {
-        name: 'Bookname',
-        price: 'Bookprice'
-    };
-}
-
-// ID를 URL에서 가져오는 함수
-function getBestSellersIdFromUrl() {
-    const url = new URL(window.location.href);
-    return Number(url.searchParams.get('id'));
-}
-  
-const BestSellersId = getBestSellersIdFromUrl();
-console.log('BestSellersId: ', BestSellersId);
-let BestSellers = getBestSellers(BestSellersId);
-  
-function updateBestSellersTitle() {
-    // 베스트셀러 이름 부분의 section의 h1 태그를 찾기
-    const BestSellersTitleH1 = document.querySelector('section.Best-Sellers h1');
-    // 못 찾았으면 함수를 끝냄
-    if (!BestSellersTitleH1) {
-        alert('베스트셀러 이름을 표시할 요소를 찾을 수 없습니다.');
-        return;
-    }
-  
-    // h1태그 안의 내용을 카테고리 이름으로 바꾼다
-    BestSellersTitleH1.innerText = BestSellers.name;
-}
-  
 function getBestSellersList() {
     // TODO: API를 호출해서 상품 목록을 가져와서 반환합니다.
   
@@ -47,7 +15,18 @@ function getBestSellersList() {
         { id: 8, name: 'Best8', price: '35,000' }
     ];
 }
-  
+
+// function getBestSellersList() {
+//     // TODO: 실제 API를 호출하여 상품 목록을 가져오는 코드로 대체해야 합니다.
+//     // 현재는 JSON 데이터를 하드코딩하여 반환합니다.
+//     return [
+//         { id: 1, name: 'Product 1', price: '10,000' },
+//         { id: 2, name: 'Product 2', price: '20,000' },
+//         { id: 3, name: 'Product 3', price: '30,000' },
+//         // 나머지 상품 데이터 추가
+//     ];
+// }
+
 function updateBestSellersList() {
     const BestSellersListElement = document.querySelector('ul.Best-list');
     if (!BestSellersListElement) {
@@ -73,7 +52,5 @@ function updateBestSellersList() {
   
 window.addEventListener('load', () => {
     // 페이지가 로드되면 베스트셀러 이름을 업데이트한다
-    updateBestSellersTitle();
     updateBestSellersList();
 });
-
