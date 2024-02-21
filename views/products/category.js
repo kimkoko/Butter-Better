@@ -62,7 +62,7 @@ function updateProductList() {
     <a href="#">
     <img src="https://picsum.photos/300/300" alt="제품 이미지">
     <h2>${product.name}</h2>
-    <span class="price">${product.price}</span>
+    <span class="price">${product.price.toLocaleString()}</span>
     </a>
     </li>
     `;
