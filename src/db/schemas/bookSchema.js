@@ -19,14 +19,14 @@ const BookSchema = new Schema({
         required: true,
     },
     img_url: {
-        type: [String],
+        type: String,
         required: true,
     },
     quantity: {
         type: Number,
         required: true,
     },
-    rating: {
+    rate: {
         type: Number,
         enum: [1, 2, 3, 4, 5],
     },

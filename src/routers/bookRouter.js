@@ -69,7 +69,7 @@ router.get(
 // );
 
 router.post('/admin', asyncHandler(async(req, res, next) => {
-  const { title, category_id, price, content, img_url, is_sale, quantity, rating } = req.body;
+  const { title, category_id, price, content, img_url, is_sale, quantity, rate } = req.body;
   await Book.create({
     title,
     category_id,
@@ -78,7 +78,7 @@ router.post('/admin', asyncHandler(async(req, res, next) => {
     img_url,
     is_sale,
     quantity,
-    rating
+    rate
   });
   res.status(201).json({
     status: 201,
