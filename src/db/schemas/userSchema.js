@@ -1,10 +1,10 @@
 const { Schema } = require('mongoose');
 
 const UserSchema = new Schema({
-    shortId: {
-        type: String,
-        required: true,
-    },
+    // shortId: {
+    //     type: String,
+    //     required: true,
+    // },
     password:  {
         type: String,
         required: true,
@@ -52,12 +52,13 @@ const UserSchema = new Schema({
     },
     created_at: {
         type: Date,
-        required: true,
+        //required: true,
     },
     is_admin: {
         type: Boolean,
-        required: true,
     },
+}, {
+  timestamps: true,
 });
 
 module.exports = UserSchema;
