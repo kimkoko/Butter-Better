@@ -1,23 +1,13 @@
 const { Schema } = require('mongoose');
 
-const autoincrement = require('mongoose-auto-increment');
-
-autoincrement.initialize(mongoose.connection);
-
-OrderSchema.plugin(autoincrement.plugin, {
-  model: 'Order',
-  field: 'seq',
-  startAt: 1,
-  increment: 1,
-});
-
 const OrderSchema = new Schema(
   {
-    seq: {
-      type: Number,
-    },
     _id: {
       type: Number,
+    },
+    user_id: {
+      type: String,
+      ref: 'users',
       required: true,
     },
     title: {
@@ -83,8 +73,7 @@ const OrderSchema = new Schema(
       default: '주문 완료',
     },
   },
-  { timestamps: true },
-  { versionKey: false }
+  { collection: 'orders', timestamps: true }
 );
 
 module.exports = OrderSchema;

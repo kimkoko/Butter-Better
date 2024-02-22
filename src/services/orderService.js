@@ -1,26 +1,49 @@
-const asyncHandler = require('../utils/async-handeler');
-const { Order } = require('../db/models/orderModel');
+const orderModel = require('../db/models/orderModel');
+const customError = require('../middlewares/customError');
 
-// 전체 주문 목록 조회 (관리자)
-const getOrderList = asyncHandler(async (req, res) => {
-  const orders = await Order.find({});
-  if (orders.length === 0) {
-    throw new error('현재 들어온 주문이 없습니다.');
+class OrderService {
+  constructor(orderModel) {
+    this.orderModel = orderModel;
   }
-  res.json(orders);
-});
 
-// 회원 주문 목록 조회
-const getOrders = asyncHandler(async (req, res) => {
-  const orders = await Order.find({ userId: req.user.id });
-  if (orders.length === 0) {
-    throw new error('현재 들어온 주문이 없습니다.');
+  async getOrderList() {
+    const orders = await this.orderModel.findAll();
+    return orders;
   }
-  res.json(orders);
-});
 
-// 주문 상세 조회
-const getOrder = asyncHandler(async (req, res) => {
-  const orderId = req.params.id;
-  const order = await Order.findOne({ _id: orderId });
-});
+  async getOrdersByUser(userId) {
+    const orders = await this.orderModel.findById(userId);
+    if (!orders || orders === null) {
+      throw new customError('404', '해당 ID의 주문 내역이 없습니다.');
+    }
+    return orders;
+  }
+
+  async getOrder(orderId) {
+    const order = await this.orderModel.findById(orderId);
+    if (!order || order === null) {
+      throw new customError('404', '해당 ID의 주문 내역이 없습니다.');
+    }
+    return order;
+  }
+
+  async addOrder(orderInfo) {
+    const { user_id, products, total_price } = orderInfo;
+    const newOrder = await this.orderModel.create(orderInfo);
+    if (!products || !total_price) {
+      throw new customError('401', '주문 금액의 합이 0원 입니다.');
+    }
+    return newOrder;
+  }
+
+  async deleteOrder(orderId) {
+    const order = await this.orderModel.delete(orderId);
+    if (!order || order === null) {
+      throw new customError('404', '해당 ID의 주문 내역이 없습니다.');
+    }
+    return order;
+  }
+}
+
+const orderService = new OrderService(orderModel);
+module.exports = orderService;
