@@ -1,0 +1,35 @@
+#overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* 어둡게 만들기 위한 배경색 */
+    z-index: 99;
+    /* 모달보다 아래에 위치하도록 설정 */
+    display: none;
+    /* 초기에는 보이지 않도록 설정 */
+}
+
+/* 모달 스타일 */
+.modal {
+    width: 640px;
+    height: 442px;
+    /* background-color: rgba(0, 0, 0, 0.4); */
+
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+
+    display: none;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* 모달 내용 스타일 */
+/* .modal-content {
+
+} */

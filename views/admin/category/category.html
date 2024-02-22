@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>관리자</title>
+
+    <!-- 아이콘 -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+    <!-- custom -->
+    <link rel="stylesheet" href="../../common/css/reset.css">
+    <link rel="stylesheet" href="../common/admin.css">
+    <link rel="stylesheet" href="category.css">
+    <link rel="stylesheet" href="../../common/header/header.css">
+    <script src="../common/loadHTML.js"></script>
+    <!-- 모달창.js -->
+    <script defer src="category.js"></script>
+</head>
+
+<body>
+    <header data-load-html="../common/header/header.html">
+    </header>
+
+
+
+    <div class="mainBox">
+        <div class="inner">
+            <div class="tableList">
+                <table>
+                    <colgroup>
+                        <col style="width:50%">
+                        <col style="width:50%">
+                    </colgroup>
+
+                    <thead class="head">
+                        <th>카테고리명</th>
+                        <th>수정/삭제</th>
+                    </thead>
+
+                    <tr>
+                        <td>카테고리명</td>
+                        <td class="edit-box">
+                            <button type="button" class="modify" data-category="카테고리명" data-status="Y">수정</button>
+                            <button type="button" class="delete">삭제</button>
+                        </td>
+                    </tr>
+                </table>               
+
+            </div>
+        </div>
+
+    </div>
+   <!-- 모달 -->
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <!-- 모달 내용 -->
+        <input type="text" id="categoryName">
+        <input type="text" id="status">
+    </div>
+</div>
+<!-- 오버레이 -->
+<div id="overlay"></div>
+
+</body>
+
+</html>
