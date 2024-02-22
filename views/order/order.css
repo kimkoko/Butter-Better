@@ -37,6 +37,10 @@ input[type="number"]::-webkit-inner-spin-button {
     justify-content: space-between;
 
 }
+
+.messageInput.off{
+    display: none;
+}
 .mainBox .inner .inputBox .box .radio_select{
     width: 100%;
     background: #fff;
@@ -81,6 +85,9 @@ input[type="number"]::-webkit-inner-spin-button {
     border-radius: 4px;
     color: #fff;
 }
+
+
+/* 주문 목록 */
 .checkout{
     width: 592px;
     height: auto;
