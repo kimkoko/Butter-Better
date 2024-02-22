@@ -8,17 +8,10 @@ document.addEventListener('DOMContentLoaded', function () {
       modal2.style.display = "flex";
     };
     // 모달 닫기 함수
-    function closeModal1() {
-      modal1.style.display = "none";
-    }
-    
-    // 외부 클릭 시 모달 닫기
-    window.onclick = function (event) {
-      if (event.target == modal1) {
-        closeModal1();
-      }
-    };
-    
+    modal2.addEventListener("click", function(e) {
+      if (e.target !== modal2) return;
+      modal2.style.display = "none";
+    })
     // 삭제 버튼과 취소 버튼에 이벤트 리스너 추가
     var deleteBtn = document.getElementById("delete-Btn");
     var backBtn = document.getElementById("back-btn");
