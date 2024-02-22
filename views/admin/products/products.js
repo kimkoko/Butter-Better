@@ -2,28 +2,39 @@ document.addEventListener('DOMContentLoaded', function () {
   // 모달 열기 버튼과 모달 가져오기
   var openModalBtn1 = document.getElementById("openModalbtn1");
   var openModalBtn2 = document.getElementById("openModalbtn2");
+  var addBtn = document.getElementById("add-btn");
   var modal1 = document.getElementById("myModal1");
   var modal2 = document.getElementById("myModal2");
   
+  
   // 모달 열기 버튼에 이벤트 리스너 추가
-  openModalBtn1.onclick = function () {
-    modal1.style.display = "flex";
-  };
-  openModalBtn2.onclick = function () {
-    modal2.style.display = "flex";
-  };
-  // 모달 닫기 함수
-  function closeModal1() {
-    modal1.style.display = "none";
-  }
-  
-  // 외부 클릭 시 모달 닫기
-  window.onclick = function (event) {
-    if (event.target == modal1) {
-      closeModal1();
+  openModalBtn1.addEventListener("click", function() {
+    var pargraph = modal1.querySelector("p");
+    if (pargraph) {
+      pargraph.innerText ="상품 수정" 
     }
-  };
+    modal1.style.display = "flex";
+  });
+  addBtn.addEventListener("click", function() {
+    var pargraph = modal1.querySelector("p");
+    if (pargraph) {
+      pargraph.innerText ="상품 추가" 
+    }
+    modal1.style.display = "flex";
+  });
+  openModalBtn2.addEventListener("click", function() {
+    modal2.style.display = "flex";
+  });
   
+  // 모달 닫기 함수
+  modal1.addEventListener("click", function(e) {
+    if (e.target !== modal1) return;
+    modal1.style.display = "none";
+  })
+  modal2.addEventListener("click", function(e) {
+    if (e.target !== modal2) return;
+    modal2.style.display = "none";
+  })
   // 저장 버튼에 이벤트 리스너 추가
   var saveBtn1 = document.getElementById("save-Btn1");
   saveBtn1.onclick = function () {

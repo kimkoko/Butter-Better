@@ -24,13 +24,11 @@
     <header data-load-html="../common/header/header.html">
     </header>
     
-    
-    
     <div class="mainBox">
         <div class="inner">
             <div class="titleBox">
                 <h2 class="title">상품 관리</h2>
-                <button type="button" class="plus">
+                <button type="button" class="plus" id="add-btn">
                     + 추가
                 </button>
             </div>
@@ -86,7 +84,7 @@
                 <input type="text" placeholder="상품명">
                 <input type="text" placeholder="상품 설명">
                 <input type="text" placeholder="가격">
-                <input type="text" placeholder="이미지">
+                <input type="file" placeholder="이미지">
                 <input type="text" placeholder="생성날짜">
                 <input type="text" placeholder="판매상태">
                 <button id="save-Btn1">저장</button>
@@ -96,13 +94,13 @@
     <div class="modal-container" id="myModal2"> 
         <div class="modal">
             <div class="modal-content">
-                <div>
+                <ul>
                     <li class="Exclamationpoint">
                         <a href="#">
                             <img src="/views/admin/common/image/Exclamation Point.png">
                         </a>
                     </li>
-                </div>    
+                </ul>    
                 <p>삭제하시겠습니까?</p>
                 <div class="button-container">
                     <button id="delete-Btn">삭제</button>
