@@ -15,7 +15,8 @@ router.get(
       Book.find({})
         //.sort({ createdAt: -1 })
         .skip(perPage * (page - 1))
-        .limit(perPage),
+        .limit(perPage)
+        .populate('category_id'),
     ]);
     const totalPage = Math.ceil(total / perPage);
 
@@ -36,7 +37,10 @@ router.get(
   '/:id',
   asyncHandler(async (req, res, next) => {
     const _id = req.params.id;
-    const book = await Book.findById(_id);
+    const book = await Book.findById(_id).populate('category_id');
+    
+    // 해당 상품의 카테고리 이름 찾는 법
+    console.log(book.category_id.name);
 
     res.status(200).json({
       status: 200,
@@ -45,7 +49,6 @@ router.get(
     });
   })
 );
-
 // 상품 추가 *admin
 // router.post(
 //   '/admin',
