@@ -36,11 +36,6 @@ document.addEventListener('DOMContentLoaded', function () {
     modal2.style.display = "none";
   })
 
-  // 모달 닫기 함수
-  function closeModal(modal) {
-    modal.style.display = "none";
-  }
-
   // // 각 모달에 대해 클릭 이벤트 처리 - 하나로 묶어서 처리하고싶은데 잘 안되네 흠
   // document.querySelectorAll(".modal").forEach(function (modal) {
   //   modal.addEventListener("click", function (e) {
@@ -59,12 +54,6 @@ document.addEventListener('DOMContentLoaded', function () {
     modal1.style.display = "none";
   };
 
-  var saveBtn3 = document.getElementById("save-Btn3");
-  saveBtn3.onclick = function () {
-    // 저장 버튼을 눌렀을 때 할 작업을 추가
-    alert("추가되었습니다.");
-    modal3.style.display = "none";
-  }
 
   // 삭제 버튼과 취소 버튼에 이벤트 리스너 추가
   var deleteBtn = document.getElementById("delete-Btn");
