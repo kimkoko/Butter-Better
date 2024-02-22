@@ -115,34 +115,40 @@ router.delete('/admin/:id', asyncHandler (async(req, res, next) => {
     });
 }));
 
-// 상품 수정 *admin
-router.patch(
-  '/admin/:id',
-  asyncHandler(async (req, res, next) => {
-    const updates = Object.keys(req.body);
-    const allowedUpdates = [
-      'name',
-      'category_name',
-      'price',
-      'content',
-      'img_url',
-      'is_sale',
-      'quantity',
-      'rate',
-    ];
+// // 상품 수정 *admin
+// router.patch(
+//   '/admin/:id',
+//   asyncHandler(async (req, res, next) => {
+//     const updates = Object.keys(req.body);
+//     const allowedUpdates = [
+//       'name',
+//       'category_name',
+//       'price',
+//       'content',
+//       'img_url',
+//       'is_sale',
+//       'quantity',
+//       'rate',
+//     ];
 
-    const updatedBookInfo = await Book.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true, runValidators: true }
-    );
+//     const updatedBookInfo = await Book.findByIdAndUpdate(
+//       req.params.id,
+//       req.body,
+//       { new: true, runValidators: true }
+//     );
 
-    res.status(200).json({
-      status: 200,
-      message: '상품 수정 완료',
-      data: updatedBookInfo,
-    });
-  })
-);
+//     res.status(200).json({
+//       status: 200,
+//       message: '상품 수정 완료',
+//       data: updatedBookInfo,
+//     });
+//   })
+// );
+
+router.patch('/admin/:id', asyncHandler(async (req, res) => {
+  const updatedBook = await Book.findByIdAndUpdate(req.params.id, req.body, { new: true });
+  res.status(200).json({ status: 200, msg: '상품 수정 완료', data: updatedBook });
+}));
+
 
 module.exports = router;
