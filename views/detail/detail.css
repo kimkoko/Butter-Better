@@ -17,6 +17,13 @@
     width: 480px;
     height: auto;
 }
+.mainBox .inner .topBox .bookImg p.img{
+    width: 100%;
+}
+.mainBox .inner .topBox .bookImg p.img img{
+    width: 100%;
+    height: auto;
+}
 .mainBox .inner .topBox .bookInfo{
     width: 648px;
     height: auto;
