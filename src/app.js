@@ -4,13 +4,11 @@ const bodyParser = require('body-parser');
 require('dotenv').config();
 
 const bookRouter = require('./routers/bookRouter');
+const orderRouter = require('./routers/orderRouter');
 
 //connect to mongodb
-// TODO : env 연결 확인
-// mongoose.connect(process.env.MONGO_URI);
-mongoose.connect(
-  'mongodb+srv://butterandbetter:Uqt93SbIF7GNPOXM@main.xqqect0.mongodb.net/BAB'
-);
+mongoose.connect(process.env.MONGO_URI);
+
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', () => {
@@ -29,6 +27,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/books', bookRouter);
+app.use('/api/orders', orderRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
