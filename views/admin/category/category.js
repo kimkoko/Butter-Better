@@ -2,46 +2,55 @@ document.addEventListener('DOMContentLoaded', function () {
   // 모달 열기 버튼과 모달 가져오기
   var openModalBtn1 = document.getElementById("openModalbtn1");
   var openModalBtn2 = document.getElementById("openModalbtn2");
-  var openModalBtn3 = document.getElementById("openModalbtn3");
   var modal1 = document.getElementById("myModal1");
   var modal2 = document.getElementById("myModal2");
-  var modal3 = document.getElementById("myModal3");
-  
+  var addBtn = document.getElementById("add-btn");
+
   // 모달 열기 버튼에 이벤트 리스너 추가  
-  openModalBtn1.onclick = function () {
+  openModalBtn1.addEventListener("click", function () {
+    var pargraph = modal1.querySelector("p");
+    if (pargraph) {
+      pargraph.innerText = "상품 수정"
+    }
     modal1.style.display = "flex";
-  };
-  openModalBtn2.onclick = function () {
+  });
+  addBtn.addEventListener("click", function () {
+    var pargraph = modal1.querySelector("p");
+    if (pargraph) {
+      pargraph.innerText = "카테고리 추가"
+    }
+    modal1.style.display = "flex";
+  });
+  openModalBtn2.addEventListener("click", function () {
     modal2.style.display = "flex";
-  }
-  openModalBtn3.onclick = function () {
-    modal3.style.display = "flex";
-  };
-    
+  });
+
 
   // 모달 닫기 함수
-  function closeModal1() {
+  modal1.addEventListener("click", function(e) {
+    if (e.target !== modal1) return;
     modal1.style.display = "none";
+  })
+  modal2.addEventListener("click", function(e) {
+    if (e.target !== modal2) return;
+    modal2.style.display = "none";
+  })
+
+  // 모달 닫기 함수
+  function closeModal(modal) {
+    modal.style.display = "none";
   }
-  
-  // 외부 클릭 시 모달 닫기
-  window.onclick = function (event) {
-    if (event.target == modal1) {
-      closeModal1();
-    }
-  };
-  // 모달 닫기 함수(modal3)
-  function closeModal3() {
-    modal3.style.display = "none";
-  }
-  
-  // 외부 클릭 시 모달 닫기(modal3)
-  window.onclick = function (event) {
-    if (event.target == modal3) {
-      closeModal3();
-    }
-  };
-  
+
+  // // 각 모달에 대해 클릭 이벤트 처리 - 하나로 묶어서 처리하고싶은데 잘 안되네 흠
+  // document.querySelectorAll(".modal").forEach(function (modal) {
+  //   modal.addEventListener("click", function (e) {
+  //     if (e.target !== modal) return;
+  //     modal.style.display = "none";
+  //   });
+  // });
+
+
+
   // 저장 버튼에 이벤트 리스너 추가
   var saveBtn1 = document.getElementById("save-Btn1");
   saveBtn1.onclick = function () {
@@ -56,7 +65,7 @@ document.addEventListener('DOMContentLoaded', function () {
     alert("추가되었습니다.");
     modal3.style.display = "none";
   }
-  
+
   // 삭제 버튼과 취소 버튼에 이벤트 리스너 추가
   var deleteBtn = document.getElementById("delete-Btn");
   var backBtn = document.getElementById("back-btn");
