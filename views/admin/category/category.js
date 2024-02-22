@@ -1,86 +1,50 @@
-// const modal = `
-//                 <div class="modal__close">
-//                   <img
-//                   width="22px"
-//                   height="22px"
-//                   src=${close}
-//                   alt="close_icon_logo"
-//                   />
-//                 </div>
-//                 <div class="modal__card">
-//                   <div class="modal__header">
-//                     <div class="modal__back">
-//                       <img width="32px" height="24px" src=${arrow} alt="arrow_back_icon" />
-//                     </div>
-//                     <h2>새 게시물 만들기</h2>
-//                     <p>공유하기</p>
-//                   </div>
-//                   <div class="modal__main">
-//                     <img src=${media} alt="media_icon" />
-//                     <h3>사진과 동영상을 업로드 해보세요.</h3>
-//                     <label for="file">
-//                       <p>컴퓨터에서 선택</p>
-//                     </label>
-//                     <input type="file" name="file" id="file" />
-//                   </div>
-//                 </div>
-//               `;
+document.addEventListener('DOMContentLoaded', function () {
+  // 모달 열기 버튼과 모달 가져오기
+  var openModalBtn1 = document.getElementById("openModalbtn1");
+  var openModalBtn2 = document.getElementById("openModalbtn2");
+  var modal1 = document.getElementById("myModal1");
+  var modal2 = document.getElementById("myModal2");
+  
+  // 모달 열기 버튼에 이벤트 리스너 추가
+  openModalBtn1.onclick = function () {
+    modal1.style.display = "flex";
+  };
+  openModalBtn2.onclick = function () {
+    modal2.style.display = "flex";
+  };
 
-// // 지시사항에 맞춰 자바스크립트 코드를 작성하세요.
-// const addPostBtn = document.querySelector("#modify");
-// addPostBtn.addEventListener('click', function() {
-//     const modalEl = document.createElement("div");
-//     modalEl.setAttribute('class', 'modal__layout');
-//     modalEl.innerHTML = modal;
-//     document.body.prepend(modalEl);
 
-//     document.querySelector('.modal__close > img')
-//     .addEventListener('click', function() {
-//         document.body.removeChild(modalEl);
-//     });
-// })
+  // 모달 닫기 함수
+  function closeModal1() {
+    modal1.style.display = "none";
+  }
+  
+  // 외부 클릭 시 모달 닫기
+  window.onclick = function (event) {
+    if (event.target == modal1) {
+      closeModal1();
+    }
+  };
+  
+  // 저장 버튼에 이벤트 리스너 추가
+  var saveBtn1 = document.getElementById("save-Btn1");
+  saveBtn1.onclick = function () {
+    // 저장 버튼을 눌렀을 때 할 작업을 추가
+    alert("저장되었습니다.");
+    modal1.style.display = "none";
+  };
+  
+  // 삭제 버튼과 취소 버튼에 이벤트 리스너 추가
+  var deleteBtn = document.getElementById("delete-Btn");
+  var backBtn = document.getElementById("back-btn");
 
-// 수정 버튼 클릭 시 모달을 띄우고 입력 폼에 해당 항목들의 값을 채우는 함수
-function showModal(event) {
-  var modal = document.getElementById("myModal");
-  var overlay = document.getElementById("overlay");
-  var categoryNameInput = document.getElementById("categoryName");
-  var statusInput = document.getElementById("status");
+  deleteBtn.onclick = function () {
+    // 실제로 삭제하는 작업 추가
+    alert("카테고리가 삭제되었습니다.");
+    modal2.style.display = "none";
+  };
 
-  // 수정 버튼에 추가한 data 속성을 통해 해당 항목들의 값을 가져옴
-  var categoryName = event.target.dataset.category;
-  var status = event.target.dataset.status;
-
-  // 입력 폼에 해당 항목들의 값을 채움
-  categoryNameInput.value = categoryName;
-  statusInput.value = status;
-
-  modal.style.display = "block";
-  overlay.style.display = "block";
-}
-
-// 모달 닫기 버튼 클릭 시 모달을 닫는 함수
-function closeModal() {
-  var modal = document.getElementById("myModal");
-  var overlay = document.getElementById("overlay");
-  modal.style.display = "none";
-  overlay.style.display = "none";
-}
-
-// 문서가 로드되면 수정 버튼에 클릭 이벤트 리스너를 추가
-document.addEventListener("DOMContentLoaded", function () {
-  var editButtons = document.querySelectorAll(".modify");
-
-  editButtons.forEach(function (button) {
-    button.addEventListener("click", showModal);
-  });
-
-  // 모달 닫기 버튼에 클릭 이벤트 리스너를 추가
-  var closeButtons = document.querySelectorAll(".close");
-  closeButtons.forEach(function (button) {
-    button.addEventListener("click", closeModal);
-  });
+  backBtn.onclick = function () {
+    modal2.style.display = "none";
+  };
 });
-
-
-

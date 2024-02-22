@@ -1,35 +1,69 @@
-#overlay {
+button {
+    display: inline-block;
+    box-sizing: border-box;
+    padding: 16px 24px;
+    font-size: 16px;
+    color: var(--orange-500);
+    border-radius: 5px;
+    transition: all 0.3s;
+    border: 1px solid var(--orange-500);
+  }
+  
+  .modal-container {
+    display: none;
+    justify-content: center;
+    align-items: center;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
-    /* 어둡게 만들기 위한 배경색 */
-    z-index: 99;
-    /* 모달보다 아래에 위치하도록 설정 */
-    display: none;
-    /* 초기에는 보이지 않도록 설정 */
-}
-
-/* 모달 스타일 */
-.modal {
-    width: 640px;
-    height: 442px;
-    /* background-color: rgba(0, 0, 0, 0.4); */
-
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 100;
-
-    display: none;
+  }
+  
+  .modal-content {
+    color: var(--camel-500);
+    font-size: 32px;
+    display: flex;
     flex-direction: column;
     align-items: center;
-}
-
-/* 모달 내용 스타일 */
-/* .modal-content {
-
-} */
+    width: 640px;
+    padding: 40px;
+    background-color: white;
+    row-gap: 18px;
+  }
+  
+  /* 입력 필드 스타일 */
+  .modal-content input {
+    width: 100%;
+    height: 60px;
+    padding: 8px;
+    box-sizing: border-box;
+    border-radius: 4px;
+  }
+  
+  /* 모달 내용 스타일 */
+  .modal-content p {
+    width: 100%;
+    height: 60px;
+    padding: 8px;
+    box-sizing: border-box;
+    border-radius: 4px;
+    text-align: center;
+  }
+  
+  /* 저장 버튼 스타일 */
+  #save-Btn1 {
+    width: 100%;
+    height: 60px;
+    padding: 8px;
+    color: var(--bg-color);
+    box-sizing: border-box;
+    border-radius: 4px;
+    background-color: var(--orange-500);
+  }
+  
+  .Exclamationpoint {
+    list-style: none;
+    color: var(--orange-500);
+  }
