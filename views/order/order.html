@@ -23,7 +23,7 @@
     <!-- header -->
     <header data-load-html="../common/header/header.html"></header>
 
-    <div class="mainBox">
+    <div class="mainBox" style="display: none;">
         <div class="inner">
             <div class="inputBox">
                 <div class="box contact">
@@ -74,7 +74,7 @@
                             <label for="card" class="pay_label">카드 결제</label>
                         </div>
                         <div class="radio_select">
-                            <input type="radio" name="pay" id="no_card">
+                            <input type="radio" name="pay" id="no_card" checked>
                             <label for="no_card" class="pay_label">무통장 입금</label>
                         </div>
 
@@ -85,17 +85,32 @@
             </div>
 
             <div class="checkout">
-                <h3>check Out</h3>
+                <h3>Check Out</h3>
                 <div class="orderBox">
                     <div>
                         <ul class="products">
                             <li class="product">
-                                <p class="img"><img src="" alt=""></p>
+                                <p class="img"><img src="../common/img/bn_ex_01.jpeg" alt=""></p>
                                 <p class="name">Title Here</p>
                                 <p class="num">1</p>
                                 <p class="price">₩17,000</p>
                             </li>
                         </ul>
+
+                        <div class="priceBox">
+                            <p class="subTotal">
+                                <span class="title">Subtotal</span>
+                                <span class="price">₩34,000</span>
+                            </p>
+                            <p class="shipping">
+                                <span class="title">Shipping</span>
+                                <span class="price">₩3,000</span>
+                            </p>
+                            <p class="total">
+                                <span class="title">Total</span>
+                                <span class="price">₩37,000</span>
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -103,15 +118,18 @@
     </div>
 
     <!-- 주문 완료 시 노출 -->
-    <div class="orderCompletion"  style="display: none;">
+    <div class="orderCompletion"  style="display:  ;">
         <div>
+            <h3>Thank You</h3>
             <p class="text">
-                감사합니다 :)<br>
-                <span class="name">주문자 이름</span>님, 주문이 완료되었습니다.
+                <ion-icon name="checkmark-circle"></ion-icon><br>
+                <span class="textSpan">고객님의 주문이 완료되었습니다.</span><br>
+                <span class="order orderNumber">주문 번호 : 2024-0220-000001</span><br>
+                <span class="order orderDate">주문 일자 : 2024-02-20 13:14:00</span>
             </p>
             <div class="buttons">
-                <button type="button" class="mypage">주문 내역 확인하기</button>
-                <button type="button" class="home" onclick="location.href='../home/home.html'" >메인으로 돌아가기</button>
+                <button type="button" class="home" onclick="location.href='../home/home.html'" >BACK TO MAIN</button>
+                <button type="button" class="mypage" >CHECK PAYMENT</button>
             </div>
         </div>
     </div>
