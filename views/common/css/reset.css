@@ -112,7 +112,16 @@ input::placeholder{
 input[type="number"]:focus{
 	outline: 2px solid var(--orange-500);
 }
-
+input[type="file"]{
+	box-sizing: border-box;
+	padding: 14px 20px;
+	font-size: 18px;
+	border:1px solid var(--cream-700);
+	border-radius: 4px
+}
+input[type="file"]:focus{
+	outline: 2px solid var(--orange-500);
+}
 
 
 
