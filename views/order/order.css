@@ -1,3 +1,4 @@
+/* 주문 창 */
 .mainBox .inner{
     width: 1200px;
     margin: 0 auto;
@@ -6,6 +7,7 @@
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
+    position: relative;
 }
 .mainBox .inner .inputBox{
     width: 560px;
@@ -34,6 +36,10 @@ input[type="number"]::-webkit-inner-spin-button {
     align-items: center;
     justify-content: space-between;
 
+}
+
+.messageInput.off{
+    display: none;
 }
 .mainBox .inner .inputBox .box .radio_select{
     width: 100%;
@@ -80,21 +86,126 @@ input[type="number"]::-webkit-inner-spin-button {
     color: #fff;
 }
 
+
+/* 주문 목록 */
+.checkout{
+    width: 592px;
+    height: auto;
+    position: sticky;
+    top: 0;
+}
+.checkout h3{
+    font-size: 32px;
+    font-weight: 600;
+    color: var(--camel-500);
+    margin-bottom: 18px;
+}
+.checkout .orderBox{
+    background: #fff;
+    border-radius: 4px;
+    border: 1px solid var(--mocha-500);
+    box-shadow: 6px 8px 30px #886d4b20;
+}
+.checkout .orderBox > div{
+    box-sizing: border-box;
+    padding: 32px;
+}
+.checkout .orderBox > div .products{
+    color: var(--orange-500);
+    font-size: 20px;
+    font-weight: 600;
+    overflow: hidden;
+}
+.checkout .orderBox > div .products li{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    padding-bottom: 16px;
+    margin-bottom: 16px;
+    border-bottom: 1px solid var(--camel-500);
+}
+.checkout .orderBox > div .products li p.img{
+    width: 130px;
+    height: auto;
+}
+.checkout .orderBox > div .products li p.img img{
+    width: 100%;
+    border: 1px solid #c4c4c4;
+}
+.checkout .orderBox > div .products li .name{
+    width: 186px;
+}
+.checkout .orderBox > div .products li .num{
+    width:40px;
+}
+.checkout .orderBox > div .products li .price{
+    width:120px;
+}
+.priceBox{
+    color: var(--orange-500);
+    margin-top: 16px;
+}
+.priceBox p{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 18px;
+    margin-bottom: 16px;
+}
+.priceBox p:last-child{
+    margin-bottom: 0px;
+}
+.priceBox p.total{
+    font-size: 24px;
+    font-weight: 600;
+}
+
+
+
+/* 주문 완료 */
 .orderCompletion > div{
     width: 1200px;
     margin: 0 auto;
-    padding: 200px 0;
+    padding: 60px 0;
     box-sizing: border-box;
+    text-align: center;
+}
+.orderCompletion > div > h3{
+    color: var(--orange-500);
+    font-size: 42px;
+    font-weight: 600;
+    margin-bottom: 40px;
 }
 .orderCompletion > div p{
+    background: #fff;
+    border: 1px solid var(--camel-500);
     text-align: center;
-    font-size: 30px;
-    line-height: 2.0;
-    color: var(--mocha-500);
-    font-weight: 600;
+    font-size: 24px;
+    font-weight: 500;
+    color: var(--orange-500);
+    width: auto;
+    display: inline-block;
+    box-sizing: border-box;
+    padding: 30px 120px;
+    border-radius: 4px;
+}
+.orderCompletion > div p ion-icon{
+    font-size: 65px;
 }
 .orderCompletion > div p span{
-    color: var(--orange-500);
+    display: inline-block;
+}
+.orderCompletion > div p span.textSpan{
+    margin: 24px 0;
+}
+.orderCompletion > div p span.order{
+    font-size: 16px;
+    color: var(--camel-500);
+    font-weight: normal;
+}
+.orderCompletion > div p span.orderDate{
+    margin-top: 10px;
 }
 .orderCompletion > div .buttons{
     margin-top: 50px;
@@ -108,7 +219,7 @@ input[type="number"]::-webkit-inner-spin-button {
     border: 1px solid var(--camel-500);
     border-radius: 4px;
 }
-.orderCompletion > div .buttons button.home{
+.orderCompletion > div .buttons button.mypage{
     margin-left: 32px;
     background: var(--orange-500);
     color: #fff;
