@@ -146,8 +146,8 @@ router.delete('/admin/:id', asyncHandler (async(req, res, next) => {
 // );
 
 router.patch('/admin/:id', asyncHandler(async (req, res) => {
-  const updatedBook = await Book.findByIdAndUpdate(req.params.id, req.body, { new: true });
-  res.status(200).json({ status: 200, msg: '상품 수정 완료', data: updatedBook });
+  await Book.findByIdAndUpdate(req.params.id, req.body);
+  res.status(200).json({ status: 200, msg: '상품 수정 완료'});
 }));
 
 
