@@ -70,13 +70,13 @@
 	font-size: 18px;
   border: 0px;
 	color: var(--mocha-500);
-	background:url('../public/img/select_arrow.png') no-repeat 97% 50%/32px auto;
+	background:url('../common/img/select_arrow.png') no-repeat 97% 50%/32px auto;
 }
 
 .products-sort select:focus{
 	outline: 2px solid var(--orange-500);
 	color: var(--mocha-500);
-	background:url('../public/img/select_arrow_up.png') no-repeat 97% 50%/32px auto;
+	background:url('../common/img/select_arrow_up.png') no-repeat 97% 50%/32px auto;
 }
 
 
