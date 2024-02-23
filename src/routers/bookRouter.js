@@ -38,7 +38,6 @@ router.get(
   asyncHandler(async (req, res, next) => {
     const _id = req.params.id;
     const book = await Book.findById(_id).populate('category_id');
-    
     // 해당 상품의 카테고리 이름 찾는 법
     console.log(book.category_id.name);
 
@@ -49,6 +48,7 @@ router.get(
     });
   })
 );
+
 
 // 상품 추가 *admin
 
