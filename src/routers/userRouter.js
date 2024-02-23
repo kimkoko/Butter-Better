@@ -50,6 +50,10 @@ router.post('/login', asyncHandler (async (req, res, next) => {
 router.delete('/:email', asyncHandler(async (req, res) => {
     const _email = req.params.email;
     await User.deleteOne({ email: _email });
+    res.status(200).json({
+        status: 200,
+        msg: '회원 삭제 완료'
+    });
 }));
 
 module.exports= router;
