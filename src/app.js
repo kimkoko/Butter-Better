@@ -5,23 +5,17 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const path = require('path');
 
-
 require('dotenv').config();
-
 
 const viewRouter = require('./routers/viewRouter');
 const bookRouter = require('./routers/bookRouter');
 const userRouter = require('./routers/userRouter');
 const categoryRouter = require('./routers/categoryRouter');
-
-
+const orderRouter = require('./routers/orderRouter');
 
 //connect to mongodb
-// TODO : env 연결 확인
-// mongoose.connect(process.env.MONGO_URI);
-mongoose.connect(
-  'mongodb+srv://butterandbetter:Uqt93SbIF7GNPOXM@main.xqqect0.mongodb.net/BAB'
-);
+mongoose.connect(process.env.MONGO_URI);
+
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', () => {
@@ -42,12 +36,11 @@ app.use(cookieParser());
 //   res.send('Butter and Better');
 // });
 
-
-
 app.use(viewRouter);
 app.use('/api/books', bookRouter);
 app.use('/api/users', userRouter);
 app.use('/api/category', categoryRouter);
+app.use('/api/order', orderRouter);
 
 // // catch 404 and forward to error handler
 // app.use(function (req, res, next) {
@@ -60,21 +53,12 @@ app.use(function (err, req, res, next) {
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
   res.status(err.status || 500);
   //res.render('error');
 });
 
-//common 폴더 
-
+//common 폴더
 
 app.use('/common', express.static(path.join(__dirname, 'views', 'common')));
-
-
-
-
-
-
-
 
 module.exports = app;
