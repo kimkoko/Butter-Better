@@ -1,7 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const passport = require('passport');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const path = require('path');
@@ -15,7 +14,7 @@ const bookRouter = require('./routers/bookRouter');
 const userRouter = require('./routers/userRouter');
 const categoryRouter = require('./routers/categoryRouter');
 
-//require('./passport')();
+
 
 //connect to mongodb
 // TODO : env 연결 확인
@@ -43,7 +42,7 @@ app.use(cookieParser());
 //   res.send('Butter and Better');
 // });
 
-//app.use(passport.initialize());
+
 
 app.use(viewRouter);
 app.use('/api/books', bookRouter);
