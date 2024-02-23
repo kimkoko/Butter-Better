@@ -1,4 +1,4 @@
-const orderModel = require('../db/models/order');
+const orderModel = require('../db/models/orderModel');
 const customError = require('../middlewares/customError');
 const { ObjectId } = require('mongoose').Types;
 

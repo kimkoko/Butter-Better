@@ -5,16 +5,13 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const path = require('path');
 
-
 require('dotenv').config();
-
 
 const viewRouter = require('./routers/viewRouter');
 const bookRouter = require('./routers/bookRouter');
 const userRouter = require('./routers/userRouter');
 const categoryRouter = require('./routers/categoryRouter');
-
-
+const orderRouter = require('./routers/orderRouter');
 
 //connect to mongodb
 mongoose.connect(process.env.MONGO_URI);
@@ -39,12 +36,11 @@ app.use(cookieParser());
 //   res.send('Butter and Better');
 // });
 
-
-
 app.use(viewRouter);
 app.use('/api/books', bookRouter);
 app.use('/api/users', userRouter);
 app.use('/api/category', categoryRouter);
+app.use('/api/order', orderRouter);
 
 // // catch 404 and forward to error handler
 // app.use(function (req, res, next) {
@@ -61,16 +57,8 @@ app.use(function (err, req, res, next) {
   //res.render('error');
 });
 
-//common 폴더 
-
+//common 폴더
 
 app.use('/common', express.static(path.join(__dirname, 'views', 'common')));
-
-
-
-
-
-
-
 
 module.exports = app;

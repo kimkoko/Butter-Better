@@ -1,5 +1,4 @@
 const { Schema } = require('mongoose');
-const bookSchema = require('./book-schema');
 
 const OrderSchema = new Schema(
   {
