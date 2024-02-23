@@ -3,7 +3,8 @@ const router = express.Router();
 const { User } = require('../db/models/userModel');
 const hashPassword = require('../utils/hash-password');
 const asyncHandler = require('../utils/async-handler');
-
+const jwt = require('jsonwebtoken');
+const loginRequired = require('../middlewares/loginRequired');
 
 router.get('/', async(req, res, next) => {
     res.send('users page.')
@@ -41,10 +42,21 @@ router.post('/login', asyncHandler (async (req, res, next) => {
     if(correctPassword !== hashPassword(password)) {
         throw new Error('비밀번호가 일치하지 않습니다.');
     }
+    let token = jwt.sign({
+        type: 'JWT',
+        email: email,
+    }, process.env.SECRET_KEY);
+    res.cookie("token", token);
+    res.status(201).json({
+        status:201,
+        msg: "로그인 완료"
+    })
+
+}))
 
 
-
-
+router.get('/mypage', loginRequired, asyncHandler(async (req, res, next) => {
+    res.send('users mypage');
 }))
 
 router.delete('/:email', asyncHandler(async (req, res) => {
