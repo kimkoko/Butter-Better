@@ -1,81 +1,89 @@
 const express = require('express');
 const orderRouter = express.Router();
-const asyncHandler = require('express-async-handler');
 const orderService = require('../services/orderService');
+const asyncHandler = require('express-async-handler');
 
-// TODO 상품 데이터 연결
-
-// TODO user 회원 검증
-// 회원 주문 목록 조회 (/api/orders/list)
+// Get orders by user Email
 orderRouter.get(
-  '/',
+  '/myorders',
   asyncHandler(async (req, res, next) => {
-    const orders = await OrderService.getOrdersByUser(req.currentUserId);
+    // TODO 회원 - const { userEmail } = req.user;
+    const orders = await orderService.getOrdersByEmail(userEmail);
     res.status(200).json({
       status: 200,
-      message: '회원 주문 목록 조회 성공',
+      message: '주문 목록 조회 성공',
+      data: orders,
     });
   })
 );
 
-// TODO admin 관리자 검증
-// 관리자 주문 목록 조회 (/api/orders/list)
+// Get orders by order ID
+orderRouter.get(
+  '/:id',
+  asyncHandler(async (req, res, next) => {
+    const orderId = req.params.id;
+    const orders = await orderService.getOrdersByOrderId(orderId);
+    res.status(200).json({
+      status: 200,
+      message: '주문 ID로 주문 상세 조회',
+      data: orders,
+    });
+  })
+);
+
+// * Admin-Only : Get all orders
 orderRouter.get(
   '/',
   asyncHandler(async (req, res, next) => {
+    // TODO adminAuth 관리자 검증
+    const orders = await orderService.getOrderList();
     res.status(200).json({
       status: 200,
       message: '전체 주문 목록 조회 성공',
+      data: orders,
     });
   })
 );
 
-// 주문 등록 (/api/orders)
+// Create a new order
 orderRouter.post(
   '/',
   asyncHandler(async (req, res, next) => {
-    const userId = req.currentUserId;
-    const {
-      seq,
-      title,
-      receiver,
-      email,
-      address,
-      products,
-      quantity,
-      message,
-      shipping_fee,
-      total_price,
-      created_at,
-      status,
-    } = req.body;
+    const orderInfo = req.body;
+    const newOrder = await orderService.addOrder(orderInfo);
+
     res.status(201).json({
       status: 201,
       message: '주문 등록 성공',
+      data: newOrder,
     });
   })
 );
 
-// 주문 삭제 (/api/orders/:orderId)
+// TODO ID 가져오기
+// Update an order by Id
+orderRouter.patch(
+  '/:id',
+  asyncHandler(async (req, res, next) => {
+    const { orderId } = req.params;
+    await orderService.updateOrderById(orderId);
+    res.status(201).json({
+      status: 201,
+      message: '주문 수정 성공',
+    });
+  })
+);
+
+// TODO ID 가져오기
+// Delete an order by ID
 orderRouter.delete(
   '/:orderId',
   asyncHandler(async (req, res, next) => {
     const { orderId } = req.params;
+    await orderService.deleteOrder(orderId);
     res.status(201).json({
       status: 201,
       message: '주문 삭제 성공',
-    });
-  })
-);
-
-// 주문 ID로 상세 조회 (/api/orders/:orderId)
-orderRouter.get(
-  '/:orderId',
-  asyncHandler(async (req, res, next) => {
-    const { orderId } = req.params;
-    res.status(200).json({
-      status: 200,
-      message: '주문 id로 주문 상세 조회',
     });
   })
 );

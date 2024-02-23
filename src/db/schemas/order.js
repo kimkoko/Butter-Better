@@ -1,16 +1,9 @@
 const { Schema } = require('mongoose');
+const bookSchema = require('./book-schema');
 
 const OrderSchema = new Schema(
   {
-    _id: {
-      type: Number,
-    },
-    user_id: {
-      type: String,
-      ref: 'users',
-      required: true,
-    },
-    title: {
+    email: {
       type: String,
       required: true,
     },
@@ -18,37 +11,28 @@ const OrderSchema = new Schema(
       type: String,
       required: true,
     },
-    email: {
+    title: {
       type: String,
       required: true,
     },
     address: {
-      type: new Schema({
-        postcode: String,
-        main: String,
-        detail: String,
-      }),
+      type: new Schema(
+        {
+          postcode: String,
+          main: String,
+          detail: String,
+        },
+        { _id: false }
+      ),
+      // required: true,
+      default: {},
+    },
+    products: {
+      type: String,
       required: true,
     },
-    products: [
-      {
-        _id: {
-          type: Schema.Types.ObjectId,
-          ref: 'Book',
-          required: true,
-        },
-        quantity: {
-          type: String,
-          required: true,
-        },
-        price: {
-          type: String,
-          required: true,
-        },
-      },
-    ],
     quantity: {
-      type: String,
+      type: Number,
       required: true,
     },
     message: {
@@ -63,11 +47,7 @@ const OrderSchema = new Schema(
       type: String,
       required: true,
     },
-    created_at: {
-      type: Date,
-      default: Date.now(),
-    },
-    status: {
+    order_status: {
       type: String,
       enum: ['주문 완료', '배송 중', '배송 완료', '주문 취소'],
       default: '주문 완료',

@@ -1,9 +1,12 @@
-const orderModel = require('../db/models/orderModel');
+const orderModel = require('../db/models/order');
 const customError = require('../middlewares/customError');
+const { ObjectId } = require('mongoose').Types;
+
+const orderModelInstance = orderModel;
 
 class OrderService {
-  constructor(orderModel) {
-    this.orderModel = orderModel;
+  constructor(orderModelInstance) {
+    this.orderModel = orderModelInstance;
   }
 
   async getOrderList() {
@@ -11,39 +14,55 @@ class OrderService {
     return orders;
   }
 
-  async getOrdersByUser(userId) {
-    const orders = await this.orderModel.findById(userId);
-    if (!orders || orders === null) {
-      throw new customError('404', '해당 ID의 주문 내역이 없습니다.');
+  async getOrdersByOrderId(orderId) {
+    const orders = await this.orderModel.findByOrderId(orderId);
+    if (!orders.length) {
+      throw new Error('해당 주문 번호의 주문 내역이 없습니다.');
     }
     return orders;
   }
 
-  async getOrder(orderId) {
-    const order = await this.orderModel.findById(orderId);
-    if (!order || order === null) {
-      throw new customError('404', '해당 ID의 주문 내역이 없습니다.');
+  async getOrdersByEmail(userEmail) {
+    const orders = await this.orderModel.findAll();
+    const orderByEmail = orders.filter((order) => order.email === userEmail);
+    if (!orderByEmail.length) {
+      throw new Error('해당 사용자의 주문 내역이 없습니다.');
+    }
+    return orderByEmail;
+  }
+
+  async addOrder(toCreate) {
+    // if (!email) {
+    //   throw new Error('해당 사용자의 주문 내역이 없습니다.');
+    // }
+    // if (!products || !total_price || total_price === 0) {
+    //   throw new Error('주문 금액의 합이 0원 입니다.');
+    // }
+
+    const newId = new ObjectId(toCreate._id);
+    toCreate._id = newId;
+
+    const newOrder = await this.orderModel.create(toCreate);
+    const savedOrder = await newOrder.save(); // document 저장
+    return savedOrder;
+  }
+
+  async updateOrderById(orderId) {
+    const order = await this.orderModel.updateOrderById(orderId);
+    if (!order) {
+      throw new Error('해당 ID의 주문 내역이 없습니다.');
     }
     return order;
   }
 
-  async addOrder(orderInfo) {
-    const { user_id, products, total_price } = orderInfo;
-    const newOrder = await this.orderModel.create(orderInfo);
-    if (!products || !total_price) {
-      throw new customError('401', '주문 금액의 합이 0원 입니다.');
-    }
-    return newOrder;
-  }
-
   async deleteOrder(orderId) {
     const order = await this.orderModel.delete(orderId);
-    if (!order || order === null) {
+    if (!order) {
       throw new customError('404', '해당 ID의 주문 내역이 없습니다.');
     }
     return order;
   }
 }
 
-const orderService = new OrderService(orderModel);
+const orderService = new OrderService(orderModelInstance);
 module.exports = orderService;
