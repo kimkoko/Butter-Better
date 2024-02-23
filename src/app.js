@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const createError = require('http-errors');
 require('dotenv').config();
 
 const bookRouter = require('./routers/bookRouter');
@@ -27,7 +28,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/books', bookRouter);
-app.use('/api/orders', orderRouter);
+app.use('/orders', orderRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
