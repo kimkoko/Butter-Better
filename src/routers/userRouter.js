@@ -4,13 +4,15 @@ const { User } = require('../db/models/userModel');
 const hashPassword = require('../utils/hash-password');
 const asyncHandler = require('../utils/async-handler');
 
+
 router.get('/', async(req, res, next) => {
     res.send('users page.')
 })
 
 // 회원가입 
 router.post('/register', asyncHandler(async(req, res, next) => {
-    const { name, password, email, phone } = req.body;
+    const { name, password, email, phone  } = req.body;
+    const { postcode, main, detail } = req.body.address;
     const user = await User.findOne({ email });
     if(user) {
         throw new Error('이미 가입된 회원입니다.');
@@ -21,6 +23,8 @@ router.post('/register', asyncHandler(async(req, res, next) => {
         password: hashedPassword,
         email,
         phone,
+        address: {postcode, main, detail},
+        deleted_at: null,
         is_admin: false
     });
     res.status(201).json({
@@ -37,6 +41,9 @@ router.post('/login', asyncHandler (async (req, res, next) => {
     if(correctPassword !== hashPassword(password)) {
         throw new Error('비밀번호가 일치하지 않습니다.');
     }
+
+
+
 
 }))
 

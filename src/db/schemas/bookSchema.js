@@ -19,7 +19,7 @@ const BookSchema = new Schema({
         required: true,
     },
     img_url: {
-        type: [String],
+        type: String,
         required: true,
     },
     quantity: {

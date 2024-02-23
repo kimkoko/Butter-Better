@@ -15,7 +15,8 @@ router.get(
       Book.find({})
         //.sort({ createdAt: -1 })
         .skip(perPage * (page - 1))
-        .limit(perPage),
+        .limit(perPage)
+        .populate('category_id'),
     ]);
     const totalPage = Math.ceil(total / perPage);
 
@@ -36,7 +37,10 @@ router.get(
   '/:id',
   asyncHandler(async (req, res, next) => {
     const _id = req.params.id;
-    const book = await Book.findById(_id);
+    const book = await Book.findById(_id).populate('category_id');
+    
+    // 해당 상품의 카테고리 이름 찾는 법
+    console.log(book.category_id.name);
 
     res.status(200).json({
       status: 200,
@@ -47,23 +51,6 @@ router.get(
 );
 
 // 상품 추가 *admin
-// router.post(
-//   '/admin',
-//   asyncHandler(async (req, res, next) => {
-//     try {
-//       const newbook = new Book(req.body);
-//       await newbook.save();
-
-//       res.status(201).json({
-//         status: 201,
-//         message: '상품 추가 완료',
-//         data: newbook,
-//       });
-//     } catch (error) {
-//       next(error);
-//     }
-//   })
-// );
 
 router.post('/admin', asyncHandler(async(req, res, next) => {
   const { title, category_id, price, content, img_url, is_sale, quantity, rating } = req.body;
@@ -84,24 +71,6 @@ router.post('/admin', asyncHandler(async(req, res, next) => {
 }));
 
 // 상품 삭제 *admin
-// router.delete(
-//   '/admin/:id',
-//   asyncHandler(async (req, res, next) => {
-//     try {
-//       const deletedBook = await Book.findByIdAndDelete(req.params.id);
-
-//       res.status(200).json({
-//         status: 200,
-//         message: '상품 삭제 완료',
-//         data: {
-//           deletedBook,
-//         },
-//       });
-//     } catch (error) {
-//       next(error);
-//     }
-//   })
-// );
 
 router.delete('/admin/:id', asyncHandler (async(req, res, next) => {
   const id = req.params.id;
@@ -116,10 +85,10 @@ router.delete('/admin/:id', asyncHandler (async(req, res, next) => {
 router.patch(
   '/admin/:id',
   asyncHandler(async (req, res, next) => {
-    const updates = Object.keys(req.body);
+    // const updates = Object.keys(req.body);
     const allowedUpdates = [
       'name',
-      'category_name',
+      'category_id',
       'price',
       'content',
       'img_url',
@@ -137,7 +106,10 @@ router.patch(
     res.status(200).json({
       status: 200,
       message: '상품 수정 완료',
-      data: updatedBookInfo,
+      data: {
+        allowedUpdates,
+        updatedBookInfo
+      }
     });
   })
 );
