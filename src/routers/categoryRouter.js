@@ -1,6 +1,6 @@
 const { Router } = require('express')
-const categoryService = require('../services/categoryModel')
-const asyncHandler = require('../utils/async-handeler');
+const categoryService = require('../services/categoryService')
+const asyncHandler = require('../utils/async-handler');
 const categoryRouter = Router()
 const { Category } = require('../db/models/categoryModel')
 
