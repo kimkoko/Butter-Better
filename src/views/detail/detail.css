@@ -1,0 +1,122 @@
+.mainBox .inner .topBox{
+    box-sizing: border-box;
+    padding: 80px 0;
+    border-bottom: 1px solid var(--camel-500);
+} 
+.mainBox .inner .topBox > div{
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    width: 1200px;
+    margin: 0 auto;
+}
+.mainBox .inner .topBox .bookImg{
+    width: 480px;
+    height: auto;
+}
+.mainBox .inner .topBox .bookImg p.img{
+    width: 100%;
+}
+.mainBox .inner .topBox .bookImg p.img img{
+    width: 100%;
+    height: auto;
+}
+.mainBox .inner .topBox .bookInfo{
+    width: 648px;
+    height: auto;
+    color: var(--orange-500);
+}
+.mainBox .inner .topBox .bookInfo h2.bookName{
+    font-size:48px;
+    font-weight: 600;
+    line-height: 1.3;
+    margin-bottom: 32px;
+}
+.mainBox .inner .topBox .bookInfo .option{
+    margin-bottom: 32px;
+}
+.mainBox .inner .topBox .bookInfo .option p{
+    display: inline-block;
+    font-weight: 600;
+    font-size: 20px;
+    box-sizing: border-box;
+    padding: 12px 20px;
+    border: 1px solid var(--orange-500);
+    border-radius: 100px;
+}
+.mainBox .inner .topBox .bookInfo .option .stars{
+    margin-left: 18px;
+}
+.mainBox .inner .topBox .bookInfo .option .stars ion-icon{
+    vertical-align: middle;
+}
+.mainBox .inner .topBox .bookText{
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 32px;
+}
+.mainBox .inner .topBox .priceButton{
+    display: flex;
+    background: var(--orange-500);
+    border-radius: 100px;
+    color: #fff;
+    box-sizing: border-box;
+    padding: 24px;
+    font-size: 22px;
+    align-items: center;
+    justify-content: space-between;
+}
+.mainBox .inner .topBox .priceButton button{
+    color: #fff;
+    font-size: 22px;
+}
+
+
+
+.Recommends-Box {
+    width: 1200px;
+    text-align: center;
+    padding: 60px;
+    margin: 0 auto;
+    font-weight: 600;
+    font-size: 42px;
+    color: var(--orange-500);
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.Recommends-list{
+    width: 1200px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 65px;
+    margin: 0 auto;
+    padding-bottom: 60px;
+    box-sizing: border-box;
+}
+
+.Recommends-item {
+    width: 250px;
+    height: 354px;
+    text-align: left;
+}
+
+.Recommends-item img {
+    width: 250px;
+    height: 276px;
+    margin-bottom: 10px;
+}
+
+.Recommends-item h2 {
+   font-size: 24px;
+   font-weight: 600;
+   margin-bottom: 20px;
+   color: var(--orange-500);
+   margin-bottom: 10px;
+}
+
+.Recommends-item .Recommends-price {
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--camel-500);
+}
