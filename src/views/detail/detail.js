@@ -71,7 +71,7 @@ async function updateProductInfo() {
   <p class="category">${product.category_id.name}</p>
   <p class="stars">
   <ion-icon name="star"></ion-icon>
-  <span class="num">${product.rating}</span>
+  <span class="num">${product.rate}</span>
   </p>
   </div>
   

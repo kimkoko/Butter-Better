@@ -1,6 +1,13 @@
 const { Book } = require('../db/models/bookModel');
 
 class BookService {
+    
+    async getBestSellers() {
+        const bestSellers = await Book.find({ isBestSeller: true })
+          .populate('category_id');
+        return bestSellers;
+      }
+
   async getBooks(page = 1, perPage = 24) {
     const skip = (page - 1) * perPage;
     const total = await Book.countDocuments({});

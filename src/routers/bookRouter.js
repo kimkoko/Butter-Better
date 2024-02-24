@@ -3,6 +3,17 @@ const router = express.Router();
 const bookService = require('../services/bookService');
 const asyncHandler = require('../utils/async-handler');
 
+// 홈페이지 베스트셀러
+router.get('/bestsellers', asyncHandler(async (req, res) => {
+  const bestSellers = await bookService.getBestSellers();
+  res.status(200).json({
+    status: 200,
+    msg: '베스트셀러 목록 조회 완료',
+    data: bestSellers,
+  });
+}));
+
+
 // 상품 목록 조회
 router.get('/', asyncHandler(async (req, res) => {
     const page = Number(req.query.page || 1);
