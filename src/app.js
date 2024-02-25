@@ -57,8 +57,9 @@ app.use(function (err, req, res, next) {
   //res.render('error');
 });
 
-//common 폴더
+//api 테스트 경로 설정
 
 app.use('/common', express.static(path.join(__dirname, 'views', 'common')));
+app.use('/src/views', express.static(path.join(__dirname, 'views')));
 
 module.exports = app;
