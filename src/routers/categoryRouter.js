@@ -1,7 +1,7 @@
 const { Router } = require('express');
-const asyncHandler = require('../utils/async-handeler');
 const categoryRouter = Router();
-const { Category } = require('../db/models/category-model');
+const { Category } = require('../db/models/categoryModel');
+const asyncHandler = require('../utils/async-handler');
 
 // adminAuth - 관리자 확인
 // const adminAuth = require('../middlewares/admin-auth')
