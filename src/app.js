@@ -40,7 +40,7 @@ app.use(viewRouter);
 app.use('/api/books', bookRouter);
 app.use('/api/users', userRouter);
 app.use('/api/category', categoryRouter);
-app.use('/api/order', orderRouter);
+app.use('/api/orders', orderRouter);
 
 // // catch 404 and forward to error handler
 // app.use(function (req, res, next) {
