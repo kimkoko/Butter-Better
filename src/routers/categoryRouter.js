@@ -1,5 +1,3 @@
-const Router = require('express');
-const categoryService = require('../services/categoryService');
 const { Router } = require('express');
 const asyncHandler = require('../utils/async-handeler');
 const categoryRouter = Router();
