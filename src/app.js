@@ -32,11 +32,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 
-// app.get('/', (req, res) => {
-//   res.send('Butter and Better');
-// });
+app.get('/', (req, res) => {
+  res.send('Butter and Better');
+});
 
-app.use(viewRouter);
 app.use('/api/books', bookRouter);
 app.use('/api/users', userRouter);
 app.use('/api/category', categoryRouter);
