@@ -92,7 +92,7 @@ router.get(
   })
 );
 
-router.put(
+router.patch(
   '/mypage/edit',
   loginRequired,
   asyncHandler(async (req, res, next) => {
