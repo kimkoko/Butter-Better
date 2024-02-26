@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { User } = require('../db/models/userModel');
-const hashPassword = require('../utils/hash-password');
+const { hashPassword, comparePassword } = require('../utils/hash-password');
 const asyncHandler = require('../utils/async-handler');
 const jwt = require('jsonwebtoken');
 const loginRequired = require('../middlewares/loginRequired');
@@ -23,7 +23,7 @@ router.post(
     if (user) {
       throw new Error('이미 가입된 회원입니다.');
     }
-    const hashedPassword = hashPassword(password);
+    const hashedPassword = await hashPassword(password);
     await User.create({
       name,
       password: hashedPassword,
@@ -46,7 +46,7 @@ router.post(
     const user = await User.findOne({ email });
     if (!user) throw new Error('이메일이 일치하지 않습니다.');
     const correctPassword = user.password;
-    if (correctPassword !== hashPassword(password)) {
+    if (!comparePassword(password, correctPassword)) {
       throw new Error('비밀번호가 일치하지 않습니다.');
     }
     let token = jwt.sign(
