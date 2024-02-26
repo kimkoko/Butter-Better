@@ -5,6 +5,7 @@ const { hashPassword, comparePassword } = require('../utils/hash-password');
 const asyncHandler = require('../utils/async-handler');
 const jwt = require('jsonwebtoken');
 const loginRequired = require('../middlewares/loginRequired');
+const adminOnly = require('../middlewares/adminOnly');
 const UserDTO = require('../utils/userValidator');
 
 router.get('/', async (req, res, next) => {
@@ -49,18 +50,33 @@ router.post(
     if (!comparePassword(password, correctPassword)) {
       throw new Error('비밀번호가 일치하지 않습니다.');
     }
-    let token = jwt.sign(
-      {
-        sub: user._id,
-        email: email,
-        name: user.name
-      },
-      process.env.SECRET_KEY
-    );
+    let token;
+    if (user.is_admin) {
+      token = jwt.sign(
+        {
+          sub: user._id,
+          email: email,
+          name: user.name,
+          role: "admin"
+        },
+        process.env.SECRET_KEY
+      );
+    } else {
+      token = jwt.sign(
+        {
+          sub: user._id,
+          email: email,
+          name: user.name
+        },
+        process.env.SECRET_KEY
+      );
+    }
+
     res.cookie('token', token);
     res.status(201).json({
       msg: '로그인 완료'
     });
+    
   })
 );
 

@@ -9,10 +9,6 @@ module.exports = (req, res, next) => {
         next();
 
     } catch (err) {
-        console.log(err);
-        res.status(400).json({
-            status: 400,
-            msg: "토큰 확인 불가."
-        });
+        next(err);
     }
 }
