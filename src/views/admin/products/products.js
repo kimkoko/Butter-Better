@@ -99,11 +99,14 @@ async function renderProductList() {
       const row = document.createElement('tr');
       row.classList.add('products-list');
       row.innerHTML = `
-      <td>${product.category_id.name}</td>
+      <td>${product.isBestSeller}</td>
       <td>${product.title}</td>
+      <td>${product.category_id.name}</td>
       <td class="content">${product.content}</td>
       <td>${product.price.toLocaleString()}</td>
       <td class="img">${product.img_url}</td>
+      <td>${product.quantity}</td>
+      <td>${product.rate}</td>
       <td>
       <button id="openModalbtn1" class="modal-edit-btn">수정</button>
       <button id="openModalbtn2" class="modal-delete-btn">삭제</button>
