@@ -29,14 +29,13 @@
 
 .product-item {
   width: 100%;
-  height: 354px;
   text-align: left;
   margin-top: 48px;
 }
 
 .product-item .img{
   width: 100%;
-  height: 276px;
+  height: 379px;
   border: 1px solid #c4c4c4;
   margin-bottom: 12px; 
 }
