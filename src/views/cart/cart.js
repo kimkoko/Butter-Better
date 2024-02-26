@@ -11,8 +11,9 @@ function loadCartItems() {
     
     cartItems.forEach(item => {
         const price = parseInt(item.price.replace(',',''));
+        // const price = parseInt(item.price);
         const quantity = parseInt(item.quantity); // 수량을 정수로 변환
-        const total_price = item.price * quantity; // 총 가격 계산
+        const total_price = price * quantity; // 총 가격 계산
         
         const row = document.createElement('tr');
         row.innerHTML = `
