@@ -3,11 +3,28 @@ const orderRouter = express.Router();
 const orderService = require('../services/orderService');
 const asyncHandler = require('express-async-handler');
 
+// Create a new order
+orderRouter.post(
+  '/',
+  asyncHandler(async (req, res, next) => {
+    const orderInfo = req.body;
+    const newOrder = await orderService.createOrder(orderInfo);
+
+    res.status(201).json({
+      status: 201,
+      message: '주문 등록 성공',
+      data: newOrder,
+    });
+  })
+);
+
+// TODO 작업 필요
 // Get orders by user Email
 orderRouter.get(
-  '/myorders',
+  '/user',
   asyncHandler(async (req, res, next) => {
-    // TODO 회원 - const { userEmail } = req.user;
+    //TODO 회원 loginRequired
+    const { userEmail } = req.user;
     const orders = await orderService.getOrdersByEmail(userEmail);
     res.status(200).json({
       status: 200,
@@ -19,9 +36,9 @@ orderRouter.get(
 
 // Get orders by order ID
 orderRouter.get(
-  '/:id',
+  '/:orderId',
   asyncHandler(async (req, res, next) => {
-    const orderId = req.params.id;
+    const { orderId } = req.params;
     const orders = await orderService.getOrdersByOrderId(orderId);
     res.status(200).json({
       status: 200,
@@ -31,11 +48,11 @@ orderRouter.get(
   })
 );
 
+// TODO 관리자 권한
 // * Admin-Only : Get all orders
 orderRouter.get(
   '/',
   asyncHandler(async (req, res, next) => {
-    // TODO adminAuth 관리자 검증
     const orders = await orderService.getOrderList();
     res.status(200).json({
       status: 200,
@@ -45,28 +62,13 @@ orderRouter.get(
   })
 );
 
-// Create a new order
-orderRouter.post(
-  '/',
-  asyncHandler(async (req, res, next) => {
-    const orderInfo = req.body;
-    const newOrder = await orderService.addOrder(orderInfo);
-
-    res.status(201).json({
-      status: 201,
-      message: '주문 등록 성공',
-      data: newOrder,
-    });
-  })
-);
-
-// TODO ID 가져오기
-// Update an order by Id
+// Update an order statys by orderId for Admin
 orderRouter.patch(
-  '/:id',
+  '/admin/:orderId',
   asyncHandler(async (req, res, next) => {
     const { orderId } = req.params;
-    await orderService.updateOrderById(orderId);
+    const { order_status } = req.body;
+    await orderService.updateOrderById(orderId, { order_status });
     res.status(201).json({
       status: 201,
       message: '주문 수정 성공',
@@ -74,7 +76,6 @@ orderRouter.patch(
   })
 );
 
-// TODO ID 가져오기
 // Delete an order by ID
 orderRouter.delete(
   '/:orderId',

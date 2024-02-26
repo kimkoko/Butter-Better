@@ -1,6 +1,5 @@
 const orderModel = require('../db/models/orderModel');
-const customError = require('../middlewares/customError');
-const { ObjectId } = require('mongoose').Types;
+const { filterResponseOrder } = require('../utils/utils');
 
 const orderModelInstance = orderModel;
 
@@ -11,44 +10,39 @@ class OrderService {
 
   async getOrderList() {
     const orders = await this.orderModel.findAll();
-    return orders;
+    if (!orders) {
+      throw new Error('주문 내역이 없습니다.');
+    }
+    return filterResponseOrder(orders);
   }
 
   async getOrdersByOrderId(orderId) {
     const orders = await this.orderModel.findByOrderId(orderId);
-    if (!orders.length) {
+    if (!orders) {
       throw new Error('해당 주문 번호의 주문 내역이 없습니다.');
     }
-    return orders;
+    return filterResponseOrder(orders);
   }
 
   async getOrdersByEmail(userEmail) {
-    const orders = await this.orderModel.findAll();
-    const orderByEmail = orders.filter((order) => order.email === userEmail);
-    if (!orderByEmail.length) {
+    const orders = await this.orderModel.findByEmail(userEmail);
+    if (!orders.length) {
       throw new Error('해당 사용자의 주문 내역이 없습니다.');
     }
-    return orderByEmail;
+    return filterResponseOrder(orders);
   }
 
-  async addOrder(toCreate) {
-    // if (!email) {
-    //   throw new Error('해당 사용자의 주문 내역이 없습니다.');
-    // }
-    // if (!products || !total_price || total_price === 0) {
-    //   throw new Error('주문 금액의 합이 0원 입니다.');
-    // }
+  async createOrder(toCreate) {
+    if (!toCreate.total_price || toCreate.total_price === 0) {
+      throw new Error('주문 금액의 합이 0원 입니다.');
+    }
 
-    const newId = new ObjectId(toCreate._id);
-    toCreate._id = newId;
-
-    const newOrder = await this.orderModel.create(toCreate);
-    const savedOrder = await newOrder.save(); // document 저장
-    return savedOrder;
+    const order = await this.orderModel.create(toCreate);
+    return order;
   }
 
-  async updateOrderById(orderId) {
-    const order = await this.orderModel.updateOrderById(orderId);
+  async updateOrderById(orderId, toUpdate) {
+    const order = await this.orderModel.updateOrderById(orderId, toUpdate);
     if (!order) {
       throw new Error('해당 ID의 주문 내역이 없습니다.');
     }
@@ -58,7 +52,7 @@ class OrderService {
   async deleteOrder(orderId) {
     const order = await this.orderModel.delete(orderId);
     if (!order) {
-      throw new customError('404', '해당 ID의 주문 내역이 없습니다.');
+      throw new Error('해당 ID의 주문 내역이 없습니다.');
     }
     return order;
   }

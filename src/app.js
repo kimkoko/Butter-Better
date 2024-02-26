@@ -32,15 +32,14 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 
-// app.get('/', (req, res) => {
-//   res.send('Butter and Better');
-// });
+app.get('/', (req, res) => {
+  res.send('Butter and Better');
+});
 
-app.use(viewRouter);
 app.use('/api/books', bookRouter);
 app.use('/api/users', userRouter);
 app.use('/api/category', categoryRouter);
-app.use('/api/order', orderRouter);
+app.use('/api/orders', orderRouter);
 
 // // catch 404 and forward to error handler
 // app.use(function (req, res, next) {
@@ -54,7 +53,6 @@ app.use(function (err, req, res, next) {
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
   res.status(err.status || 500);
-  //res.render('error');
 });
 
 //api 테스트 경로 설정
