@@ -1,56 +1,48 @@
-// home.js 파일
+import { API_HOST } from '../common/api.js';
 
-function getBestSellersList() {
-    // TODO: API를 호출해서 상품 목록을 가져와서 반환합니다.
-  
-    // 임시 BestSellers 데이터
-    return [
-        { id: 1, name: 'Best1', price: '10,000' },
-        { id: 2, name: 'Best2', price: '50,000' },
-        { id: 3, name: 'Best3', price: '30,000' },
-        { id: 4, name: 'Best4', price: '70,000' },
-        { id: 5, name: 'Best5', price: '20,000' },
-        { id: 6, name: 'Best6', price: '80,000' },
-        { id: 7, name: 'Best7', price: '25,000' },
-        { id: 8, name: 'Best8', price: '35,000' }
-    ];
-}
+async function getBestSellersList() {
+    try {
+        const response = await fetch(`${API_HOST}/api/books`);
+        if (!response.ok) {
+            throw new Error('상품 데이터를 가져올 수 없습니다.');
+        } else {
+            console.log("데이터 가져오기 성공!!");
+        }
 
-// function getBestSellersList() {
-//     // TODO: 실제 API를 호출하여 상품 목록을 가져오는 코드로 대체해야 합니다.
-//     // 현재는 JSON 데이터를 하드코딩하여 반환합니다.
-//     return [
-//         { id: 1, name: 'Product 1', price: '10,000' },
-//         { id: 2, name: 'Product 2', price: '20,000' },
-//         { id: 3, name: 'Product 3', price: '30,000' },
-//         // 나머지 상품 데이터 추가
-//     ];
-// }
+        const data = await response.json();
+        const products = data.data.books;
+        console.log(products);
+        
+        const maxProductsToShow = 8;
+        let productsShown = 0;
 
-function updateBestSellersList() {
-    const BestSellersListElement = document.querySelector('ul.Best-list');
-    if (!BestSellersListElement) {
-        alert('상품 목록을 표시할 요소를 찾을 수 없습니다.');
-        return;
-    }
-  
-    const BestSellersList = getBestSellersList(); // API 호출해서 상품 목록 가져오기 => 서버를 호출하니까 느림
-  
-    BestSellersListElement.innerHTML = '';
-    for (const Bestseller of BestSellersList) {
-        BestSellersListElement.innerHTML += `
-            <li class="Best-item">
-                <a href="#">
-                    <img src="https://picsum.photos/300/300" alt="제품 이미지">
-                    <h2>${Bestseller.name}</h2>
-                    <span class="Best-price">${Bestseller.price}</span>
-                </a>
-            </li>
-        `;
+        // 베스트셀러 리스트를 나타내는 엘리먼트를 찾음
+        const bestSellersListElement = document.getElementById('bestSellersList');
+
+        products.forEach(product => {
+            // 상품이 베스트셀러이고, 최대 표시 상품 개수에 도달하지 않았을 때만 처리
+            if (product.isBestSeller === true && productsShown < maxProductsToShow) {
+                const productItem = document.createElement('li');
+                productItem.classList.add('Best-item');
+                productItem.innerHTML = `
+                    <a href="/src/views/detail/detail.html?id=${product._id}">
+                    <img src="${product.img_url}" alt="제품 이미지">
+                    <h2>${product.title}</h2>
+                    <span class="price">${product.price.toLocaleString()} 원</span>
+                    </a>
+                `;
+
+                // 리스트에 상품 아이템 추가
+                bestSellersListElement.appendChild(productItem);
+            }
+        });
+
+    } catch (error) {
+        console.error('베스트셀러 상품 리스트를 가져오는 중 오류가 발생했습니다:', error);
     }
 }
-  
+
+// 페이지가 로드되면 베스트셀러 상품 리스트 렌더링
 window.addEventListener('load', () => {
-    // 페이지가 로드되면 베스트셀러 이름을 업데이트한다
-    updateBestSellersList();
+    getBestSellersList();
 });

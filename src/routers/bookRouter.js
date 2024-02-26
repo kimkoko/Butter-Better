@@ -43,7 +43,7 @@ router.get(
     }
     res.status(200).json({
       status: 200,
-      msg: '상품 상세 조회 성공',
+      msg: '상품 상세 조회 완료',
       data: book,
     });
   })
