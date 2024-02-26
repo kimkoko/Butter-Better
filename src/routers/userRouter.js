@@ -5,6 +5,7 @@ const hashPassword = require('../utils/hash-password');
 const asyncHandler = require('../utils/async-handler');
 const jwt = require('jsonwebtoken');
 const loginRequired = require('../middlewares/loginRequired');
+const UserDTO = require('../utils/userValidator');
 
 router.get('/', async (req, res, next) => {
   res.send('users page.');
@@ -14,8 +15,10 @@ router.get('/', async (req, res, next) => {
 router.post(
   '/register',
   asyncHandler(async (req, res, next) => {
-    const { name, password, email, phone } = req.body;
-    const { postcode, main, detail } = req.body.address;
+    const { name, password, email, phone, address } = req.body;
+    const userData = new UserDTO(name, password, email, phone, address);
+    UserDTO.validateUserData(userData);
+
     const user = await User.findOne({ email });
     if (user) {
       throw new Error('이미 가입된 회원입니다.');
@@ -26,7 +29,7 @@ router.post(
       password: hashedPassword,
       email,
       phone,
-      address: { postcode, main, detail },
+      address,
       deleted_at: null,
       is_admin: false,
     });
