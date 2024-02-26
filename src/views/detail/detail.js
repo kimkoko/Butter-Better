@@ -58,6 +58,36 @@ async function updateProductInfo() {
   `;
 }
 
+document.addEventListener("DOMContentLoaded", function() {
+  const cartButtons = document.querySelectorAll('.cartBtn');
+
+  cartButtons.forEach(button => {
+      button.addEventListener('click', function() {
+          const productInfo = getProductInfoFromDOM(button); // 버튼이 속한 상품 정보 가져오기
+          saveProductToLocalStorage(productInfo); // 상품 정보를 로컬 스토리지에 저장
+          alert('상품이 장바구니에 추가되었습니다!');
+      });
+  });
+});
+
+function getProductInfoFromDOM(button) {
+  const productContainer = button.closest('.topBox');
+  const productName = productContainer.querySelector('.bookName').textContent;
+  const productPrice = productContainer.querySelector('.price').textContent;
+  const productImg = productContainer.querySelector('.img img').getAttribute('src');
+  return {
+      name: productName,
+      price: productPrice,
+      img: productImg
+  };
+}
+
+function saveProductToLocalStorage(productInfo) {
+  let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+  cartItems.push(productInfo);
+  localStorage.setItem('cartItems', JSON.stringify(cartItems));
+}
+
 
 window.addEventListener('load', () => {
   // 페이지가 로드되면 카테고리 이름을 업데이트한다
