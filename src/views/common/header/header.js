@@ -1,21 +1,25 @@
 import { API_HOST } from '../../common/api.js';
 
+/* 카테고리 데이터 불러오기 */
+async function fetchCategory() {
+    try {
+        // API에서 카테고리 데이터 가져오기
+        const response = await fetch(`${API_HOST}/api/categories`);
+        const res = await response.json();
+        return res.data
+
+    } catch (error) {
+        console.error('카테고리를  렌더링하는 중 오류가 발생했습니다:', error);
+    }
+}
+
+
 /* 카테고리 데이터를 가져와서 메뉴를 렌더링하는 함수 */
 async function renderCategory() {
 
     try {
-        // API에서 카테고리 데이터 가져오기
-        const response = await fetch(`${API_HOST}/api/category`);
-        const res = await response.json();
-        console.log(res.data)
 
-        if (!response.ok) {
-            throw new Error('카테고리 데이터를 가져올 수 없습니다.');
-        } else {
-        console.log("성공이다!!")
-        }
-
-        const category = res.data
+        const category = await fetchCategory()
         const categoryListElement = document.getElementById('categoryList');
 
         
