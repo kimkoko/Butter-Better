@@ -28,7 +28,7 @@ async function getBestSellersList() {
                     <a href="/src/views/detail/detail.html?id=${product._id}">
                     <img src="${product.img_url}" alt="제품 이미지">
                     <h2>${product.title}</h2>
-                    <span class="Best-price">${product.price.toLocaleString()} 원</span>
+                    <span class="price">${product.price.toLocaleString()} 원</span>
                     </a>
                 `;
 
