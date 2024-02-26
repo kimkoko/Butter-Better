@@ -1,10 +1,10 @@
 document.addEventListener('DOMContentLoaded', function () {
   // 모달 열기 버튼과 모달 가져오기
-  var openModalBtn1 = document.getElementById("openModalbtn1");
-  var openModalBtn2 = document.getElementById("openModalbtn2");
-  var addBtn = document.getElementById("add-btn");
-  var modal1 = document.getElementById("myModal1");
-  var modal2 = document.getElementById("myModal2");
+  const openModalBtn1 = document.getElementById("openModalbtn1");
+  const openModalBtn2 = document.getElementById("openModalbtn2");
+  const addBtn = document.getElementById("add-btn");
+  const modal1 = document.getElementById("myModal1");
+  const modal2 = document.getElementById("myModal2");
   
   
   // 모달 열기 버튼에 이벤트 리스너 추가
@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function () {
     modal2.style.display = "none";
   })
   // 저장 버튼에 이벤트 리스너 추가
-  var saveBtn1 = document.getElementById("save-Btn1");
+  const saveBtn1 = document.getElementById("save-Btn1");
   saveBtn1.onclick = function () {
     // 저장 버튼을 눌렀을 때 할 작업을 추가
     alert("저장되었습니다.");
@@ -44,8 +44,8 @@ document.addEventListener('DOMContentLoaded', function () {
   };
   
   // 삭제 버튼과 취소 버튼에 이벤트 리스너 추가
-  var deleteBtn = document.getElementById("delete-Btn");
-  var backBtn = document.getElementById("back-btn");
+  const deleteBtn = document.getElementById("delete-Btn");
+  const backBtn = document.getElementById("back-btn");
   
   deleteBtn.onclick = function () {
     // 실제로 삭제하는 작업 추가

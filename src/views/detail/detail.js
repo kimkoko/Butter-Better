@@ -1,44 +1,15 @@
 import { API_HOST } from '../common/api.js';
 
-async function getProductInfo(id) {
-  // TODO: API를 호출해서 상품 상세 정보를 가져와서 반환합니다.
-  const apiUrl = `${API_HOST}/api/books/${id}`;
+async function getProductInfo(productId) {
+  try {
+    // API에서 상품 데이터 가져오기
+    const response = await fetch(`${API_HOST}/api/books/${productId}`);
+    const res = await response.json();
+    return res.data
 
-  // fetch를 사용하여 GET 요청 보내기
-  const productDetail = fetch(apiUrl)
-    .then(response => {
-      // 응답을 JSON 형식으로 파싱
-      return response.json();
-    })
-    .then(res => {
-      // 성공적으로 데이터를 받았을 때 처리
-      console.log(res.data);
-      return res.data;
-    })
-    .catch(error => {
-      // 오류 처리
-      console.error('API 호출 중 오류 발생:', error);
-    });
-
-
-  return productDetail
-
-  // 임시 Product 데이터
-  // return { 
-  //   _id: "1",
-  //   title: 'Burger',
-  //   category_id: {
-  //     _id:"10",
-  //     name:"test",
-  //     sort: 10,
-  //   },
-  //   price: "10,000",
-  //   content: "상품 설명",
-  //   img_url: "https://picsum.photos/300/300",
-  //   quantity: 3,
-  //   rating: 4,
-  //   __v: 0
-  // }
+  } catch (error) {
+      console.error('상품 리스트를 렌더링하는 중 오류가 발생했습니다:', error);
+  }
 }
 
 /* 책 정보 */
