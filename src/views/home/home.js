@@ -23,12 +23,12 @@ async function getBestSellersList() {
             // 상품이 베스트셀러이고, 최대 표시 상품 개수에 도달하지 않았을 때만 처리
             if (product.isBestSeller === true && productsShown < maxProductsToShow) {
                 const productItem = document.createElement('li');
-                productItem.classList.add('Best-list');
+                productItem.classList.add('Best-item');
                 productItem.innerHTML = `
-                    <a href="#">
-                        <img src="${product.img_url}" alt="제품 이미지">
-                        <h2>${product.title}</h2>
-                        <span class="Best-price">${product.price}</span>
+                    <a href="/src/views/detail/detail.html?id=${product._id}">
+                    <img src="${product.img_url}" alt="제품 이미지">
+                    <h2>${product.title}</h2>
+                    <span class="Best-price">${product.price.toLocaleString()} 원</span>
                     </a>
                 `;
 

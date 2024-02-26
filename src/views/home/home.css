@@ -112,42 +112,38 @@
 }
 
 .Best-list {
-    width: 1200px;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 66px;
-    margin: 0 auto;
-    padding-bottom: 60px;
-    box-sizing: border-box;
-  }
+  width: 1200px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-column-gap : 66px;
+  margin: 0 auto 60px;
+  padding: 0 60px;
+}
 
-  .Best-item {
-    width: 250px;
-    text-align: left;
-  }
-  
-  .Best-item img {
-    width: 250px;
-    height: 350px;
-    margin-bottom: 10px;
-  }
+.Best-item {
+  width: 100%;
+  text-align: left;
+  margin-top: 48px;
+}
 
-  .Best-item h2 {
-    font-size: 24px;
-    font-weight: 600;
-    margin-bottom: 20px;
-    color: var(--orange-500);
-    margin-bottom: 10px;
-  }
+.Best-item .img{
+  width: 250px;
+  height: 350px;
+  margin-bottom: 12px; 
+}
+.Best-item img {
+  width: 100%;
+ height: 350px;
+}
 
-  /* .Best-item .Best-name {
-    font-size: 24px;
-    font-weight: 600;
-    color: var(--orange-500);
-  } */
+.Best-item h2 {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 12px;
 
-  .Best-item .Best-price {
-    font-size: 18px;
-    font-weight: 500;
-    color: var(--camel-500);
-  }
+  color: var(--orange-500);
+}
+.Best-item .price {
+  font-size: 18px;
+  color:var(--camel-500);
+}
