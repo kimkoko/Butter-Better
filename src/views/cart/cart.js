@@ -1,12 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
     // 장바구니 아이템 로드
     loadCartItems();
-
-    // 수량 변경 시 이벤트 리스너 등록
-    const quantityInputs = document.querySelectorAll('.cartList table tbody .quantity input');
-    quantityInputs.forEach(input => {
-        input.addEventListener('input', updateTotalPrice);
-    });
 });
 
 function loadCartItems() {
@@ -14,8 +8,12 @@ function loadCartItems() {
     const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
     
     cartList.innerHTML = ''; // 기존 목록 초기화
-
+    
     cartItems.forEach(item => {
+        const price = parseInt(item.price.replace(',',''));
+        const quantity = parseInt(item.quantity); // 수량을 정수로 변환
+        const total_price = item.price * quantity; // 총 가격 계산
+        
         const row = document.createElement('tr');
         row.innerHTML = `
             <td><input type="checkbox" class="checkbox ck"></td>
@@ -25,26 +23,57 @@ function loadCartItems() {
                     <h3>${item.name}</h3>
                 </div>
             </td>
-            <td class="price">${item.price}</td>
-            <td class="quantity"><input type="text" value="${item.quantity}" min="1"></td>
-            <td class="total_price">${item.total}</td>
+            <td class="price">${price}</td>
+            <td class="quantity"><input type="text" value="${quantity}" min="1"></td>
+            <td class="total_price">${total_price}</td>
         `;
+        console.log(quantity);        
+        console.log(price);
         cartList.appendChild(row);
     });
 }
 
-function updateTotalPrice(event) {
-    const input = event.target;
-    const row = input.closest('tr');
-    const priceCell = row.querySelector('.cartList table tbody .price');
-    const totalPriceCell = row.querySelector('.cartList table tbody .total_price');
 
-    const price = parseFloat(priceCell.textContent.replace('₩', '').replace(',', ''));
-    const quantity = parseInt(input.value);
-    const totalPrice = price * quantity;
+// cartItems.forEach(item => {
+//     // 가격과 수량을 숫자로 변환하여 계산
+//     const price = parseFloat(item.price);
+//     const quantity = parseInt(item.quantity);
 
-    totalPriceCell.textContent = `₩${totalPrice}`;
-}
+//     // 유효성 검사
+//     if (!isNaN(price) && !isNaN(quantity)) {
+//         const total = price * quantity;
+//         // 총 가격을 표시하는 열 업데이트
+//         row.innerHTML = `
+//             <td><input type="checkbox" class="checkbox ck"></td>
+//             <td class="left">
+//                 <div class="book">
+//                     <p class="img"><img src="${item.img}" alt="상품 이미지"></p>
+//                     <h3>${item.name}</h3>
+//                 </div>
+//             </td>
+//             <td class="price">${item.price}</td>
+//             <td class="quantity"><input type="text" value="${item.quantity}" min="1"></td>
+//             <td class="total_price">${total}</td>
+//         `;
+//     } else {
+//         // 가격이나 수량이 유효하지 않은 경우 NaN 대신 다른 값을 표시할 수 있음
+//         row.innerHTML = `
+//             <td><input type="checkbox" class="checkbox ck"></td>
+//             <td class="left">
+//                 <div class="book">
+//                     <p class="img"><img src="${item.img}" alt="상품 이미지"></p>
+//                     <h3>${item.name}</h3>
+//                 </div>
+//             </td>
+//             <td class="price">${item.price}</td>
+//             <td class="quantity"><input type="text" value="${item.quantity}" min="1"></td>
+//             <td class="total_price">N/A</td>
+//         `;
+//     }
+// });
+
+
+
 
 document.addEventListener("DOMContentLoaded", function () {
     // 전체 선택 체크박스

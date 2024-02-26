@@ -58,6 +58,23 @@ async function updateProductInfo() {
   `;
 }
 
+// 수량 감소 버튼 클릭 시 이벤트 핸들러
+document.getElementById('decreaseQuantity').addEventListener('click', function() {
+  const quantityInput = document.querySelector('.quantityInput');
+  let quantity = parseInt(quantityInput.textContent);
+  if (quantity > 1) {
+      quantityInput.textContent = --quantity;
+  }
+});
+
+// 수량 증가 버튼 클릭 시 이벤트 핸들러
+document.getElementById('increaseQuantity').addEventListener('click', function() {
+  const quantityInput = document.querySelector('.quantityInput');
+  let quantity = parseInt(quantityInput.textContent);
+  quantityInput.textContent = ++quantity;
+});
+
+// ADD TO CART 장바구니 추가버튼 클릭시 아오오오오오오
 document.addEventListener("DOMContentLoaded", function() {
   const cartButtons = document.querySelectorAll('.cartBtn');
 
@@ -74,10 +91,12 @@ function getProductInfoFromDOM(button) {
   const productContainer = button.closest('.topBox');
   const productName = productContainer.querySelector('.bookName').textContent;
   const productPrice = productContainer.querySelector('.price').textContent;
+  const productQuantity = productContainer.querySelector('.quantityInput').textContent;
   const productImg = productContainer.querySelector('.img img').getAttribute('src');
   return {
       name: productName,
       price: productPrice,
+      quantity: productQuantity,
       img: productImg
   };
 }
