@@ -129,11 +129,12 @@
 .Best-item .img{
   width: 250px;
   height: 350px;
-  margin-bottom: 12px; 
+   
 }
 .Best-item img {
   width: 100%;
- height: 350px;
+  height: 350px;
+  margin-bottom: 12px;
 }
 
 .Best-item h2 {
