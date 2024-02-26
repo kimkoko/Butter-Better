@@ -89,7 +89,7 @@
     width: 1200px;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 65px;
+    gap: 66px;
     margin: 0 auto;
     padding-bottom: 60px;
     box-sizing: border-box;
@@ -97,14 +97,14 @@
 
 .Recommends-item {
     width: 250px;
-    height: 354px;
     text-align: left;
 }
 
 .Recommends-item img {
     width: 250px;
-    height: 276px;
+    height: 350px;
     margin-bottom: 10px;
+    border: 1px solid #c4c4c4;
 }
 
 .Recommends-item h2 {
