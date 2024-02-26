@@ -93,42 +93,58 @@ window.addEventListener('load', () => {
   updateProductInfo();
 })
 
-function getRecommendsList() {
+async function renderRecommendsList() {
   // TODO: API를 호출해서 상품 목록을 가져와서 반환합니다.
   
-  // 임시 Recommends 데이터
-  return [
-    { id: 1, name: 'Recommends1', price: '10,000' },
-    { id: 2, name: 'Team4 fighting', price: '50,000' },
-    { id: 3, name: '정신나가정신나가', price: '30,000' },
-    { id: 4, name: '정신들어와정신들어와', price: '70,000' },
-  ];
-}
+  try {
+    // API에서 상품 데이터 가져오기
+    const response = await fetch(`${API_HOST}/api/books`);
+    if (!response.ok) {
+        throw new Error('상품 데이터를 가져올 수 없습니다.');
+    } else {
+      console.log("성공이다!!")
+    }
 
-function updateRecommendsList() {
-  const RecommendsListElement = document.querySelector('ul.Recommends-list');
-  if (!RecommendsListElement) {
-    alert('상품 목록을 표시할 요소를 찾을 수 없습니다.');
-    return;
-  }
-  
-  const RecommendsList = getRecommendsList(); // API 호출해서 상품 목록 가져오기 => 서버를 호출하니까 느림
-  
-  RecommendsListElement.innerHTML = '';
-  for (const Recommends of RecommendsList) {
-    RecommendsListElement.innerHTML += `
-    <li class="Recommends-item">
-    <a href="#">
-    <img src="https://picsum.photos/300/300" alt="제품 이미지">
-    <h2>${Recommends.name}</h2>
-    <span class="Recommends-price">${Recommends.price}</span>
-    </a>
-    </li>
-    `;
-  }
+    const data = await response.json();
+    console.log(data)
+    let products = data.data.books
+    
+    const productListElement = document.getElementById('recommendsList');
+    
+    // 랜덤으로 4개만 선택
+    let selected = [];
+    for(let i = 0; i < 4; i++){
+      const randomIndex = Math.floor(Math.random() * products.length);
+      selected.push(products[randomIndex]);
+      products.splice(randomIndex, 1);
+    }
+    products = selected;
+
+    // 상품 데이터를 기반으로 상품 리스트 생성
+    products.forEach(product => {
+        // 상품 요소 생성
+        const productItem = document.createElement('li');
+        productItem.classList.add('Recommends-item');
+        productItem.innerHTML = `
+        <a href="/src/views/detail/detail.html?id=${product._id}">
+        <img src="${product.img_url}" alt="제품 이미지">
+        <h2 class="Recommends-name">${product.title}</h2>
+        <span class="Recommends-price">${product.price}</span>
+            </a>
+        `;
+
+        productListElement.appendChild(productItem);
+    });
+
+
+    
+
+} catch (error) {
+    console.error('상품 리스트를 렌더링하는 중 오류가 발생했습니다:', error);
+}
 }
 
 window.addEventListener('load', () => {
   // 페이지가 로드되면 베스트셀러 이름을 업데이트한다
-  updateRecommendsList();
+  renderRecommendsList();
 });
