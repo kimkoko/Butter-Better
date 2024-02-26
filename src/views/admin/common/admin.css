@@ -7,7 +7,9 @@ header nav {
 header nav .menus{
     display: inline-block;
 }
-
+header .inner{
+    width: 1700px !important;
+}
 
 /* table */
 .mainBox .inner{
