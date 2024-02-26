@@ -1,5 +1,4 @@
 const categoryModel = require('../db/models/categoryModel');
-// const
 
 class CategoryService {
   constructor(Category) {

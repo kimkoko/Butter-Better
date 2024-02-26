@@ -65,11 +65,11 @@ const OrderSchema = new Schema(
       required: true,
     },
     shipping_fee: {
-      type: String,
+      type: Number,
       required: true,
     },
     total_price: {
-      type: String,
+      type: Number,
       required: true,
     },
     order_status: {

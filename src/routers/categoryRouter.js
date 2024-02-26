@@ -20,7 +20,7 @@ categoryRouter.get(
   })
 );
 
-// 카테고리 추가 -> admin 한정
+// 카테고리 추가 *admin
 categoryRouter.post(
   '/',
   asyncHandler(async (req, res, next) => {
@@ -42,7 +42,7 @@ categoryRouter.post(
   })
 );
 
-// 카테고리 수정 -> admin 한정
+// 카테고리 수정 *admin
 categoryRouter.patch(
   '/:categoryId',
   asyncHandler(async (req, res, next) => {
@@ -72,7 +72,8 @@ categoryRouter.patch(
   })
 );
 
-// 카테고리 삭제 -> admin 한정
+// 카테고리 삭제 *admin
+// TODO admin 검증
 categoryRouter.delete(
   '/:categoryId',
   asyncHandler(async (req, res, next) => {

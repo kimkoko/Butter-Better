@@ -3,7 +3,7 @@ const orderRouter = express.Router();
 const orderService = require('../services/orderService');
 const asyncHandler = require('express-async-handler');
 
-// Create a new order
+// 주문 생성
 orderRouter.post(
   '/',
   asyncHandler(async (req, res, next) => {
@@ -18,8 +18,8 @@ orderRouter.post(
   })
 );
 
-// TODO 작업 필요
-// Get orders by user Email
+// 주문자 이메일(ID)로 주문 상세 조회
+// TODO 회원 로그인 검증
 orderRouter.get(
   '/user',
   asyncHandler(async (req, res, next) => {
@@ -34,7 +34,7 @@ orderRouter.get(
   })
 );
 
-// Get orders by order ID
+// 주문 ID로 주문 상세 조회
 orderRouter.get(
   '/:orderId',
   asyncHandler(async (req, res, next) => {
@@ -48,8 +48,8 @@ orderRouter.get(
   })
 );
 
-// TODO 관리자 권한
-// * Admin-Only : Get all orders
+// 주문 전체 목록 조회 *admin
+// TODO admin 검증
 orderRouter.get(
   '/',
   asyncHandler(async (req, res, next) => {
@@ -62,7 +62,8 @@ orderRouter.get(
   })
 );
 
-// Update an order statys by orderId for Admin
+// 주문 상태 업데이트 *admin
+// TODO admin 검증
 orderRouter.patch(
   '/admin/:orderId',
   asyncHandler(async (req, res, next) => {
@@ -76,7 +77,8 @@ orderRouter.patch(
   })
 );
 
-// Delete an order by ID
+// 주문 ID로 삭제 *admin
+// TODO admin 검증
 orderRouter.delete(
   '/:orderId',
   asyncHandler(async (req, res, next) => {
