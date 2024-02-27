@@ -73,6 +73,21 @@ router.get(
   })
 );
 
+// 회원 탈퇴 시 비밀번호 null, deleted_at 에 탈퇴 시간 작성
+// 탈퇴 해도 db에는 정보 남아있음
+router.patch(
+  '/delete',
+  loginRequired,
+  asyncHandler(async (req, res, next) => {
+    const deleteUser = await userService.deleteUser(req.user.sub);
+    res.status(200).json({
+      msg: "회원 탈퇴 처리 완료",
+      deleteUser
+    })
+  })
+)
+
+// 관리자만 db에서 유저 정보 삭제?
 router.delete(
   '/',
   loginRequired,
