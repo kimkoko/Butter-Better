@@ -1,4 +1,4 @@
-.mainBox .inner .topBox{
+ .mainBox .inner .topBox{
     box-sizing: border-box;
     padding: 80px 0;
     border-bottom: 1px solid var(--camel-500);
@@ -54,6 +54,7 @@
     font-size: 18px;
     line-height: 1.6;
     margin-bottom: 32px;
+    color: var(--mocha-500);
 }
 .mainBox .inner .topBox .price{    
     font-size: 24px;
@@ -62,15 +63,36 @@
 .mainBox .inner .topBox .quantityButton{
     width: 140px;
     display: inline-block;
-    font-weight: 600;
+    font-weight: 500;
     font-size: 20px;
     box-sizing: border-box;
-    padding: 24px 24px;
-    outline: none;
+    padding: 7px;
     border: 1px solid var(--orange-500);
     border-radius: 100px;
     text-align: center;
+}
+.mainBox .inner .topBox .quantityButton span{
+    font-size:24px ;
+    color: var(--orange-500);
+    display: inline-block;
+    margin: 0px 10px;
+    vertical-align: top;
+    margin-top: 10px;
+}
+h3.price{
+    font-size: 24px;
+}
+.mainBox .inner .topBox .quantityButton button{
+    font-size: 40px;
+    color: var(--orange-500);
+}
+
+.priceButton{
+    display: flex;
     margin-top: 32px;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 32px;
 }
 .mainBox .inner .topBox .priceButton .cartBtn{
     width: 490px;
@@ -78,11 +100,11 @@
     border-radius: 100px;
     color: #fff;
     box-sizing: border-box;
-    padding: 24px 24px;
+    padding: 17px 24px;
     font-weight: 500;
     font-size: 22px;
     text-align: center;
-    margin-bottom: 32px;
+    
 }
 /* 
 .mainBox .inner .topBox .priceButton button{
@@ -94,9 +116,10 @@
 
 .Recommends-Box {
     width: 1200px;
-    text-align: center;
+    text-align: center !important;
+    display: block !important;
     padding: 60px;
-    margin: 0 auto;
+    margin: 80px auto 0 !important;
     font-weight: 600;
     font-size: 42px;
     color: var(--orange-500);
@@ -135,6 +158,5 @@
 
 .Recommends-item .Recommends-price {
     font-size: 18px;
-    font-weight: 500;
     color: var(--camel-500);
 }
