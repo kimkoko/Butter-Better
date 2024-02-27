@@ -18,7 +18,8 @@ orderRouter.post(
   })
 );
 
-// 주문자 email로 주문 조회
+// TODO 작업 필요
+// Get orders by user Email
 orderRouter.get(
   '/user',
   asyncHandler(async (req, res, next) => {
@@ -47,7 +48,8 @@ orderRouter.get(
   })
 );
 
-// 주문 목록 조회 *admin
+// TODO 관리자 권한
+// * Admin-Only : Get all orders
 orderRouter.get(
   '/',
   // TODO 관리자 권한
@@ -61,7 +63,7 @@ orderRouter.get(
   })
 );
 
-// 주문 ID로 목록 조회 *관리자
+// Update an order statys by orderId for Admin
 orderRouter.patch(
   '/admin/:orderId',
   asyncHandler(async (req, res, next) => {
@@ -75,7 +77,7 @@ orderRouter.patch(
   })
 );
 
-// 주문 삭제 *admin
+// Delete an order by ID
 orderRouter.delete(
   '/:orderId',
   // TODO 관리자 권한

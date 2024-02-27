@@ -21,32 +21,7 @@ categoryRouter.get(
   })
 );
 
-categoryRouter.get(
-  '/',
-  asyncHandler(async (req, res, next) => {
-    const { name, index } = req.query;
-    const page = Number(req.query.page || 1);
-    const perPage = Number(req.query.perPage || 9);
-
-    const { books, total, totalPage } = await bookService.getCategoryProducts(
-      categoryId,
-      page,
-      perPage
-    );
-
-    res.status(200).json({
-      status: 200,
-      message: '카테고리별 상품 목록 조회 성공',
-      data: {
-        totalPage: totalPage,
-        bookCount: total,
-        books,
-      },
-    });
-  })
-);
-
-// 카테고리 추가 -> admin 한정
+// 카테고리 추가 *admin
 categoryRouter.post(
   '/',
   asyncHandler(async (req, res, next) => {
@@ -68,7 +43,7 @@ categoryRouter.post(
   })
 );
 
-// 카테고리 수정 -> admin 한정
+// 카테고리 수정 *admin
 categoryRouter.patch(
   '/:categoryId',
   asyncHandler(async (req, res, next) => {
@@ -98,7 +73,8 @@ categoryRouter.patch(
   })
 );
 
-// 카테고리 삭제 -> admin 한정
+// 카테고리 삭제 *admin
+// TODO admin 검증
 categoryRouter.delete(
   '/:categoryId',
   asyncHandler(async (req, res, next) => {

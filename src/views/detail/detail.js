@@ -1,44 +1,15 @@
 import { API_HOST } from '../common/api.js';
 
-async function getProductInfo(id) {
-  // TODO: API를 호출해서 상품 상세 정보를 가져와서 반환합니다.
-  const apiUrl = `${API_HOST}/api/books/${id}`;
+async function getProductInfo(productId) {
+  try {
+    // API에서 상품 데이터 가져오기
+    const response = await fetch(`${API_HOST}/api/books/${productId}`);
+    const res = await response.json();
+    return res.data
 
-  // fetch를 사용하여 GET 요청 보내기
-  const productDetail = fetch(apiUrl)
-    .then(response => {
-      // 응답을 JSON 형식으로 파싱
-      return response.json();
-    })
-    .then(res => {
-      // 성공적으로 데이터를 받았을 때 처리
-      console.log(res.data);
-      return res.data;
-    })
-    .catch(error => {
-      // 오류 처리
-      console.error('API 호출 중 오류 발생:', error);
-    });
-
-
-  return productDetail
-
-  // 임시 Product 데이터
-  // return { 
-  //   _id: "1",
-  //   title: 'Burger',
-  //   category_id: {
-  //     _id:"10",
-  //     name:"test",
-  //     sort: 10,
-  //   },
-  //   price: "10,000",
-  //   content: "상품 설명",
-  //   img_url: "https://picsum.photos/300/300",
-  //   quantity: 3,
-  //   rating: 4,
-  //   __v: 0
-  // }
+  } catch (error) {
+      console.error('상품 리스트를 렌더링하는 중 오류가 발생했습니다:', error);
+  }
 }
 
 /* 책 정보 */
@@ -71,7 +42,7 @@ async function updateProductInfo() {
   <p class="category">${product.category_id.name}</p>
   <p class="stars">
   <ion-icon name="star"></ion-icon>
-  <span class="num">${product.rating}</span>
+  <span class="num">${product.rate}</span>
   </p>
   </div>
   
@@ -87,48 +58,113 @@ async function updateProductInfo() {
   `;
 }
 
+// 수량 감소 버튼 클릭 시 이벤트 핸들러
+document.getElementById('decreaseQuantity').addEventListener('click', function() {
+  const quantityInput = document.querySelector('.quantityInput');
+  let quantity = parseInt(quantityInput.textContent);
+  if (quantity > 1) {
+      quantityInput.textContent = --quantity;
+  }
+});
+
+// 수량 증가 버튼 클릭 시 이벤트 핸들러
+document.getElementById('increaseQuantity').addEventListener('click', function() {
+  const quantityInput = document.querySelector('.quantityInput');
+  let quantity = parseInt(quantityInput.textContent);
+  quantityInput.textContent = ++quantity;
+});
+
+// ADD TO CART 장바구니 추가버튼 클릭시 아오오오오오오
+document.addEventListener("DOMContentLoaded", function() {
+  const cartButtons = document.querySelectorAll('.cartBtn');
+
+  cartButtons.forEach(button => {
+      button.addEventListener('click', function() {
+          const productInfo = getProductInfoFromDOM(button); // 버튼이 속한 상품 정보 가져오기
+          saveProductToLocalStorage(productInfo); // 상품 정보를 로컬 스토리지에 저장
+          alert('상품이 장바구니에 추가되었습니다!');
+      });
+  });
+});
+
+function getProductInfoFromDOM(button) {
+  const productContainer = button.closest('.topBox');
+  const productName = productContainer.querySelector('.bookName').textContent;
+  const productPrice = productContainer.querySelector('.price').textContent;
+  const productQuantity = productContainer.querySelector('.quantityInput').textContent;
+  const productImg = productContainer.querySelector('.img img').getAttribute('src');
+  return {
+      name: productName,
+      price: productPrice,
+      quantity: productQuantity,
+      img: productImg
+  };
+}
+
+function saveProductToLocalStorage(productInfo) {
+  let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+  cartItems.push(productInfo);
+  localStorage.setItem('cartItems', JSON.stringify(cartItems));
+}
+
 
 window.addEventListener('load', () => {
   // 페이지가 로드되면 카테고리 이름을 업데이트한다
   updateProductInfo();
 })
 
-function getRecommendsList() {
+async function renderRecommendsList() {
   // TODO: API를 호출해서 상품 목록을 가져와서 반환합니다.
   
-  // 임시 Recommends 데이터
-  return [
-    { id: 1, name: 'Recommends1', price: '10,000' },
-    { id: 2, name: 'Team4 fighting', price: '50,000' },
-    { id: 3, name: '정신나가정신나가', price: '30,000' },
-    { id: 4, name: '정신들어와정신들어와', price: '70,000' },
-  ];
-}
+  try {
+    // API에서 상품 데이터 가져오기
+    const response = await fetch(`${API_HOST}/api/books`);
+    if (!response.ok) {
+        throw new Error('상품 데이터를 가져올 수 없습니다.');
+    } else {
+      console.log("성공이다!!")
+    }
 
-function updateRecommendsList() {
-  const RecommendsListElement = document.querySelector('ul.Recommends-list');
-  if (!RecommendsListElement) {
-    alert('상품 목록을 표시할 요소를 찾을 수 없습니다.');
-    return;
-  }
-  
-  const RecommendsList = getRecommendsList(); // API 호출해서 상품 목록 가져오기 => 서버를 호출하니까 느림
-  
-  RecommendsListElement.innerHTML = '';
-  for (const Recommends of RecommendsList) {
-    RecommendsListElement.innerHTML += `
-    <li class="Recommends-item">
-    <a href="#">
-    <img src="https://picsum.photos/300/300" alt="제품 이미지">
-    <h2>${Recommends.name}</h2>
-    <span class="Recommends-price">${Recommends.price}</span>
-    </a>
-    </li>
-    `;
-  }
+    const data = await response.json();
+    console.log(data)
+    let products = data.data.books
+    
+    const productListElement = document.getElementById('recommendsList');
+    
+    // 랜덤으로 4개만 선택
+    let selected = [];
+    for(let i = 0; i < 4; i++){
+      const randomIndex = Math.floor(Math.random() * products.length);
+      selected.push(products[randomIndex]);
+      products.splice(randomIndex, 1);
+    }
+    products = selected;
+
+    // 상품 데이터를 기반으로 상품 리스트 생성
+    products.forEach(product => {
+        // 상품 요소 생성
+        const productItem = document.createElement('li');
+        productItem.classList.add('Recommends-item');
+        productItem.innerHTML = `
+        <a href="/src/views/detail/detail.html?id=${product._id}">
+        <img src="${product.img_url}" alt="제품 이미지">
+        <h2 class="Recommends-name">${product.title}</h2>
+        <span class="Recommends-price">${product.price}</span>
+            </a>
+        `;
+
+        productListElement.appendChild(productItem);
+    });
+
+
+    
+
+} catch (error) {
+    console.error('상품 리스트를 렌더링하는 중 오류가 발생했습니다:', error);
+}
 }
 
 window.addEventListener('load', () => {
   // 페이지가 로드되면 베스트셀러 이름을 업데이트한다
-  updateRecommendsList();
+  renderRecommendsList();
 });
