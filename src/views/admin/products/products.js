@@ -1,15 +1,3 @@
-// {
-//   '65dcasdlkfjwaioef': {
-//     title: '책 제목',
-//     content: '책 내용',
-//     ...
-//   },
-//   '12312312123asfwef': {
-//     title: '책 제목',
-//     content: '책 내용',
-//     ...
-//   }
-// }
 let products = {}
 
 // ID로 현재 가지고 있는 제품들 중에서 찾기
@@ -46,9 +34,50 @@ document.addEventListener('DOMContentLoaded', function () {
   // 저장 버튼에 이벤트 리스너 추가
   const saveBtn1 = document.getElementById("save-Btn1");
   saveBtn1.onclick = function () {
-    // 저장 버튼을 눌렀을 때 할 작업을 추가
-    alert("저장되었습니다.");
-    modal1.style.display = "none";
+    // 모달 내 입력 필드 값 가져오기
+    const bestSellerInput = document.querySelector("#myModal1 input[placeholder='베스트셀러']");
+    const titleInput = document.querySelector("#myModal1 input[placeholder='상품명']");
+    const contentInput = document.querySelector("#myModal1 input[placeholder='상품 설명']");
+    const categoryInput = document.querySelector("#myModal1 input[placeholder='카테고리']");
+    const priceInput = document.querySelector("#myModal1 input[placeholder='가격']");
+    const imageInput = document.querySelector("#myModal1 input[placeholder='이미지']");
+    const quantityInput = document.querySelector("#myModal1 input[placeholder='수량']");
+    const rateInput = document.querySelector("#myModal1 input[placeholder='별점']");
+    
+    // 새로운 제품 정보를 객체로 만들기
+    const newProduct = {
+      isBestSeller: bestSellerInput.value,
+      title: titleInput.value,
+      category_id: categoryInput.value,
+      content: contentInput.value,
+      price: priceInput.value,
+      img_url: imageInput.value,
+      quantity: quantityInput.value,
+      rate: rateInput.value,
+    };
+    
+    // API를 통해 새로운 제품 추가
+    fetch(`${API_HOST}/api/books/admin`, {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newProduct),
+    })
+    .then(response => {
+      if (response.ok) {
+        alert("새로운 상품이 추가되었습니다.");
+        modal1.style.display = "none";
+        renderProductList();
+      } else {
+
+        alert('상품 추가 실패');
+      }
+    })
+    .catch(error => {
+      console.error('상품 추가 중 오류가 발생했습니다:', error);
+      alert('상품 추가 실패');
+    });
   };
   
   // 삭제 버튼과 취소 버튼에 이벤트 리스너 추가
@@ -57,7 +86,10 @@ document.addEventListener('DOMContentLoaded', function () {
   
   deleteBtn.onclick = function () {
     // 실제로 삭제하는 작업 추가
-    
+    const productId = deleteBtn.dataset.productId;
+    console.log(deleteBtn);
+    if (!productId) return;
+    deleteProduct(productId)
     alert("상품이 삭제되었습니다.");
     modal2.style.display = "none";
   };
@@ -99,7 +131,7 @@ function connectModalEvent() {
     const imageInput = document.querySelector("#myModal1 input[placeholder='이미지']");
     const quantityInput = document.querySelector("#myModal1 input[placeholder='수량']");
     const rateInput = document.querySelector("#myModal1 input[placeholder='별점']");
-
+    
     
     bestSellerInput.value = product.isBestSeller;
     titleInput.value = product.title;
@@ -109,7 +141,7 @@ function connectModalEvent() {
     imageInput.value = product.img_url;
     quantityInput.value = product.quantity;
     rateInput.value = product.rate;
-  
+    
     // 현재 선택된 제품의 ID를 모달에 저장
   }
   modalDeleteBtns.forEach(function (modalDeleteBtn) {
@@ -117,13 +149,6 @@ function connectModalEvent() {
     
     modalDeleteBtn.addEventListener("click", function () {
       modal2.style.display = "flex";
-      
-      // TODO: 현재 제품을 삭제하는 작업 추가
-      // 그럴려면 현재 제품이 뭔지 알아야됨
-      // => 현재 제품을 ID로 알아내기
-      const productId = modalDeleteBtn.dataset.productId;
-      if (!productId) return;
-      deleteProduct(productId)
       
     });
   });
@@ -189,14 +214,9 @@ async function renderProductList() {
     data.data.books.forEach((book) => {
       products[book._id] = book;
     });
-    
-    console.log('원래 데이터: ', data.data.books)
-    console.log('오브젝트: ', products)
-    // 하나의 예시
-    // console.log('임의의 오브젝트 하나 찾아봄 ("65dc25d85d51b0a7ba1cc1a2"): ', products["65dc25d85d51b0a7ba1cc1a2"])
+
     const productListElement = document.getElementById('table-List');
-    // const categoryName = document.getElementById("categoryName")
-    // console.log(Object.entries(products))
+
     
     // 상품 데이터를 기반으로 상품 리스트 생성
     for (const [id, product] of Object.entries(products)) {
@@ -205,7 +225,7 @@ async function renderProductList() {
       row.innerHTML = `
       <td id="product-BestSeller">${product.isBestSeller}</td>
       <td id="product-title">${product.title}</td>
-      <td id="product-category">${product.category}</td>
+      <td id="product-category">${product.category_id.name}</td>
       <td class="content" id="product-content">${product.content}</td>
       <td id="product-price">${product.price.toLocaleString()}</td>
       <td class="img" id="product-img">${product.img_url}</td>
