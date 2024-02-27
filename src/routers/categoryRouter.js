@@ -23,19 +23,19 @@ categoryRouter.get(
 
 // 카테고리 별 목록 조회
 categoryRouter.get('/books/:categoryId', async (req, res, next) => {
-  const page = Number(req.query.page || 1);
-  const perPage = Number(req.query.perPage || 24);
+  const books = await bookService.getBooksByCategory(req.params.categoryId);
 
-  const { books, total, totalPage } = await bookService.getBooksByCategory(
-    req.params.categoryId,
-    page,
-    perPage
-  );
+  if (!books) {
+    return res.status(404).json({
+      status: 404,
+      message: '해당 카테고리의 상품을 찾을 수 없습니다.',
+    });
+  }
 
   res.status(200).json({
     status: 200,
     message: '카테고리 별 목록 조회 성공',
-    data: { totalPage: totalPage, productCount: total, books },
+    data: { books },
   });
 });
 

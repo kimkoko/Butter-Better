@@ -10,8 +10,6 @@ class CategoryService {
     return await this.Category.find({});
   }
 
-  async getCategoriesItems(books) {}
-
   // 카테고리 추가
   async addCategory(categoryInfo) {
     const { category } = categoryInfo;
