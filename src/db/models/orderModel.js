@@ -4,15 +4,11 @@ const Order = mongoose.model('orders', OrderSchema);
 
 class OrderModel {
   async findAll() {
-    return await Order.find({}).lean();
+    return await Order.find({}).sort({ createdAt: -1 });
   }
 
   async findByOrderId(orderId) {
     return await Order.findById(orderId).lean();
-  }
-
-  async findByEmail(userEmail) {
-    return await Order.find({ 'orderer.email': userEmail }).lean();
   }
 
   async create(toCreate) {
@@ -24,7 +20,7 @@ class OrderModel {
   }
 
   async delete(orderId) {
-    return await Order.findOneAndDelete(orderId).lean();
+    return await Order.findOneAndDelete(orderId);
   }
 }
 
