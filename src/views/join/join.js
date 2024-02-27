@@ -31,6 +31,7 @@ signForm.addEventListener("submit", async (event) => {
     const main = document.getElementById("main").value
     const detail = document.getElementById("detail").value
 
+
     try {
 
         const response = await fetch(`${API_HOST}/api/users/register`, {
@@ -53,9 +54,19 @@ signForm.addEventListener("submit", async (event) => {
         const res = await response.json()
 
         if(response.ok) {
-            messageDiv.classList.add = "show"
-            mainBox.classList.add = "remove"
+
+            // 회원가입 완료 영역 노출
+            messageDiv.style.display = "block"
+            mainBox.style.display = "none"
+
+            return
         } else {
+
+            // 회원가입 영역 노출
+            messageDiv.style.display = "none"
+            mainBox.style.display = "block"
+
+
             // 필수 필드 확인
             if (!name || !email || !password || !confirmPassword) {
                 window.alert("필수 항목을 입력하세요.")
@@ -71,9 +82,26 @@ signForm.addEventListener("submit", async (event) => {
                 }
                 return;
             }
+
+            // 비밀번호 8자 확인
+            if (password.length < 8) {
+                window.alert('비밀번호는 최소 8자 이상이어야 합니다.');
+
+                return
+            }
+
+
+            // 이메일 형식 검사
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                window.alert('유효한 이메일 형식이 아닙니다.');
+
+                return
+            }
+
+            
         }
 
-        
 
     }  catch (error) {
         console.log("회원가입 오류: ", error.message)
