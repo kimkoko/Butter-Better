@@ -9,7 +9,7 @@ const bookService = require('../services/bookService');
 
 // 카테고리 조회
 categoryRouter.get(
-  '/all',
+  '/',
   asyncHandler(async (req, res, next) => {
     const categories = await Category.find({});
 
