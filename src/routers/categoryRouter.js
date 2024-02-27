@@ -21,6 +21,10 @@ categoryRouter.get(
   })
 );
 
+categoryRouter.get('/', async (req, res, next) => {
+  console.log('카테고리 조회 확인용');
+});
+
 // 카테고리 추가 *admin
 categoryRouter.post(
   '/',
