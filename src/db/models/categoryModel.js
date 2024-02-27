@@ -1,4 +1,4 @@
 const mongoose = require('mongoose');
-const CategorySchema = require('../schemas/categorySchema')
+const CategorySchema = require('../schemas/categorySchema');
 
-exports.Category = mongoose.model('Category', CategorySchema)
+exports.Category = mongoose.model('Category', CategorySchema);

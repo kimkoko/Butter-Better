@@ -1,6 +1,10 @@
 const { Schema } = require('mongoose')
 
 const BookSchema = new Schema({
+    isBestSeller: {
+        type: Boolean,
+        default: false,
+    },
     title: {
         type: String,
         required: true,
@@ -11,7 +15,7 @@ const BookSchema = new Schema({
         required: true,
     },
     price: {
-        type: String,
+        type: Number,
         required: true,
     },
     content: {
@@ -19,17 +23,19 @@ const BookSchema = new Schema({
         required: true,
     },
     img_url: {
-        type: [String],
+        type: String,
         required: true,
     },
     quantity: {
         type: Number,
         required: true,
     },
-    rating: {
+    rate: {
         type: Number,
         enum: [1, 2, 3, 4, 5],
     },
+
 })
 
 module.exports = BookSchema
+
