@@ -23,7 +23,7 @@ const AddressSchema = new Schema(
   {
     postcode: { type: String, required: true },
     main: { type: String, required: true },
-    default: { type: String, required: true },
+    default: { type: String },
   },
   { _id: false }
 );
@@ -65,11 +65,11 @@ const OrderSchema = new Schema(
       required: true,
     },
     shipping_fee: {
-      type: String,
+      type: Number,
       required: true,
     },
     total_price: {
-      type: String,
+      type: Number,
       required: true,
     },
     order_status: {

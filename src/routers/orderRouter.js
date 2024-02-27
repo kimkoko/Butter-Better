@@ -3,7 +3,7 @@ const orderRouter = express.Router();
 const orderService = require('../services/orderService');
 const asyncHandler = require('express-async-handler');
 
-// Create a new order
+// 주문 생성
 orderRouter.post(
   '/',
   asyncHandler(async (req, res, next) => {
@@ -18,8 +18,7 @@ orderRouter.post(
   })
 );
 
-// TODO 작업 필요
-// Get orders by user Email
+// 주문자 email로 주문 조회
 orderRouter.get(
   '/user',
   asyncHandler(async (req, res, next) => {
@@ -34,7 +33,7 @@ orderRouter.get(
   })
 );
 
-// Get orders by order ID
+// 주문 ID로 주문 상세 조회
 orderRouter.get(
   '/:orderId',
   asyncHandler(async (req, res, next) => {
@@ -48,10 +47,10 @@ orderRouter.get(
   })
 );
 
-// TODO 관리자 권한
-// * Admin-Only : Get all orders
+// 주문 목록 조회 *admin
 orderRouter.get(
   '/',
+  // TODO 관리자 권한
   asyncHandler(async (req, res, next) => {
     const orders = await orderService.getOrderList();
     res.status(200).json({
@@ -62,7 +61,7 @@ orderRouter.get(
   })
 );
 
-// Update an order statys by orderId for Admin
+// 주문 ID로 목록 조회 *관리자
 orderRouter.patch(
   '/admin/:orderId',
   asyncHandler(async (req, res, next) => {
@@ -76,9 +75,10 @@ orderRouter.patch(
   })
 );
 
-// Delete an order by ID
+// 주문 삭제 *admin
 orderRouter.delete(
   '/:orderId',
+  // TODO 관리자 권한
   asyncHandler(async (req, res, next) => {
     const { orderId } = req.params;
     await orderService.deleteOrder(orderId);

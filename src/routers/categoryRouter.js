@@ -1,6 +1,7 @@
 const { Router } = require('express');
 const categoryRouter = Router();
 const { Category } = require('../db/models/categoryModel');
+const bookService = require('../services/bookService');
 const asyncHandler = require('../utils/async-handler');
 
 // adminAuth - 관리자 확인
@@ -8,7 +9,7 @@ const asyncHandler = require('../utils/async-handler');
 
 // 카테고리 조회
 categoryRouter.get(
-  '/',
+  '/all',
   asyncHandler(async (req, res, next) => {
     const categories = await Category.find({});
 
@@ -16,6 +17,31 @@ categoryRouter.get(
       status: 200,
       message: '전체 카테고리 목록 조회 성공',
       data: categories,
+    });
+  })
+);
+
+categoryRouter.get(
+  '/',
+  asyncHandler(async (req, res, next) => {
+    const { name, index } = req.query;
+    const page = Number(req.query.page || 1);
+    const perPage = Number(req.query.perPage || 9);
+
+    const { books, total, totalPage } = await bookService.getCategoryProducts(
+      categoryId,
+      page,
+      perPage
+    );
+
+    res.status(200).json({
+      status: 200,
+      message: '카테고리별 상품 목록 조회 성공',
+      data: {
+        totalPage: totalPage,
+        bookCount: total,
+        books,
+      },
     });
   })
 );

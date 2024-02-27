@@ -38,7 +38,7 @@ app.get('/', (req, res) => {
 
 app.use('/api/books', bookRouter);
 app.use('/api/users', userRouter);
-app.use('/api/category', categoryRouter);
+app.use('/api/categories', categoryRouter);
 app.use('/api/orders', orderRouter);
 
 // // catch 404 and forward to error handler
@@ -59,6 +59,5 @@ app.use(function (err, req, res, next) {
 
 app.use('/common', express.static(path.join(__dirname, 'views', 'common')));
 app.use('/src/views', express.static(path.join(__dirname, 'views')));
-
 
 module.exports = app;
