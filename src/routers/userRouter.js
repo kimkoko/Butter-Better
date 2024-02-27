@@ -96,7 +96,14 @@ router.patch(
   '/mypage/edit',
   loginRequired,
   asyncHandler(async (req, res, next) => {
-    const updateUser = await User.findByIdAndUpdate(req.user.sub, req.body, { new: true });
+    const { password, ...userData } = req.body;
+    let hashedPassword;
+    if (password) {
+      hashedPassword = await hashPassword(password);
+    }
+    let updateData = { ... userData };
+    if (hashedPassword) updateData.password = hashedPassword;
+    const updateUser = await User.findByIdAndUpdate(req.user.sub, updateData , { new: true });
     res.status(200).json({
       msg: "회원 정보 수정 완료",
       updateUser

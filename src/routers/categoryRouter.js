@@ -2,6 +2,7 @@ const { Router } = require('express');
 const categoryRouter = Router();
 const { Category } = require('../db/models/categoryModel');
 const asyncHandler = require('../utils/async-handler');
+const bookService = require('../services/bookService');
 
 // adminAuth - 관리자 확인
 // const adminAuth = require('../middlewares/admin-auth')
@@ -19,6 +20,24 @@ categoryRouter.get(
     });
   })
 );
+
+// 카테고리 별 목록 조회
+categoryRouter.get('/books/:categoryId', async (req, res, next) => {
+  const books = await bookService.getBooksByCategory(req.params.categoryId);
+
+  if (!books) {
+    return res.status(404).json({
+      status: 404,
+      message: '해당 카테고리의 상품을 찾을 수 없습니다.',
+    });
+  }
+
+  res.status(200).json({
+    status: 200,
+    message: '카테고리 별 목록 조회 성공',
+    data: { books },
+  });
+});
 
 // 카테고리 추가 *admin
 categoryRouter.post(
@@ -64,8 +83,8 @@ categoryRouter.patch(
 
     const updateCategory = await Category.findOneAndUpdate(category, toUpdate);
 
-    res.status(200).json({
-      status: 200,
+    res.status(201).json({
+      status: 201,
       message: '카테고리 수정 완료',
       data: updateCategory,
     });
