@@ -78,26 +78,9 @@ document.addEventListener('DOMContentLoaded', function () {
       console.error('상품 추가 중 오류가 발생했습니다:', error);
       alert('상품 추가 실패');
     });
-  };
-  
-  // 삭제 버튼과 취소 버튼에 이벤트 리스너 추가
-  const deleteBtn = document.getElementById("delete-Btn");
-  const backBtn = document.getElementById("back-btn");
-  
-  deleteBtn.onclick = function () {
-    // 실제로 삭제하는 작업 추가
-    const productId = deleteBtn.dataset.productId;
-    console.log(deleteBtn);
-    if (!productId) return;
-    deleteProduct(productId)
-    alert("상품이 삭제되었습니다.");
-    modal2.style.display = "none";
-  };
-  
-  backBtn.onclick = function () {
-    modal2.style.display = "none";
-  };
+  }; 
 });
+
 
 function connectModalEvent() {
   // 모달 열기 버튼과 모달 가져오기
@@ -106,7 +89,7 @@ function connectModalEvent() {
   const modal1 = document.getElementById("myModal1");
   const modal2 = document.getElementById("myModal2");
   
-  // 모달 열기 버튼에 이벤트 리스너 추가
+  //추가버튼
   modalEditBtns.forEach(function (modalEditBtn) {
     modalEditBtn.addEventListener("click", function () {
       var pargraph = modal1.querySelector("p");
@@ -135,7 +118,7 @@ function connectModalEvent() {
     
     bestSellerInput.value = product.isBestSeller;
     titleInput.value = product.title;
-    categoryInput.value = product.category;
+    categoryInput.value = product.category_id.name;
     contentInput.value = product.content;
     priceInput.value = product.price;
     imageInput.value = product.img_url;
@@ -144,12 +127,16 @@ function connectModalEvent() {
     
     // 현재 선택된 제품의 ID를 모달에 저장
   }
+
+//삭제버튼
   modalDeleteBtns.forEach(function (modalDeleteBtn) {
-    // data-image-url="ImageURL" data-product-id="asdf"
-    
     modalDeleteBtn.addEventListener("click", function () {
       modal2.style.display = "flex";
-      
+
+      const productId = modalDeleteBtn.dataset.productId;
+      if (!productId) return;
+      const product = findProductById(productId);
+      deleteProduct(product)
     });
   });
 }
@@ -169,7 +156,6 @@ function editProduct() {
 }
 
 function deleteProduct(productId) {
-  
   // 삭제요청 API
   fetch(`${API_HOST}/api/books/admin/${productId}`, {
     method: 'delete',
