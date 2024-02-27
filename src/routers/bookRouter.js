@@ -1,10 +1,10 @@
 const express = require('express');
-const router = express.Router();
+const bookRouter = express.Router();
 const bookService = require('../services/bookService');
 const asyncHandler = require('../utils/async-handler');
 
 // 홈페이지 베스트셀러
-router.get(
+bookRouter.get(
   '/bestsellers',
   asyncHandler(async (req, res) => {
     const bestSellers = await bookService.getBestSellers();
@@ -17,7 +17,7 @@ router.get(
 );
 
 // 상품 목록 조회
-router.get(
+bookRouter.get(
   '/',
   asyncHandler(async (req, res) => {
     const page = Number(req.query.page || 1);
@@ -32,7 +32,7 @@ router.get(
 );
 
 // 상품 상세 조회
-router.get(
+bookRouter.get(
   '/:id',
   asyncHandler(async (req, res) => {
     const book = await bookService.getBook(req.params.id);
@@ -50,7 +50,7 @@ router.get(
 );
 
 // 상품 추가 *admin
-router.post(
+bookRouter.post(
   '/admin',
   asyncHandler(async (req, res) => {
     const newBook = await bookService.addBook(req.body);
@@ -63,7 +63,7 @@ router.post(
 );
 
 // 상품 삭제 *admin
-router.delete(
+bookRouter.delete(
   '/admin/:id',
   asyncHandler(async (req, res) => {
     const deletedBook = await bookService.deleteBook(req.params.id);
@@ -76,7 +76,7 @@ router.delete(
 );
 
 // 상품 수정 *admin
-router.patch(
+bookRouter.patch(
   '/admin/:id',
   asyncHandler(async (req, res) => {
     const updatedBook = await bookService.updateBook(req.params.id, req.body);
@@ -88,4 +88,4 @@ router.patch(
   })
 );
 
-module.exports = router;
+module.exports = bookRouter;
