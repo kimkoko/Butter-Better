@@ -85,7 +85,24 @@ input[type="number"]::-webkit-inner-spin-button {
     border-radius: 4px;
     color: #fff;
 }
-
+.postalCode{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.postalCode input{
+    width: 429px  !important;
+    margin-top: 0px !important;
+}
+.postalCode button{
+    box-sizing: border-box;
+    padding: 13px 24px;
+    font-size: 18px;
+    color: var(--orange-500);
+    border-radius: 4px;
+    margin-left: 10px;
+    border: 1px solid var(--camel-500);
+}
 
 /* 주문 목록 */
 .checkout{
