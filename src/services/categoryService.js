@@ -1,56 +1,59 @@
-const categoryModel = require('../db/models/categoryModel')
-// const 
+const categoryModel = require('../db/models/categoryModel');
 
 class CategoryService {
+  constructor(Category) {
+    this.Category = Category;
+  }
 
-    constructor(categoryModel) {
-        this.categoryModel = categoryModel
+  // 카테고리 조회
+  async getCategories() {
+    return await this.Category.find({});
+  }
+
+  // 카테고리 추가
+  async addCategory(categoryInfo) {
+    const { category } = categoryInfo;
+
+    // 중복 확인
+    const categoryName = await this.Category.findOne({ name: category });
+    if (categoryName) {
+      throw new Error('이미 있는 카테고리입니다.');
     }
- // 카테고리 조회
-    async getCategories () {
-        return await this.categoryModel.findAll()
+    // db 저장
+    return await this.Category.create(categoryInfo);
+  }
+
+  // 카테고리 수정 shortId 불가능하면 수정해야 될듯 합니다.
+  async setCategory(categoryId, toUpdate) {
+    const category = await this.Category.findById({ id: categoryId });
+    if (!category) {
+      throw new Error('해당 카테고리의 id가 없습니다.');
     }
-
- // 카테고리 추가
-    async addCategory(categoryInfo) {
-        const { category } = categoryInfo;
-
-        // 중복 확인
-        const categoryName = await this.categoryModel.findByCategory(category)
-        if (categoryName) {
-            throw new Error('이미 있는 카테고리입니다.')
-        }
-        // db 저장
-        return await this.categoryModel.create(categoryInfo)
-    }
-
- // 카테고리 수정
-    async setCategory(categoryId, toUpdate) {
-        let category = await this.categoryModel.findById(categoryId)
-        if (!category) {
-            throw new Error('해당 카테고리의 id가 없습니다.')
-        }
-        // 중복 확인
-        const categoryName = await this.categoryModel.findByCategory(toUpdate.category)
-        if (categoryName) {
-            throw new Error ('이미 있는 카테고리입니다.')
-        }
-
-        return await this.categoryModel.update({
-            categoryId,
-            update: toUpdate,
-        })
+    // 중복 확인
+    const categoryName = await this.Category.findOne({
+      name: toUpdate.category,
+    });
+    if (categoryName) {
+      throw new Error('이미 있는 카테고리입니다.');
     }
 
- // 카테고리 조회
-    async deleteCategory(categoryId) {
-        let category = await categoryModel.delete(categoryId);
-        if (!category) {
-            throw new Error('해당 카테고리의 id가 없습니다.')
-        }
+    return await this.Category.findOneAndUpdate(
+      { id: categoryId },
+      { toUpdate }
+    );
+  }
 
-        return category
+  // 카테고리 삭제
+  async deleteCategory(categoryId) {
+    let category = await Category.findOneAndDelete({ id: categoryId });
+    if (!category) {
+      throw new Error('해당 카테고리의 id가 없습니다.');
     }
+
+    return category;
+  }
 }
 
-module.exports = CategoryService
+const categoryService = new CategoryService(Category);
+
+module.exports = CategoryService;

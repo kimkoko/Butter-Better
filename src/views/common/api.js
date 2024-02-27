@@ -1,0 +1,1 @@
+export const API_HOST = 'http://localhost:3000'; // API 서버 주소
