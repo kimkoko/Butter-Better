@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>관리자</title>
-
+    
     <!-- 아이콘 -->
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-
+    
     <!-- custom -->
     <link rel="stylesheet" href="../../common/css/reset.css">
     <link rel="stylesheet" href="../common/admin.css">
@@ -17,15 +16,14 @@
     <link rel="stylesheet" href="./products.css">
     <!-- JavaScript -->
     <script type="module" src="./products.js"></script>
-
+    
     <script src="../common/loadHTML.js"></script>
-
+    
 </head>
-
 <body>
     <header data-load-html="../common/header/header.html">
     </header>
-
+    
     <div class="mainBox">
         <div class="inner">
             <div class="titleBox">
@@ -47,7 +45,7 @@
                         <col style="width:5%">
                         <col style="width:15%">
                     </colgroup>
-
+                    
                     <thead class="head">
                         <th>베스트셀러</th>
                         <th>상품명</th>
@@ -59,8 +57,8 @@
                         <th>별점</th>
                         <th>수정/삭제</th>
                     </thead>
-
-
+                    
+                    
                     <tr id="products-list" class="products-list">
                         <!-- <td>카테고리</td>
                         <td>상품명</td>
@@ -96,7 +94,7 @@
             </div>
         </div>
     </div>
-    <div class="modal-container" id="myModal2">
+    <div class="modal-container" id="myModal2"> 
         <div class="modal">
             <div class="modal-content">
                 <ul>
@@ -105,7 +103,7 @@
                             <img src="/src/views/admin/common/image/Exclamation Point.png">
                         </a>
                     </li>
-                </ul>
+                </ul>    
                 <p>삭제하시겠습니까?</p>
                 <div class="button-container">
                     <button id="delete-Btn">삭제</button>
@@ -114,7 +112,6 @@
             </div>
         </div>
     </div>
-
+    
 </body>
-
 </html>
