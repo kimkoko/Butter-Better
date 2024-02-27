@@ -122,3 +122,28 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
+// 모달 열기
+const quantityButton = document.querySelector('.quantityBtn');
+const quantityModal = document.getElementById('quantityModal');
+
+    quantityButton.addEventListener('click', function() {
+    quantityModal.style.display = 'block';
+});
+
+// 모달 닫기
+const closeButton = document.querySelector('.close');
+
+closeButton.addEventListener('click', function() {
+    quantityModal.style.display = 'none';
+});
+
+// 모달 외부 클릭 시 닫기
+window.addEventListener('click', function(event) {
+    if (event.target === quantityModal) {
+        quantityModal.style.display = 'none';
+    }
+});
+
+
+
+
