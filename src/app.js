@@ -38,7 +38,7 @@ app.get('/', (req, res) => {
 
 app.use('/api/books', bookRouter);
 app.use('/api/users', userRouter);
-app.use('/api/category', categoryRouter);
+app.use('/api/categories', categoryRouter);
 app.use('/api/orders', orderRouter);
 
 // // catch 404 and forward to error handler
@@ -51,14 +51,13 @@ app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
-
   res.status(err.status || 500);
+  res.json(err.message);
 });
 
 //api 테스트 경로 설정
 
 app.use('/common', express.static(path.join(__dirname, 'views', 'common')));
 app.use('/src/views', express.static(path.join(__dirname, 'views')));
-
 
 module.exports = app;

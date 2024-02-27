@@ -1,12 +1,12 @@
 const { Book } = require('../db/models/bookModel');
 
 class BookService {
-    
-    async getBestSellers() {
-        const bestSellers = await Book.find({ isBestSeller: true })
-          .populate('category_id');
-        return bestSellers;
-      }
+  async getBestSellers() {
+    const bestSellers = await Book.find({ isBestSeller: true }).populate(
+      'category_id'
+    );
+    return bestSellers;
+  }
 
   async getBooks(page = 1, perPage = 24) {
     const skip = (page - 1) * perPage;
@@ -39,7 +39,9 @@ class BookService {
   }
 
   async updateBook(id, updateData) {
-    const updatedBook = await Book.findByIdAndUpdate(id, updateData, { new: true });
+    const updatedBook = await Book.findByIdAndUpdate(id, updateData, {
+      new: true,
+    });
     return updatedBook;
   }
 }

@@ -1,77 +1,113 @@
-function getCategory(id) {
-  // TODO: API를 호출해서 카테고리 정보를 가져와서 반환합니다.
-  
-  return {
-    name: 'American',
+import { API_HOST } from '../common/api.js';
+
+
+/* 카테고리 데이터 개별 불러오기 */
+async function fetchCategoryId(_id) {
+  // try {
+      // // API에서 카테고리 데이터 가져오기
+      // const response = await fetch(`${API_HOST}/api/categories/${categoryId}`);
+      // const res = await response.json();
+      // // return res.data
+      
+      return {
+        _id: ObjectId("65d6dec19d642e173175f1b2"),
+        name: "American",
+        sort: 0
+      }
+
+  // } catch (error) {
+  //     console.error('카테고리를  렌더링하는 중 오류가 발생했습니다:', error);
+  // }
+}
+
+/* 카테고리 이름 렌더링 함수 */
+async function renderCategoryName() {
+
+  try {
+
+      
+      
+
+      // URL에서 카테고리 ID 가져오기
+      function getCategoryIdFromUrl() {
+        const url = new URL(window.location.href);
+        return url.searchParams.get('id');
+      }
+
+      const categoryId = getCategoryIdFromUrl();
+      console.log('categoryId: ', categoryId);
+
+      //상품 id를 통해 상품 정보를 가져온다
+      const category = await fetchCategoryId(_id);
+      console.log(category)
+      
+      
+
+      categoryName.innerText = `${category.name}`
+
+
+  } catch (error) {
+      console.error('카테고리를  렌더링하는 중 오류가 발생했습니다:', error);
   }
 }
 
-// ID를 URL에서 가져오는 함수
-function getCategoryIdFromUrl() {
-  const url = new URL(window.location.href);
-  return Number(url.searchParams.get('id'));
-}
 
-// URL = /products/category.html?id=1
-// URL: /category/1/products
 
-const categoryId = getCategoryIdFromUrl();
-console.log('categoryId: ', categoryId);
-let category = getCategory(categoryId);
+/* 상품 데이터를 가져와서 상품 리스트를 렌더링하는 함수 */
+async function renderProductList() {
 
-function updateCategoryTitle() {
-  // 카테고리 이름 부분의 section의 h1 태그를 찾기
-  const categoryTitleH1 = document.querySelector('section.category h1');
-  // 못 찾았으면 함수를 끝냄
-  if (!categoryTitleH1) {
-    alert('카테고리 이름을 표시할 요소를 찾을 수 없습니다.')
-    return
-  }
-  
-  // h1태그 안의 내용을 카테고리 이름으로 바꾼다
-  categoryTitleH1.innerText = category.name;
-}
+  try {
+      // API에서 상품 데이터 가져오기
+      const response = await fetch(`${API_HOST}/api/books`);
+      const res = await response.json();
+      console.log(res.data)
 
-function getProductList() {
-  // TODO: API를 호출해서 상품 목록을 가져와서 반환합니다.
-  
-  // 임시 Product 데이터
-  return [
-    { id: 1, name: 'Burger', price: 10000 },
-    { id: 2, name: 'Fries', price: 50000 },
-    { id: 3, name: 'Cola', price: 30000 },
-    { id: 4, name: 'Milkshake', price: 70000},
-    { id: 5, name: 'Ice Cream', price: 100000},
-    { id: 6, name: 'Hot Dog', price: 200000},
-  ]
-}
+      if (!response.ok) {
+          throw new Error('상품 데이터를 가져올 수 없습니다.');
+      } else {
+        console.log("성공이다!!")
+      }
 
-function updateProductList() {
-  const productListElement = document.querySelector('ul.product-list');
-  if (!productListElement) {
-    alert('상품 목록을 표시할 요소를 찾을 수 없습니다.')
-    return
-  }
-  const productList = getProductList(); // API 호출해서 상품 목록 가져오기 => 서버를 호출하니까 느림
-  
-  productListElement.innerHTML = '';
-  for (let i = 0; i <= 16 && i < productList.length; i++) {
-    const product = productList[i];
-    productListElement.innerHTML += `
-    <li class="product-item">
-    <a href="#">
-    <img src="https://picsum.photos/300/300" alt="제품 이미지">
-    <h2>${product.name}</h2>
-    <span class="price">${product.price.toLocaleString()}</span>
-    </a>
-    </li>
-    `;
+      const products = res.data.books
+      const totalNum = res.data.productCount
+      // const categoryProducts = products.filter(products => products.category_id === category_id)
+
+      const productListElement = document.getElementById('productList');
+      const totalText = document.getElementById("totalCount")
+      
+
+      // 상품 데이터를 기반으로 상품 리스트 생성
+      products.slice(0, 16).forEach(product => {
+          // 상품 요소 생성
+          const productItem = document.createElement('li');
+          productItem.classList.add('product-item');
+          productItem.innerHTML = `
+              <a href="/src/views/detail/detail.html?id=${product._id}">
+                  <p class="img"><img src="${product.img_url}" alt="제품 이미지"></p>
+                  <h2>${product.title}</h2>
+                  <span class="price">${product.price.toLocaleString()} 원</span>
+              </a>
+          `;
+
+          // 상품 리스트에 상품 추가
+          productListElement.appendChild(productItem);
+      });
+
+
+      // 리스트에 뿌려지는 아이템 갯수
+      totalText.innerText = `${totalNum} products`
+
+
+      // 
+
+  } catch (error) {
+      console.error('상품 리스트를 렌더링하는 중 오류가 발생했습니다:', error);
   }
 }
 
+// 페이지가 로드되면 상품 리스트 렌더링
 window.addEventListener('load', () => {
-  // 페이지가 로드되면 카테고리 이름을 업데이트한다
-  updateCategoryTitle();
-  updateProductList();
-})
-
+  fetchCategoryId()
+  renderCategoryName();
+  renderProductList();
+}); 

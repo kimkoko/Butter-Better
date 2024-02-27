@@ -61,7 +61,7 @@
     color: var(--orange-500);
 }
 .cartList table tr .quantity input{
-    width: 49px;
+    width: 60px;
     height: 49px;
     color: var(--orange-500);
     border: 1px solid var(--mocha-500);
