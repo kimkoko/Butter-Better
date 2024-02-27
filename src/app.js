@@ -38,13 +38,12 @@ app.get('/', (req, res) => {
 
 app.use('/api/books', bookRouter);
 app.use('/api/users', userRouter);
-app.use('/api/categories', categoryRouter);
-app.use('/api/orders', orderRouter);
+app.use('/api/category', categoryRouter);
 
-// // catch 404 and forward to error handler
-// app.use(function (req, res, next) {
-//   next(createError(404));
-// });
+// catch 404 and forward to error handler
+app.use(function (req, res, next) {
+  next(createError(404));
+});
 
 // error handler
 app.use(function (err, req, res, next) {
@@ -54,12 +53,5 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.json(err.message);
 });
-
-
-
-//api 테스트 경로 설정
-
-app.use('/common', express.static(path.join(__dirname, 'views', 'common')));
-app.use('/src/views', express.static(path.join(__dirname, 'views')));
 
 module.exports = app;
