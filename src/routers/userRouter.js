@@ -1,12 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const { User } = require('../db/models/userModel');
-const { hashPassword, comparePassword } = require('../utils/hash-password');
 const asyncHandler = require('../utils/async-handler');
-const jwt = require('jsonwebtoken');
 const loginRequired = require('../middlewares/loginRequired');
 const adminOnly = require('../middlewares/adminOnly');
-const UserDTO = require('../utils/userValidator');
+const userService = require('../services/userService');
 
 router.get('/', async (req, res, next) => {
   res.send('users page.');
@@ -17,23 +15,7 @@ router.post(
   '/register',
   asyncHandler(async (req, res, next) => {
     const { name, password, email, phone, address } = req.body;
-    const userData = new UserDTO(name, password, email, phone, address);
-    UserDTO.validateUserData(userData);
-
-    const user = await User.findOne({ email });
-    if (user) {
-      throw new Error('이미 가입된 회원입니다.');
-    }
-    const hashedPassword = await hashPassword(password);
-    await User.create({
-      name,
-      password: hashedPassword,
-      email,
-      phone,
-      address,
-      deleted_at: null,
-      is_admin: false,
-    });
+    await userService.registerUser(name, password, email, phone, address);
     res.status(201).json({
       msg: '회원가입 완료'
     });
@@ -44,37 +26,13 @@ router.post(
   '/login',
   asyncHandler(async (req, res, next) => {
     const { email, password } = req.body;
-    const user = await User.findOne({ email });
-    if (!user) throw new Error('이메일이 일치하지 않습니다.');
-    const correctPassword = user.password;
-    if (!comparePassword(password, correctPassword)) {
-      throw new Error('비밀번호가 일치하지 않습니다.');
-    }
-    let token;
-    if (user.is_admin) {
-      token = jwt.sign(
-        {
-          sub: user._id,
-          email: email,
-          name: user.name,
-          role: "admin"
-        },
-        process.env.SECRET_KEY
-      );
-    } else {
-      token = jwt.sign(
-        {
-          sub: user._id,
-          email: email,
-          name: user.name
-        },
-        process.env.SECRET_KEY
-      );
-    }
-
+    
+    const {token, role} = await userService.loginUser(email, password);
     res.cookie('token', token);
+
     res.status(201).json({
-      msg: '로그인 완료'
+      msg: '로그인 완료',
+      role
     });
     
   })
@@ -96,14 +54,7 @@ router.patch(
   '/mypage/edit',
   loginRequired,
   asyncHandler(async (req, res, next) => {
-    const { password, ...userData } = req.body;
-    let hashedPassword;
-    if (password) {
-      hashedPassword = await hashPassword(password);
-    }
-    let updateData = { ... userData };
-    if (hashedPassword) updateData.password = hashedPassword;
-    const updateUser = await User.findByIdAndUpdate(req.user.sub, updateData , { new: true });
+    const updateUser = await userService.updateUser(req.user.sub, req.body);
     res.status(200).json({
       msg: "회원 정보 수정 완료",
       updateUser
@@ -122,6 +73,21 @@ router.get(
   })
 );
 
+// 회원 탈퇴 시 비밀번호 null, deleted_at 에 탈퇴 시간 작성
+// 탈퇴 해도 db에는 정보 남아있음
+router.patch(
+  '/delete',
+  loginRequired,
+  asyncHandler(async (req, res, next) => {
+    const deleteUser = await userService.deleteUser(req.user.sub);
+    res.status(200).json({
+      msg: "회원 탈퇴 처리 완료",
+      deleteUser
+    })
+  })
+)
+
+// 관리자만 db에서 유저 정보 삭제?
 router.delete(
   '/',
   loginRequired,
