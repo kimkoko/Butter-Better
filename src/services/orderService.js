@@ -36,7 +36,7 @@ class OrderService {
 
   async createOrder(toCreate) {
     if (!toCreate.total_price || toCreate.total_price === 0) {
-      throw new customError(400, '주문 금액의 합이 0원 입니다.');
+      throw new customError(401, '주문 금액의 합이 0원 입니다.');
     }
 
     const order = await this.orderModel.create(toCreate);
