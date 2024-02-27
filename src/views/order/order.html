@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,6 +20,7 @@
     <script type="module" src="../common/header/header.js"></script>
 
 </head>
+
 <body>
     <!-- header -->
     <header data-load-html="../common/header/header.html"></header>
@@ -39,7 +41,7 @@
                                     <option value="017">017</option>
                                     <option value="017">018</option>
                                 </select>
-                                <input type="number" style="width: 170px; margin-top: 0;"> 
+                                <input type="number" style="width: 170px; margin-top: 0;">
                                 <input type="number" style="width: 170px; margin-top: 0;">
                             </div>
                         </form>
@@ -53,7 +55,8 @@
                             <input type="number" placeholder="우편번호">
                             <input type="text" placeholder="기본 주소">
                             <input type="text" placeholder="나머지 주소 (선택)">
-                            <select name="message" id="message" style="width: 100%; margin-top: 18px;" onchange="selectText()">
+                            <select name="message" id="message" style="width: 100%; margin-top: 18px;"
+                                onchange="selectText()">
                                 <option value="0">배송 메세지 (선택)</option>
                                 <option value="1">부재 시, 경비실에 맡겨주세요.</option>
                                 <option value="2">배송 전에 미리 연락 바랍니다.</option>
@@ -120,7 +123,7 @@
     </div>
 
     <!-- 주문 완료 시 노출 -->
-    <div class="orderCompletion"  style="display:  none;">
+    <div class="orderCompletion" style="display:  none;">
         <div>
             <h3>Thank You</h3>
             <p class="text">
@@ -130,8 +133,8 @@
                 <span class="order orderDate">주문 일자 : 2024-02-20 13:14:00</span>
             </p>
             <div class="buttons">
-                <button type="button" class="home" onclick="location.href='../home/home.html'" >BACK TO MAIN</button>
-                <button type="button" class="mypage" >CHECK PAYMENT</button>
+                <button type="button" class="home" onclick="location.href='../home/home.html'">BACK TO MAIN</button>
+                <button type="button" class="mypage">CHECK PAYMENT</button>
             </div>
         </div>
     </div>
