@@ -18,8 +18,8 @@ orderRouter.post(
   })
 );
 
-// 주문자 이메일(ID)로 주문 상세 조회
-// TODO 회원 로그인 검증
+// TODO 작업 필요
+// Get orders by user Email
 orderRouter.get(
   '/user',
   asyncHandler(async (req, res, next) => {
@@ -48,10 +48,11 @@ orderRouter.get(
   })
 );
 
-// 주문 전체 목록 조회 *admin
-// TODO admin 검증
+// TODO 관리자 권한
+// * Admin-Only : Get all orders
 orderRouter.get(
   '/',
+  // TODO 관리자 권한
   asyncHandler(async (req, res, next) => {
     const orders = await orderService.getOrderList();
     res.status(200).json({
@@ -62,8 +63,7 @@ orderRouter.get(
   })
 );
 
-// 주문 상태 업데이트 *admin
-// TODO admin 검증
+// Update an order statys by orderId for Admin
 orderRouter.patch(
   '/admin/:orderId',
   asyncHandler(async (req, res, next) => {
@@ -77,10 +77,10 @@ orderRouter.patch(
   })
 );
 
-// 주문 ID로 삭제 *admin
-// TODO admin 검증
+// Delete an order by ID
 orderRouter.delete(
   '/:orderId',
+  // TODO 관리자 권한
   asyncHandler(async (req, res, next) => {
     const { orderId } = req.params;
     await orderService.deleteOrder(orderId);

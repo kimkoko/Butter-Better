@@ -32,16 +32,7 @@
                         <form action="">
                             <input type="text" placeholder="이름">
                             <input type="email" placeholder="이메일">
-                            <div class="phone">
-                                <select name="phone" id="phone" style="width: 170px;">
-                                    <option value="010">010</option>
-                                    <option value="016">016</option>
-                                    <option value="017">017</option>
-                                    <option value="017">018</option>
-                                </select>
-                                <input type="number" style="width: 170px; margin-top: 0;"> 
-                                <input type="number" style="width: 170px; margin-top: 0;">
-                            </div>
+                            <input type="text" placeholder="휴대 전화, '-' 기호를 추가해 주세요.">
                         </form>
                     </div>
                 </div>
@@ -50,7 +41,10 @@
                     <h3>Delivery</h3>
                     <div class="input">
                         <form action="">
-                            <input type="number" placeholder="우편번호">
+                            <div class="postalCode">
+                                <input type="number" placeholder="우편번호">
+                                <button type="button">주소 검색</button>
+                            </div>
                             <input type="text" placeholder="기본 주소">
                             <input type="text" placeholder="나머지 주소 (선택)">
                             <select name="message" id="message" style="width: 100%; margin-top: 18px;" onchange="selectText()">

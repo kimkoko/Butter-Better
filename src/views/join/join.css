@@ -71,6 +71,15 @@ input[type="number"]::-webkit-inner-spin-button {
 
 
 /* 가입 완료 */
+.joinCompletion{
+    display: none;
+}
+.joinCompletion.show{
+    display: block;
+}
+.mainBox.remove{
+    display: none;
+}
 .joinCompletion > div{
     width: 1200px;
     margin: 0 auto;

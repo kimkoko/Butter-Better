@@ -22,47 +22,48 @@ document.addEventListener('DOMContentLoaded', function () {
   const addBtn = document.getElementById("add-btn");
   const modal1 = document.getElementById("myModal1");
   const modal2 = document.getElementById("myModal2");
-
+  
   // 모달 열기 버튼에 이벤트 리스너 추가
   addBtn.addEventListener("click", function () {
-      var pargraph = modal1.querySelector("p");
-      if (pargraph) {
-          pargraph.innerText = "상품 추가";
-      }
-      modal1.style.display = "flex";
+    var pargraph = modal1.querySelector("p");
+    if (pargraph) {
+      pargraph.innerText = "상품 추가";
+    }
+    modal1.style.display = "flex";
   });
-
+  
   // 모달 닫기 함수
   modal1.addEventListener("click", function (e) {
-      if (e.target !== modal1) return;
-      modal1.style.display = "none";
+    if (e.target !== modal1) return;
+    modal1.style.display = "none";
   });
-
+  
   modal2.addEventListener("click", function (e) {
-      if (e.target !== modal2) return;
-      modal2.style.display = "none";
+    if (e.target !== modal2) return;
+    modal2.style.display = "none";
   });
-
+  
   // 저장 버튼에 이벤트 리스너 추가
   const saveBtn1 = document.getElementById("save-Btn1");
   saveBtn1.onclick = function () {
-      // 저장 버튼을 눌렀을 때 할 작업을 추가
-      alert("저장되었습니다.");
-      modal1.style.display = "none";
+    // 저장 버튼을 눌렀을 때 할 작업을 추가
+    alert("저장되었습니다.");
+    modal1.style.display = "none";
   };
-
+  
   // 삭제 버튼과 취소 버튼에 이벤트 리스너 추가
   const deleteBtn = document.getElementById("delete-Btn");
   const backBtn = document.getElementById("back-btn");
-
+  
   deleteBtn.onclick = function () {
-      // 실제로 삭제하는 작업 추가
-      alert("상품이 삭제되었습니다.");
-      modal2.style.display = "none";
+    // 실제로 삭제하는 작업 추가
+    
+    alert("상품이 삭제되었습니다.");
+    modal2.style.display = "none";
   };
-
+  
   backBtn.onclick = function () {
-      modal2.style.display = "none";
+    modal2.style.display = "none";
   };
 });
 
@@ -72,38 +73,59 @@ function connectModalEvent() {
   const modalDeleteBtns = document.querySelectorAll(".modal-delete-btn");
   const modal1 = document.getElementById("myModal1");
   const modal2 = document.getElementById("myModal2");
-
+  
   // 모달 열기 버튼에 이벤트 리스너 추가
   modalEditBtns.forEach(function (modalEditBtn) {
-      modalEditBtn.addEventListener("click", function () {
-          var pargraph = modal1.querySelector("p");
-          if (pargraph) {
-              pargraph.innerText = "상품 수정";
-          }
-          modal1.style.display = "flex";
-
-          // TODO: 모달의 내용을 해당하는 제품의 내용으로 수정
-          updateModalContent(modalEditBtn);
-      });
+    modalEditBtn.addEventListener("click", function () {
+      var pargraph = modal1.querySelector("p");
+      if (pargraph) {
+        pargraph.innerText = "상품 수정";
+      }
+      modal1.style.display = "flex";
+      
+      const productId = modalEditBtn.dataset.productId;
+      if (!productId) return;
+      const product = findProductById(productId);
+      // TODO: 모달의 내용을 해당하는 제품의 내용으로 수정
+      updateModalContent(product)
+    });
   });
+  function updateModalContent(product) {
+    const bestSellerInput = document.querySelector("#myModal1 input[placeholder='베스트셀러']");
+    const titleInput = document.querySelector("#myModal1 input[placeholder='상품명']");
+    const categoryInput = document.querySelector("#myModal1 input[placeholder='카테고리']");
+    const contentInput = document.querySelector("#myModal1 input[placeholder='상품 설명']");
+    const priceInput = document.querySelector("#myModal1 input[placeholder='가격']");
+    const imageInput = document.querySelector("#myModal1 input[placeholder='이미지']");
+    const quantityInput = document.querySelector("#myModal1 input[placeholder='수량']");
+    const rateInput = document.querySelector("#myModal1 input[placeholder='별점']");
 
+    
+    bestSellerInput.value = product.isBestSeller;
+    titleInput.value = product.title;
+    categoryInput.value = product.category;
+    contentInput.value = product.content;
+    priceInput.value = product.price;
+    imageInput.value = product.img_url;
+    quantityInput.value = product.quantity;
+    rateInput.value = product.rate;
+  
+    // 현재 선택된 제품의 ID를 모달에 저장
+  }
   modalDeleteBtns.forEach(function (modalDeleteBtn) {
     // data-image-url="ImageURL" data-product-id="asdf"
-    // console.log(modalDeleteBtn.dataset)
-    console.log(modalDeleteBtn.dataset.productId)
-
+    
     modalDeleteBtn.addEventListener("click", function () {
-        modal2.style.display = "flex";
-
-        // TODO: 현재 제품을 삭제하는 작업 추가
-        // 그럴려면 현재 제품이 뭔지 알아야됨
-        // => 현재 제품을 ID로 알아내기
-        const productId = modalDeleteBtn.dataset.productId;
-        if (!productId) return;
-        const product = findProductById(productId);
-        console.log(product);
-        console.log(product.title);
-      });
+      modal2.style.display = "flex";
+      
+      // TODO: 현재 제품을 삭제하는 작업 추가
+      // 그럴려면 현재 제품이 뭔지 알아야됨
+      // => 현재 제품을 ID로 알아내기
+      const productId = modalDeleteBtn.dataset.productId;
+      if (!productId) return;
+      deleteProduct(productId)
+      
+    });
   });
 }
 
@@ -117,23 +139,31 @@ function editProduct() {
   // => 그 정보를 가지고 화면에 있는 정보를 수정 (tr 한개의 내용만 수정)
   alert("수정되었습니다.");
   modal1.style.display = "none";
-
+  
   renderProductList();
 }
 
-function deleteProduct() {
-  // 삭제 버튼을 눌렀을 때 할 작업을 추가
-
+function deleteProduct(productId) {
+  
   // 삭제요청 API
-  fetch(`${API_HOST}/api/books/${productId}`, {
-    method: 'DELETE',
-  }).then(() => {
-    // OK
-    renderProductList();
-  }).catch(() => {
-    // Error
-    alert('삭제 실패')
+  fetch(`${API_HOST}/api/books/admin/${productId}`, {
+    method: 'delete',
   })
+  .then(response => {
+    if (response.ok) {
+      // OK
+      alert("상품이 삭제되었습니다.");
+      modal2.style.display = "none";
+      renderProductList();
+    } else {
+      // Error
+      alert('삭제 실패')
+    }
+  })
+  .catch(error => {
+    console.error('삭제 중 오류가 발생했습니다:', error);
+    alert('삭제 실패');
+  });
 }
 
 // 제품 리스트 가져오기 //
@@ -173,22 +203,26 @@ async function renderProductList() {
       const row = document.createElement('tr');
       row.classList.add('products-list');
       row.innerHTML = `
-      <td>${product.isBestSeller}</td>
-      <td>${product.title}</td>
-      <td>${product.category}</td>
-      <td class="content">${product.content}</td>
-      <td>${product.price.toLocaleString()}</td>
-      <td class="img">${product.img_url}</td>
-      <td>${product.quantity}</td>
-      <td>${product.rate}</td>
+      <td id="product-BestSeller">${product.isBestSeller}</td>
+      <td id="product-title">${product.title}</td>
+      <td id="product-category">${product.category}</td>
+      <td class="content" id="product-content">${product.content}</td>
+      <td id="product-price">${product.price.toLocaleString()}</td>
+      <td class="img" id="product-img">${product.img_url}</td>
+      <td id="product-quantity">${product.quantity}</td>
+      <td id="product-rate">${product.rate}</td>
       <td>
-      <button id="openModalbtn1" class="modal-edit-btn">수정</button>
+      <button
+      id="openModalbtn1"
+      class="modal-edit-btn"
+      data-product-id="${product._id}"
+      >수정</button>
       <button 
-        id="openModalbtn2"
-        class="modal-delete-btn"
-        data-product-id="${product._id}"
+      id="openModalbtn2"
+      class="modal-delete-btn"
+      data-product-id="${product._id}"
       >
-        삭제
+      삭제
       </button>
       </td>`;
       
@@ -196,7 +230,7 @@ async function renderProductList() {
     };
     //모달 불러오기
     connectModalEvent();
-
+    
   } catch (error) {
     console.error('상품 리스트를 렌더링하는 중 오류가 발생했습니다:', error);
   }
