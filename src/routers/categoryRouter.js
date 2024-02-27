@@ -27,44 +27,75 @@ categoryRouter.get('/', async (req, res, next) => {
 
 // 카테고리 추가 *admin
 categoryRouter.post(
-  '/admin',
+  '/',
   asyncHandler(async (req, res, next) => {
-    const { name, sort } = req.body;
-    const newCategory = await Category.create({
-      name,
-      sort,
-    });
+    const { category } = req.body;
+
+    // 중복 확인
+    const categoryName = await Category.findOne({ name: category });
+    if (categoryName) {
+      throw new Error('이미 있는 카테고리입니다.');
+    }
+    // db 저장
+    await Category.create(req.body);
+
     res.status(201).json({
       status: 201,
       message: '카테고리 추가 성공',
-      data: newCategory,
+      data: category,
     });
   })
 );
 
-// 카테고리 수정 -> admin 한정
+// 카테고리 수정 *admin
 categoryRouter.patch(
-  '/admin/:id',
+  '/:categoryId',
   asyncHandler(async (req, res, next) => {
-    const editedCategory = await Category.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true, runValidators: true }
-    );
-    res.status(201).json({
-      status: 201,
-      message: '카테고리 추가 성공',
-      data: editedCategory,
+    const { categoryId } = req.params;
+    const { name, sort } = req.body;
+    const toUpdate = { name, sort };
+
+    const category = await Category.findById(categoryId);
+
+    // ID 확인
+    if (!category) {
+      throw new Error('해당 카테고리의 id가 없습니다.');
+    }
+    // 중복 확인
+    const categoryName = await Category.findOne({ name: req.body.name });
+    if (categoryName) {
+      throw new Error('이미 있는 카테고리입니다.');
+    }
+
+    const updateCategory = await Category.findOneAndUpdate(category, toUpdate);
+
+    res.status(200).json({
+      status: 200,
+      message: '카테고리 수정 완료',
+      data: updateCategory,
     });
   })
 );
 
-// 카테고리 삭제 -> admin 한정
-categoryRouter.delete('/:categoryId', async (req, res, next) => {
-  try {
-  } catch (error) {
-    next(error);
-  }
-});
+// 카테고리 삭제 *admin
+// TODO admin 검증
+categoryRouter.delete(
+  '/:categoryId',
+  asyncHandler(async (req, res, next) => {
+    const { categoryId } = req.params;
+    const category = await Category.findById(categoryId);
+
+    const deleteCategory = await Category.findOneAndDelete(category);
+    if (!category) {
+      throw new Error('해당 카테고리의 id가 없습니다.');
+    }
+
+    res.status(200).json({
+      status: 200,
+      message: '카테고리 삭제 완료',
+      data: deleteCategory,
+    });
+  })
+);
 
 module.exports = categoryRouter;
