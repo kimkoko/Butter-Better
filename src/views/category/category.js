@@ -1,4 +1,35 @@
 import { API_HOST } from '../common/api.js';
+let currentPage = 1;
+let totalPage = 1;
+
+
+// 페이지가 로드되면 상품 리스트 렌더링
+document.addEventListener('DOMContentLoaded', function () {
+  
+  // 페이지네이션 버튼 가져오기
+  const prevPageBtn = document.querySelector(".previous-page a");
+  const nextPageBtn = document.querySelector(".next-page a");
+
+  // 이전 페이지로 이동
+  prevPageBtn.addEventListener("click", function (e) {
+    e.preventDefault();
+    if (currentPage > 1) {
+      currentPage--;
+      getCategoryBooks()
+    }
+  });
+
+  // 다음 페이지로 이동
+  nextPageBtn.addEventListener("click", function (e) {
+    e.preventDefault();
+    if (currentPage < totalPage) {
+      currentPage++;
+      getCategoryBooks()
+    }
+  });
+});
+
+
 
 /* 카테고리별 정보 */
 async function getCategoryBooks() {
@@ -15,13 +46,14 @@ async function getCategoryBooks() {
 
     // categoryId를 사용하여 카테고리 정보를 가져오는 API 호출
     const response = await fetch(
-      `${API_HOST}/api/categories/books/${categoryId}`
+      `${API_HOST}/api/categories/books/${categoryId}?page=${currentPage}`
     );
 
     // API 응답 데이터를 JSON 형태로 변환
     const categoryBooks = await response.json();
-    console.log('categoryBooks: ', categoryBooks);
     const categoryBook = categoryBooks.data.books;
+    
+    totalPage = categoryBook.totalPage;
 
     // 카테고리 타이틀
     const categoryName = document.getElementById('categoryName');
@@ -34,6 +66,9 @@ async function getCategoryBooks() {
     // 카테고리별 리스트
     const productListElement = document.getElementById('productList');
     const books = categoryBook.books;
+    
+    productListElement.innerHTML = '';
+
 
     books.slice(0, 24).forEach((book) => {
       // 상품 요소 생성
@@ -53,9 +88,15 @@ async function getCategoryBooks() {
   } catch (error) {
     console.error('카테고리별 정보를 가져오는 중 오류가 발생했습니다:', error);
   }
+  updatePagination() 
 }
 
 // 페이지가 로드되면 상품 리스트 렌더링
 window.addEventListener('load', () => {
   getCategoryBooks();
 });
+
+function updatePagination() {
+  const currentPageInfo = document.getElementById("currentPageInfo");
+  currentPageInfo.textContent = `Page ${currentPage} of ${totalPage}`;
+}
