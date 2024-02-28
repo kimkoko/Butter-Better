@@ -39,6 +39,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (e.target !== modal2) return;
     modal2.style.display = "none";
   });
+  
 });
 
 // Modal에서 입력된 상품 데이터 가져오기
@@ -233,6 +234,12 @@ async function renderProductList() {
       products[book._id] = book;
     });
     
+    
+    //토탈페이지값
+    let page = 1;
+    let totalPage = data.data.totalPage;
+
+
     const productListElement = document.getElementById('table-List');
     
     
