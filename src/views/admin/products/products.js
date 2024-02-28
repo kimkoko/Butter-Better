@@ -86,6 +86,17 @@ function getProductDataFromModal() {
 
   return newProduct;
 }
+//이미지 업로드!!!!!!!!!!!!!!
+document.addEventListener('DOMContentLoaded', function () {
+  // 이미지 업로드 버튼
+  const uploadBtn = document.getElementById('upload-btn');
+  
+  // 버튼 클릭 이벤트 리스너
+  uploadBtn.addEventListener('click', function() {
+      // 페이지 이동
+      window.location.href = `${API_HOST}/upload`;
+  });
+});
 
 // 새로운 제품(책) 추가
 function createProduct() {
