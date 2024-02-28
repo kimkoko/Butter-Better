@@ -1,7 +1,8 @@
 const express = require('express');
 const { upload, bucket } = require('../views/upload/upload'); // 이 부분이 올바르게 임포트되었는지 확인하세요
-
+const fs = require('fs');
 const uploadRouter = express.Router();
+
 
 // uploadRouter.js
 uploadRouter.post('/', upload.single('file'), (req, res, next) => {
@@ -26,14 +27,15 @@ uploadRouter.post('/', upload.single('file'), (req, res, next) => {
           });
         });
   
-        blobStream.end(req.file.buffer);
-      } else {
-        throw new Error('File upload failed');
-      }
-    } catch (error) {
-      next(error);
+        // diskStorage를 사용하는 경우 파일 시스템에서 파일을 읽어서 스트림합니다.
+      fs.createReadStream(req.file.path).pipe(blobStream);
+    } else {
+      throw new Error('File upload failed');
     }
-  });
+  } catch (error) {
+    next(error);
+  }
+});
   
   
   
