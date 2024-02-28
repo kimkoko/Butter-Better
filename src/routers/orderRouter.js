@@ -22,7 +22,8 @@ orderRouter.post(
 // 주문 목록 조회 *admin
 orderRouter.get(
   '/admin',
-  // adminOnly,
+  loginRequired,
+  adminOnly,
   asyncHandler(async (req, res, next) => {
     const orders = await orderService.getOrderList();
     res.status(200).json({
@@ -36,7 +37,7 @@ orderRouter.get(
 // 주문 상세 조회 *회원 Email
 orderRouter.get(
   '/user',
-  // loginRequired,
+  loginRequired,
   asyncHandler(async (req, res, next) => {
     const { userEmail } = req.user;
     const orders = await orderService.getOrdersByEmail(userEmail);
@@ -65,6 +66,7 @@ orderRouter.get(
 // 주문 정보 수정
 orderRouter.patch(
   '/:orderId',
+  loginRequired,
   asyncHandler(async (req, res, next) => {
     const { orderId } = req.params;
     const { orderer } = req.body;
@@ -79,7 +81,8 @@ orderRouter.patch(
 // 주문 상태 수정 *admin
 orderRouter.patch(
   '/admin/:orderId',
-  // adminOnly,
+  loginRequired,
+  adminOnly,
   asyncHandler(async (req, res, next) => {
     const { orderId } = req.params;
     const { order_status } = req.body;
@@ -94,7 +97,8 @@ orderRouter.patch(
 // 주문 ID로 주문 삭제 *admin
 orderRouter.delete(
   '/admin/:orderId',
-  // adminOnly,
+  loginRequired,
+  adminOnly,
   asyncHandler(async (req, res, next) => {
     const { orderId } = req.params;
     await orderService.deleteOrder(orderId);
