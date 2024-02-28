@@ -60,8 +60,9 @@
     font-size: 20px;
     color: var(--orange-500);
 }
+/* 경림님 코드 */
 .cartList table tr .quantity input{
-    width: 60px;
+    width: 100px;
     height: 49px;
     color: var(--orange-500);
     border: 1px solid var(--mocha-500);
@@ -124,59 +125,59 @@
     color: #fff;
 }
 
-/* 모달 전체 컨테이너 스타일 */
-.modal-container {
-    display: none; /* 기본적으로 모달을 숨김 */
+
+    /* 모달 관련 */
+/* button {
+    display: inline-block;
+    box-sizing: border-box;
+    padding: 16px 24px;
+    font-size: 16px;
+    color: var(--orange-500);
+    border-radius: 5px;
+    transition: all 0.3s;
+    border: 1px solid var(--orange-500);
+  }
+  
+  .modal-container {
+    display: none;
+    justify-content: center;
+    align-items: center;
     position: fixed;
-    z-index: 9999; /* 다른 콘텐츠 위에 표시되도록 z-index 설정 */
-    left: 0;
     top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    overflow: auto; /* 화면 크기를 벗어나면 스크롤 표시 */
-    background-color: rgba(0, 0, 0, 0.5); /* 배경을 어둡게 표시 */
-}
-
-/* 모달 내용 컨테이너 스타일 */
-.modal-content {
-    background-color: #fefefe;
-    margin: 15% auto; /* 화면 중앙에 위치 */
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%; /* 모달 창 너비 */
-    max-width: 600px; /* 최대 너비 */
-}
-
-/* 닫기 버튼 스타일 */
-.close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-/* 수량 입력 필드 스타일 */
-#quantityInput {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  
+  .modal-content {
+    color: var(--camel-500);
+    font-size: 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 640px;
+    padding: 40px;
+    background-color: white;
+    row-gap: 18px;
+  }
+  
+  
+  .modal-content input {
     width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
+    height: 60px;
+    padding: 8px;
     box-sizing: border-box;
-}
-
-/* 확인 버튼 스타일 */
-.confirmBtn {
-    background-color: #4CAF50;
-    color: white;
-    padding: 14px 20px;
-    margin: 8px 0;
-    border: none;
-    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+ 
+  #save-Btn1 {
     width: 100%;
-}
+    height: 60px;
+    padding: 8px;
+    color: var(--bg-color);
+    box-sizing: border-box;
+    border-radius: 4px;
+    background-color: var(--orange-500);
+  } */

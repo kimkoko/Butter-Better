@@ -58,20 +58,9 @@
                             </div>
                         </td>  
                         <td class="one_price">₩15,000</td>
-                        <td class="quantity"><input type="text" value="1"></td>                        
-                        <td class="total_price">₩15,000</td>
-                    </tr>
-
-                    <tr>
-                        <td><input type="checkbox" class="checkbox ck"></td>
-                        <td class="left">
-                            <div class="book">
-                                <p class="img"><img src="https://picsum.photos/300/300" alt="책표지"></p>
-                                <h3>Title Here</h3>
-                            </div>
-                        </td>  
-                        <td class="one_price">₩15,000</td>
-                        <td class="quantity"><input type="text" value="1"></td>
+                            <td class="quantity">                            
+                                <input type="number" class="quantity-input" value="1" min="1">                                                        
+                            </td>                        
                         <td class="total_price">₩15,000</td>
                     </tr>
                 </table>
@@ -98,22 +87,38 @@
                 <button type="button" id="removeBtn">REMOVE</button>
 
                 <div class="rightBox">
-                    <button type="button" class="quantityBtn">QUANTITY EDIT</button>
+                    <!-- <button type="button" id="quantityBtn">QUANTITY EDIT</button> -->
                     <button type="button" class="continue-shopping">CONTINUE SHOPPING</button>
                     <button type="button" class="checkout">CHECK OUT</button>
                 </div>
             </div>            
         </div>
-        
-        <!-- <div id="quantityModal" class="modal-container">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <label for="quantityInput">Quantity:</label>
-                <input type="text" id="quantityInput" placeholder="quantity">
-                <button class="confirmBtn">수정 확인</button>
-            </div>
-        </div> -->
     
+        <!-- 수량 수정
+    <div class="modal-container" id="myModal1">
+        <div class="modal">
+            <div class="modal-content">
+                모달 내용
+                <p>카테고리 수정</p>
+                추가 모달 내용
+                <input type="text" placeholder="Quantity(수량)을 입력해주세요." id="categoryInput">
+                <button type="button" id="save-Btn1">저장</button>
+            </div>
+        </div>
+    </div> -->
+    <!-- <script>
+        const quantityInput = document.getElementById('quantity-input');
+
+        // 초기 수량 설정
+        let quantity = parseInt(localStorage.getItem('quantity')) || 1;
+        quantityInput.value = quantity;
+
+        // 수량 변경 이벤트
+        quantityInput.addEventListener('change', function() {
+            quantity = parseInt(this.value) || 1;
+            localStorage.setItem('quantity', quantity);
+        });
+    </script> -->
 
     <!-- footer -->
     <footer data-load-html="../common/footer/footer.html"></footer>

@@ -12,9 +12,12 @@ const bookRouter = require('./routers/bookRouter');
 const userRouter = require('./routers/userRouter');
 const categoryRouter = require('./routers/categoryRouter');
 const orderRouter = require('./routers/orderRouter');
-
+const uploadRouter = require('./routers/uploadRouter');
 //connect to mongodb
 mongoose.connect(process.env.MONGO_URI);
+
+
+
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -40,7 +43,7 @@ app.use('/api/books', bookRouter);
 app.use('/api/users', userRouter);
 app.use('/api/categories', categoryRouter);
 app.use('/api/orders', orderRouter);
-
+app.use('/api/uploads', uploadRouter);
 // // catch 404 and forward to error handler
 // app.use(function (req, res, next) {
 //   next(createError(404));
@@ -59,5 +62,10 @@ app.use(function (err, req, res, next) {
 
 app.use('/common', express.static(path.join(__dirname, 'views', 'common')));
 app.use('/src/views', express.static(path.join(__dirname, 'views')));
+app.use('/upload', express.static(path.join(__dirname, 'src/public')));
+app.use('/uploads', express.static(path.join(__dirname, 'src/public')));
+app.use('/upload', express.static('src/public'));
+
+app.use('/upload', uploadRouter);
 
 module.exports = app;
