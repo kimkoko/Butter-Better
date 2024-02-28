@@ -4,8 +4,10 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const path = require('path');
-
+const fs = require('fs');
 require('dotenv').config();
+const multer = require('multer');
+const {Storage} = require('@google-cloud/storage');
 
 const viewRouter = require('./routers/viewRouter');
 const bookRouter = require('./routers/bookRouter');
