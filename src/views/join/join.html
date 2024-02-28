@@ -17,7 +17,7 @@
 <script type="module" src="./join.js"></script>
 <script src="../common/loadHTML.js"></script>
 <script type="module" src="../common/header/header.js"></script>
-
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 </head>
 <body>
@@ -64,9 +64,9 @@
                     <label for="confirmPassword">Address *</label>
                     <div class="postalCode">
                         <input type="text" placeholder="우편번호" id="postCode">
-                        <button type="button">주소 검색</button>
+                        <button type="button" id="searchAddressBtn">주소 검색</button>
                     </div>
-                    <input type="text" placeholder="기본 주소" id="main">
+                    <input type="text" placeholder="기본 주소" id="address">
                     <input type="text" placeholder="나머지 주소 (선택)" id="detail">
                 </div>
 
