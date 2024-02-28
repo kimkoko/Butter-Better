@@ -29,7 +29,7 @@ async function renderCategory() {
             const categoryItem = document.createElement('li');
             categoryItem.classList.add('menu');
             categoryItem.innerHTML = `
-                <a href="#">${category.name}</a>
+                <a href="/src/views/category/category.html?category=${category._id}">${category.name}</a>
             `;
 
             // 상품 리스트에 상품 추가

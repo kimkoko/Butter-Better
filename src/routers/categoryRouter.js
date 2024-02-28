@@ -1,18 +1,14 @@
-const { Router } = require('express');
-const categoryRouter = Router();
-const { Category } = require('../db/models/categoryModel');
-const asyncHandler = require('../utils/async-handler');
+const express = require('express');
+const categoryRouter = express.Router();
+const categoryService = require('../services/categoryService');
 const bookService = require('../services/bookService');
-
-// adminAuth - 관리자 확인
-// const adminAuth = require('../middlewares/admin-auth')
+const asyncHandler = require('../utils/async-handler');
 
 // 카테고리 조회
 categoryRouter.get(
   '/',
   asyncHandler(async (req, res, next) => {
-    const categories = await Category.find({});
-
+    const categories = await categoryService.getAll();
     res.status(200).json({
       status: 200,
       message: '전체 카테고리 목록 조회 성공',
@@ -43,20 +39,12 @@ categoryRouter.get('/books/:categoryId', async (req, res, next) => {
 categoryRouter.post(
   '/',
   asyncHandler(async (req, res, next) => {
-    const { category } = req.body;
-
-    // 중복 확인
-    const categoryName = await Category.findOne({ name: category });
-    if (categoryName) {
-      throw new Error('이미 있는 카테고리입니다.');
-    }
-    // db 저장
-    await Category.create(req.body);
+    const newCategory = await categoryService.addCategory(req.body);
 
     res.status(201).json({
       status: 201,
       message: '카테고리 추가 성공',
-      data: category,
+      data: newCategory,
     });
   })
 );
@@ -68,25 +56,15 @@ categoryRouter.patch(
     const { categoryId } = req.params;
     const { name, sort } = req.body;
     const toUpdate = { name, sort };
-
-    const category = await Category.findById(categoryId);
-
-    // ID 확인
-    if (!category) {
-      throw new Error('해당 카테고리의 id가 없습니다.');
-    }
-    // 중복 확인
-    const categoryName = await Category.findOne({ name: req.body.name });
-    if (categoryName) {
-      throw new Error('이미 있는 카테고리입니다.');
-    }
-
-    const updateCategory = await Category.findOneAndUpdate(category, toUpdate);
+    const updatedCategory = await categoryService.updateCategory(
+      categoryId,
+      toUpdate
+    );
 
     res.status(201).json({
       status: 201,
       message: '카테고리 수정 완료',
-      data: updateCategory,
+      data: updatedCategory,
     });
   })
 );
@@ -97,17 +75,12 @@ categoryRouter.delete(
   '/:categoryId',
   asyncHandler(async (req, res, next) => {
     const { categoryId } = req.params;
-    const category = await Category.findById(categoryId);
-
-    const deleteCategory = await Category.findOneAndDelete(category);
-    if (!category) {
-      throw new Error('해당 카테고리의 id가 없습니다.');
-    }
+    const deletedCategory = await categoryService.deleteCategory(categoryId);
 
     res.status(200).json({
       status: 200,
       message: '카테고리 삭제 완료',
-      data: deleteCategory,
+      data: deletedCategory,
     });
   })
 );

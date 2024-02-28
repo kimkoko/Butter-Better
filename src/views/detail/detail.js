@@ -32,28 +32,32 @@ async function updateProductInfo() {
 
   productInfoElement.innerHTML = `
   <div class="bookImg">
-  <p class="img"><img src="${product.img_url}" alt="책 표지"></p>
+      <p class="img"><img src="${product.img_url}" alt="책 표지"></p>
   </div>
-  
+
   <div class="bookInfo">
-  <h2 class="bookName">${product.title}</h2>
-  
-  <div class="option">
-  <p class="category">${product.category_id.name}</p>
-  <p class="stars">
-  <ion-icon name="star"></ion-icon>
-  <span class="num">${product.rate}</span>
-  </p>
-  </div>
-  
-  <div class="bookText">
-  ${product.content}
-  </div>
-  
-  <div class="priceButton">
-  <p class="price">￦ ${product.price}</p>
-  <button type="button">ADD TO CART</button>
-  </div>
+      <h2 class="bookName">${product.title}</h2>
+
+      <div class="option">
+          <p class="category">${product.category_id.name}</p>
+          <p class="stars">
+              <ion-icon name="star"></ion-icon>
+              <span class="num">${product.rate}</span>
+          </p>
+      </div>
+
+      <h3 class="price">￦ <span class="price">${product.price.toLocaleString()}</span></h3>
+      <div class="priceButton">
+          <div class="quantityButton">
+              <button id="decreaseQuantity" class="button1"> - </button>
+              <span class="quantityInput"> 1 </span>
+              <button id="increaseQuantity" class="button2"> + </button>
+          </div>
+          <!-- <p>￦<span class="price">17,000</span></p> -->
+          <button type="button"  class="cartBtn">ADD TO CART</button>
+      </div>
+      <div class="bookText">
+      ${product.content}
   </div>
   `;
 }
@@ -149,7 +153,7 @@ async function renderRecommendsList() {
         <a href="/src/views/detail/detail.html?id=${product._id}">
         <img src="${product.img_url}" alt="제품 이미지">
         <h2 class="Recommends-name">${product.title}</h2>
-        <span class="Recommends-price">${product.price}</span>
+        <span class="Recommends-price">${product.price.toLocaleString()}</span>
             </a>
         `;
 

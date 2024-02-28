@@ -66,10 +66,11 @@ router.post(
 router.delete(
   '/admin/:id',
   asyncHandler(async (req, res) => {
-    await bookService.deleteBook(req.params.id);
+    const deletedBook = await bookService.deleteBook(req.params.id);
     res.status(200).json({
       status: 200,
       msg: '상품 삭제 완료',
+      data: deletedBook,
     });
   })
 );
