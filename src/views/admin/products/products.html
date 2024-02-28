@@ -61,51 +61,69 @@
                     
                     <tr id="products-list" class="products-list">
                         <!-- <td>카테고리</td>
-                        <td>상품명</td>
-                        <td>상품 설명</td>
-                        <td>가격</td>
-                        <td><img src=""></td>
-                        <td>2024-02-02</td>
-                        <td>Y</td>
-                        <td>
-                            <button id="openModalbtn1" class="edit">수정</button>
-                            <button id="openModalbtn2" class="delete">삭제</button>
-                        </td> -->
-                    </tr>
-                </table>
+                            <td>상품명</td>
+                            <td>상품 설명</td>
+                            <td>가격</td>
+                            <td><img src=""></td>
+                            <td>2024-02-02</td>
+                            <td>Y</td>
+                            <td>
+                                <button id="openModalbtn1" class="edit">수정</button>
+                                <button id="openModalbtn2" class="delete">삭제</button>
+                            </td> -->
+                        </tr>
+                    </table>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="modal-container" id="myModal1">
-        <div class="modal">
-            <div class="modal-content">
-                <!-- 모달 내용 -->
-                <p>상품 수정</p>
-                <!-- 추가 모달 내용 -->
-                <input type="text" placeholder="베스트셀러">
-                <input type="text" placeholder="상품명">
-                <input type="text" placeholder="카테고리">
-                <input type="text" placeholder="상품 설명">
-                <input type="text" placeholder="가격">
-                <input type="text" placeholder="이미지">
-                <input type="text" placeholder="수량">
-                <input type="text" placeholder="별점">
-                <button id="save-Btn1">저장</button>
+        <div class="modal-container" id="myModal1">
+            <div class="modal">
+                <div class="modal-content">
+                    <!-- 모달 내용 -->
+                    <p>상품 수정</p>
+                    <!-- 추가 모달 내용 -->
+                    <input type="text" placeholder="베스트셀러">
+                    <input type="text" placeholder="상품명">
+                    <input type="text" placeholder="카테고리">
+                    <input type="text" placeholder="상품 설명">
+                    <input type="text" placeholder="가격">
+                    <input type="text" placeholder="이미지">
+                    <input type="text" placeholder="수량">
+                    <input type="text" placeholder="별점">
+                    <button id="save-Btn1">저장</button>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="modal-container" id="myModal2"> 
-        <div class="modal">
-            <div class="modal-content">
-                <ul>
-                    <li class="Exclamationpoint">
-                        <a href="#">
-                            <img src="/src/views/admin/common/image/Exclamation Point.png">
-                        </a>
-                    </li>
-                </ul>    
+        <div class="modal-container" id="myModal2"> 
+            <div class="modal">
+                <div class="modal-content">
+                    <ul>
+                        <li class="Exclamationpoint">
+                            <a href="#">
+                                <img src="/src/views/admin/common/image/Exclamation Point.png">
+                            </a>
+                        </li>
+                    </ul>    
+                </div>
             </div>
         </div>
-    </div>
-</body>
-</html>
+        <div class="pagination-box" >
+            <ul class="pagination">
+                <li class="previous-page">
+                    <a href="#">
+                        <img src="../../category/image/btn-prev.png" alt="Previous">
+                    </a>
+                </li>
+                <li class="current-page" id="currentPageInfo">
+                    Page 1 of 5
+                </li>
+                <li class="next-page">
+                    <a href="#">
+                        <img src="../../category/image/btn-next.png" alt="Next">
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </body>
+    </html>
+    
