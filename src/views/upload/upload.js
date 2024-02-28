@@ -1,8 +1,9 @@
 // upload.js
 const multer = require('multer');
 const path = require('path');
-const fs = require('fs');
 const {Storage} = require('@google-cloud/storage');
+const fs = require('fs');
+
 
 const keyFilename = process.env.KEY_FILENAME; // 서비스 계정 키 파일의 경로
 const projectId = process.env.PROJECT_ID; // 프로젝트 ID
@@ -28,23 +29,26 @@ const storage = multer.diskStorage({
   }
 });
 
-// 파일 필터링 (예: 이미지만 허용)
-const fileFilter = (req, file, cb) => {
-  if (file.mimetype.startsWith('image/')) {
+const fileFilter = function (req, file, cb) {
+  // 파일이 JPEG 또는 PNG 이미지인 경우 true를 반환
+  if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
     cb(null, true);
   } else {
-    cb(new Error('Not an image! Please upload only images.'), false);
+    // 그렇지 않은 경우 false를 반환
+    cb(null, false);
   }
 };
 
+
 const upload = multer({
   storage: storage,
+  bucket: bucket,
   fileFilter: fileFilter,
   limits: {
-  fileSize: 1024 * 1024 * 3 // 5MB 파일 크기 제한
+    fileSize: 1024 * 1024 * 3 // 3MB 파일 크기 제한
   }
-  });
-   // 'file'은 클라이언트가 파일을 보낼 때 사용하는 필드의 이름입니다.
+});// 'file'은 클라이언트가 파일을 보낼 때 사용하는 필드의 이름입니다.
 
 
 module.exports = { upload, bucket };
+
