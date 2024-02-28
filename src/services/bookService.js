@@ -1,7 +1,6 @@
 // const bookModel = require('../db/models/bookModel');
 const { Book } = require('../db/models/bookModel');
 const categoryModel = require('../db/models/categoryModel');
-const categoryService = require('../services/categoryService');
 
 class BookService {
   async getBestSellers() {
@@ -13,6 +12,7 @@ class BookService {
 
   async getBooksByCategory(categoryId, page = 1, perPage = 24) {
     const skip = (page - 1) * perPage;
+    const category = await categoryModel.findByCategoryId(categoryId);
     const total = await Book.countDocuments({ category_id: categoryId });
     const books = await Book.find({ category_id: categoryId })
       .skip(skip)
@@ -23,6 +23,7 @@ class BookService {
       totalPage: Math.ceil(total / perPage),
       productCount: total,
       books,
+      category: category.name,
     };
   }
 
