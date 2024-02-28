@@ -74,7 +74,7 @@ document.getElementById('increaseQuantity').addEventListener('click', function()
   quantityInput.textContent = ++quantity;
 });
 
-// ADD TO CART 장바구니 추가버튼 클릭시 아오오오오오오
+// ADD TO CART 장바구니 추가버튼 클릭시
 document.addEventListener("DOMContentLoaded", function() {
   const cartButtons = document.querySelectorAll('.cartBtn');
 
