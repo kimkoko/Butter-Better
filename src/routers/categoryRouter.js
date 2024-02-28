@@ -20,7 +20,7 @@ categoryRouter.get(
 );
 
 // 카테고리 별 목록 조회
-categoryRouter.get('/books/:categoryId ', async (req, res, next) => {
+categoryRouter.get('/books/:categoryId', async (req, res, next) => {
   const books = await bookService.getBooksByCategory(req.params.categoryId);
 
   if (!books) {
