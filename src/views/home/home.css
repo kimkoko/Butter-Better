@@ -44,12 +44,14 @@
 }
 .textBox {
   color: var(--orange-500);
+  position: relative;
 }
 .textBox h3 {
   font-size: 48px;
   font-weight: bold;
   line-height: 1.3;
   margin-bottom: 30px;
+  position: relative;
 }
 .textBox button {
   font-family: Pretendard !important;
@@ -60,7 +62,8 @@
   padding: 16px 28px;
   border-radius: 100px;
   border: 1px solid var(--orange-500);
-  transition: all 0.3s;
+  transition: all 0.3s ease-in;
+  box-shadow: 6px 8px 30px rgba(136, 109, 75, 0.125);
 }
 
 .textBox button:hover {
@@ -72,11 +75,81 @@
 .imgBox {
   width: 400px;
   height: 400px;
+  position: relative;
+  margin-left: auto;
 }
 .imgBox img {
   width: auto;
   height: 100%;
-  float: right;
+  position: absolute;
+  right: 0;
+}
+
+.slide_inner .textBox h3::before {
+  position: absolute;
+  top: -38px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--bg-color);
+  background-color: var(--orange-500);
+  padding: 6px 10px;
+  display: block;
+  box-sizing: border-box;
+  border-radius: 4px;
+  transform: rotate(-1deg);
+}
+.slide_inner.first .textBox h3::before {
+  content: 'Pasta Grannies';
+}
+.slide_inner.second .textBox h3::before {
+  content: 'Vegan Specialized';
+}
+.slide_inner.third .textBox h3::before {
+  content: 'Simple Recipe';
+}
+
+.slide_inner .imgBox::after {
+  content: '';
+  position: absolute;
+  left: -20px;
+  bottom: 0;
+  width: 160px;
+  height: 160px;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.slide_inner.first .imgBox::after {
+  background-image: url(../common/img/banner_elem_01.png);
+}
+.slide_inner.second .imgBox::after {
+  background-image: url(../common/img/banner_elem_03.png);
+  transform: rotate(-5deg);
+  left: -10px;
+}
+.slide_inner.third .imgBox::after {
+  width: 100px;
+  height: 312px;
+  background-image: url(../common/img/banner_elem_05.png);
+  left: 0;
+}
+
+.slide_inner .imgBox::before {
+  content: '';
+  position: absolute;
+  width: 40px;
+  height: 160px;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: -1;
+}
+.slide_inner.second .imgBox::before {
+  background-image: url(../common/img/banner_elem_04.png);
+  transform: rotate(-5deg);
+  top: 40px;
+  left: 90px;
 }
 
 .arrowBox ion-icon {
@@ -128,7 +201,7 @@
   text-align: left;
   margin-top: 48px;
 }
-.Best-item:nth-child(-n + 5) {
+.Best-item:nth-child(-n + 4) {
   margin-top: 0;
 }
 
