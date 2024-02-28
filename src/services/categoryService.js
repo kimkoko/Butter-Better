@@ -13,12 +13,13 @@ class CategoryService {
 
   // 카테고리 추가
   async addCategory(categoryInfo) {
-    const { category } = categoryInfo;
-
-    const categoryName = await this.categoryModel.findByCategory(category);
+    const categoryName = await this.categoryModel.findByCategory(
+      categoryInfo.name
+    );
     if (categoryName) {
       throw new customError(409, '이미 있는 카테고리입니다.');
     }
+
     return await this.categoryModel.create(categoryInfo);
   }
 

@@ -2,6 +2,8 @@ const express = require('express');
 const categoryRouter = express.Router();
 const categoryService = require('../services/categoryService');
 const bookService = require('../services/bookService');
+const loginRequired = require('../middlewares/loginRequired');
+const adminOnly = require('../middlewares/adminOnly');
 const asyncHandler = require('../utils/async-handler');
 
 // 카테고리 조회
@@ -38,6 +40,8 @@ categoryRouter.get('/books/:categoryId', async (req, res, next) => {
 // 카테고리 추가 *admin
 categoryRouter.post(
   '/',
+  loginRequired,
+  adminOnly,
   asyncHandler(async (req, res, next) => {
     const newCategory = await categoryService.addCategory(req.body);
 
@@ -52,6 +56,8 @@ categoryRouter.post(
 // 카테고리 수정 *admin
 categoryRouter.patch(
   '/:categoryId',
+  loginRequired,
+  adminOnly,
   asyncHandler(async (req, res, next) => {
     const { categoryId } = req.params;
     const { name, sort } = req.body;
@@ -70,9 +76,10 @@ categoryRouter.patch(
 );
 
 // 카테고리 삭제 *admin
-// TODO admin 검증
 categoryRouter.delete(
   '/:categoryId',
+  loginRequired,
+  adminOnly,
   asyncHandler(async (req, res, next) => {
     const { categoryId } = req.params;
     const deletedCategory = await categoryService.deleteCategory(categoryId);
