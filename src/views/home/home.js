@@ -1,8 +1,10 @@
 import { API_HOST } from '../common/api.js';
 
 async function getBestSellersList() {
+    let products; // 'products' 변수를 선언
+
     try {
-        const response = await fetch(`${API_HOST}/api/books`);
+        const response = await fetch(`${API_HOST}/api/books/bestsellers`);
         if (!response.ok) {
             throw new Error('상품 데이터를 가져올 수 없습니다.');
         } else {
@@ -10,8 +12,8 @@ async function getBestSellersList() {
         }
 
         const data = await response.json();
-        const products = data.data.books;
-        console.log(products);
+        console.log(data.data);
+        products = data.data; // 'products' 변수에 데이터 할당
         
         const maxProductsToShow = 8;
         let productsShown = 0;
@@ -34,6 +36,7 @@ async function getBestSellersList() {
 
                 // 리스트에 상품 아이템 추가
                 bestSellersListElement.appendChild(productItem);
+                productsShown++; // 표시된 상품 개수 증가
             }
         });
 

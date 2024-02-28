@@ -54,7 +54,8 @@ app.use(function (err, req, res, next) {
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
   res.status(err.status || 500);
-  res.json(err.message);
+  res.json({
+    msg: err.message});
 });
 
 //api 테스트 경로 설정

@@ -132,7 +132,6 @@ function updateModalContent(product) {
   
   bestSellerInput.value = product.isBestSeller;
   titleInput.value = product.title;
-  // categoryInput.value = product.category_id.name;
   categoryInput.value = product.category_id._id;
   contentInput.value = product.content;
   priceInput.value = product.price;

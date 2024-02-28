@@ -12,7 +12,7 @@ function loadHTML(file, targetElement) {
   rawFile.send(null);
 }
 
-window.addEventListener('load', () => {
+document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('[data-load-html]').forEach((element) => {
         const filePath = element.dataset.loadHtml
         loadHTML(filePath, element)

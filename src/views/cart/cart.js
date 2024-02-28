@@ -66,50 +66,6 @@ function updateTotalAndShipping() {
     totalPriceElement.textContent = `₩${finalTotalPrice.toLocaleString()}`;
 }
 
-
-
-
-// cartItems.forEach(item => {
-//     // 가격과 수량을 숫자로 변환하여 계산
-//     const price = parseFloat(item.price);
-//     const quantity = parseInt(item.quantity);
-
-//     // 유효성 검사
-//     if (!isNaN(price) && !isNaN(quantity)) {
-//         const total = price * quantity;
-//         // 총 가격을 표시하는 열 업데이트
-//         row.innerHTML = `
-//             <td><input type="checkbox" class="checkbox ck"></td>
-//             <td class="left">
-//                 <div class="book">
-//                     <p class="img"><img src="${item.img}" alt="상품 이미지"></p>
-//                     <h3>${item.name}</h3>
-//                 </div>
-//             </td>
-//             <td class="price">${item.price}</td>
-//             <td class="quantity"><input type="text" value="${item.quantity}" min="1"></td>
-//             <td class="total_price">${total}</td>
-//         `;
-//     } else {
-//         // 가격이나 수량이 유효하지 않은 경우 NaN 대신 다른 값을 표시할 수 있음
-//         row.innerHTML = `
-//             <td><input type="checkbox" class="checkbox ck"></td>
-//             <td class="left">
-//                 <div class="book">
-//                     <p class="img"><img src="${item.img}" alt="상품 이미지"></p>
-//                     <h3>${item.name}</h3>
-//                 </div>
-//             </td>
-//             <td class="price">${item.price}</td>
-//             <td class="quantity"><input type="text" value="${item.quantity}" min="1"></td>
-//             <td class="total_price">N/A</td>
-//         `;
-//     }
-// });
-
-
-
-
 document.addEventListener("DOMContentLoaded", function () {
     // 전체 선택 체크박스
     const selectAllCheckbox = document.querySelector(".ck-all");
@@ -157,6 +113,10 @@ document.addEventListener("DOMContentLoaded", function () {
         // 로컬 스토리지 업데이트
         localStorage.setItem('cartItems', JSON.stringify(cartItems));
 
+        // 페이지 내용 업데이트
+        loadCartItems(); // 장바구니 항목 다시 로드
+        updateTotalAndShipping(); // 총액과 배송비 업데이트
+        
         // 전체 선택 체크박스 해제
         selectAllCheckbox.checked = false;
     });
