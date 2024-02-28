@@ -18,9 +18,6 @@ const uploadRouter = require('./routers/uploadRouter');
 //connect to mongodb
 mongoose.connect(process.env.MONGO_URI);
 
-
-
-
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', () => {
@@ -62,7 +59,6 @@ app.use(function (err, req, res, next) {
 });
 
 //api 테스트 경로 설정
-
 app.use('/common', express.static(path.join(__dirname, 'views', 'common')));
 app.use('/src/views', express.static(path.join(__dirname, 'views')));
 app.use('/upload', express.static(path.join(__dirname, 'src/public')));

@@ -46,6 +46,7 @@ document.addEventListener('DOMContentLoaded', function () {
       pargraph.innerText = "상품 추가";
     }
     modal1.style.display = "flex";
+    initializeForm();   // 폼 초기화
 
     // 저장 버튼에 이벤트 리스너 추가
     const saveBtn1 = document.getElementById("save-Btn1");
@@ -56,11 +57,6 @@ document.addEventListener('DOMContentLoaded', function () {
   modal1.addEventListener("mousedown", function (e) {
     if (e.target !== modal1) return;
     modal1.style.display = "none";
-  });
-  
-  modal2.addEventListener("mousedown", function (e) {
-    if (e.target !== modal2) return;
-    modal2.style.display = "none";
   });
 });
 
@@ -156,7 +152,6 @@ function connectModalEvent() {
   const modalEditBtns = document.querySelectorAll(".modal-edit-btn");
   const modalDeleteBtns = document.querySelectorAll(".modal-delete-btn");
   const modal1 = document.getElementById("myModal1");
-  const modal2 = document.getElementById("myModal2");
   
   // 수정버튼
   modalEditBtns.forEach(function (modalEditBtn) {
@@ -237,7 +232,27 @@ function deleteProduct(product) {
     alert('삭제 실패');
   });
 }
+// moal1 초기화
+function initializeForm() {
+  const bestSellerInput = document.querySelector("#myModal1 input[placeholder='베스트셀러']");
+  const titleInput = document.querySelector("#myModal1 input[placeholder='상품명']");
+  const categoryInput = document.querySelector("#myModal1 input[placeholder='카테고리']");
+  const contentInput = document.querySelector("#myModal1 input[placeholder='상품 설명']");
+  const priceInput = document.querySelector("#myModal1 input[placeholder='가격']");
+  const imageInput = document.querySelector("#myModal1 input[placeholder='이미지']");
+  const quantityInput = document.querySelector("#myModal1 input[placeholder='수량']");
+  const rateInput = document.querySelector("#myModal1 input[placeholder='별점']");
 
+  // 폼 필드 초기화
+  bestSellerInput.value = "";
+  titleInput.value = "";
+  categoryInput.value = "";
+  contentInput.value = "";
+  priceInput.value = "";
+  imageInput.value = "";
+  quantityInput.value = "";
+  rateInput.value = "";
+}
 // 제품 리스트 가져오기 //
 import { API_HOST } from '../../common/api.js';
 

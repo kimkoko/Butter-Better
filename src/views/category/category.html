@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,11 +13,17 @@
   <script src="../common/loadHTML.js"></script>
   <script type="module" src="../common/header/header.js"></script>
 
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="64x64" href="../common/img/faviconx64.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../common/img/faviconx32.png" />
+  <link rel="shortcut icon" href="../common/img/favicon.io" />
+
   <!-- 아이콘 -->
   <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 
 </head>
+
 <body>
   <header data-load-html="../common/header/header.html"></header>
 
@@ -25,7 +32,7 @@
       <h1 id="categoryName">All Books</h1>
       <!-- <p>Description</p> -->
     </section>
-    
+
     <section class="products-sort">
       <span class="total-count" id="totalCount">100 products</span>
       <select class="product-filter">
@@ -35,7 +42,7 @@
         <option value="높은 가격순">높은 가격순</option>
       </select>
     </section>
-    
+
     <section>
       <ul class="product-list" id="productList">
         <!-- 제품을 반복하며 리스트 아이템을 생성 -->
@@ -48,7 +55,7 @@
         </li> -->
       </ul>
     </section>
-    <div class="pagination-box" >
+    <div class="pagination-box">
       <ul class="pagination">
         <li class="previous-page">
           <a href="#">
@@ -69,4 +76,5 @@
 
   <footer data-load-html="../common/footer/footer.html"></footer>
 </body>
+
 </html>
