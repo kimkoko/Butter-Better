@@ -26,6 +26,13 @@ document.addEventListener('DOMContentLoaded', function () {
       console.log(response);
       const result = await response.json();
 
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                window.alert('유효한 이메일 형식이 아닙니다.');
+                
+                return
+            }
+            
       // 서버 응답에 따른 처리
       if (response.ok) {
         alert('로그인 성공');
