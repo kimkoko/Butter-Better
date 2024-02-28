@@ -1,7 +1,7 @@
 import { API_HOST } from '../common/api.js';
 
 /* All Books */
-async function getAllBooks() {
+async function getAllBooks(allBooks) {
   try {
     // 서버에서 모든 책 목록을 가져오는 API 호출
     const response = await fetch(`${API_HOST}/api/books`);
@@ -10,10 +10,18 @@ async function getAllBooks() {
     const allBooks = await response.json();
     console.log('모든 책 목록:', allBooks);
 
+    const books = allBooks.data.books
+    console.log(books);
+
     // 여기서 책 목록을 활용하여 원하는 작업을 수행할 수 있습니다.
     const productListElement = document.getElementById('productList');
 
-    allBooks.slice(0, 24).forEach((book) => {
+    // totalNum
+    // 리스트에 뿌려지는 아이템 갯수
+    const totalText = document.getElementById('totalCount');
+    totalText.innerText = `${allBooks.data.productCount} products`;
+
+    books.slice(0, 24).forEach((book) => {
       // 상품 요소 생성
       const productItem = document.createElement('li');
       productItem.classList.add('product-item');
