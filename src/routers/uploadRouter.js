@@ -1,10 +1,8 @@
 const express = require('express');
-const { upload, bucket } = require('../views/upload/upload'); // 이 부분이 올바르게 임포트되었는지 확인하세요
+const { upload, bucket } = require('../views/upload/upload'); 
 const fs = require('fs');
 const uploadRouter = express.Router();
 
-
-// uploadRouter.js
 uploadRouter.post('/', upload.single('file'), (req, res, next) => {
     try {
       // 파일이 성공적으로 업로드 되었는지 확인
@@ -18,7 +16,7 @@ uploadRouter.post('/', upload.single('file'), (req, res, next) => {
         });
   
         blobStream.on('finish', () => {
-          // The public URL can be used to directly access the file via HTTP.
+          // public URL
           const publicUrl = `https://storage.googleapis.com/${bucket.name}/${blob.name}`;
           res.status(200).json({
             message: 'File uploaded successfully',
@@ -27,7 +25,7 @@ uploadRouter.post('/', upload.single('file'), (req, res, next) => {
           });
         });
   
-        // diskStorage를 사용하는 경우 파일 시스템에서 파일을 읽어서 스트림합니다.
+        // 파일 시스템에서 파일을 읽어서 스트림
       fs.createReadStream(req.file.path).pipe(blobStream);
     } else {
       throw new Error('File upload failed');

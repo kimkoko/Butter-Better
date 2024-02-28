@@ -5,16 +5,16 @@ const {Storage} = require('@google-cloud/storage');
 const fs = require('fs');
 
 
-const keyFilename = process.env.KEY_FILENAME; // 서비스 계정 키 파일의 경로
+const keyFilename = process.env.KEY_FILENAME; // 서비스 계정 키 파일 경로
 const projectId = process.env.PROJECT_ID; // 프로젝트 ID
 
 // Google Cloud Storage 설정
 const gcs = new Storage({
-  keyFilename: process.env.KEY_FILENAME, // 서비스 계정 키 파일의 경로를 적어주세요.
-  projectId: process.env.PROJECT_ID, // 프로젝트 ID를 적어주세요.
+  keyFilename: process.env.KEY_FILENAME, // 서비스 계정 키 파일의 경로
+  projectId: process.env.PROJECT_ID, // 프로젝트 ID
 });
 
-const bucket = gcs.bucket('elice_04'); // 저장소 이름을 적어주세요.
+const bucket = gcs.bucket('elice_04'); // 저장소 이름
 
 // 파일 저장을 위한 multer 설정
 const storage = multer.diskStorage({
@@ -47,7 +47,7 @@ const upload = multer({
   limits: {
     fileSize: 1024 * 1024 * 3 // 3MB 파일 크기 제한
   }
-});// 'file'은 클라이언트가 파일을 보낼 때 사용하는 필드의 이름입니다.
+});// 'file'은 클라이언트가 파일을 보낼 때 사용하는 필드의 이름
 
 
 module.exports = { upload, bucket };

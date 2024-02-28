@@ -3,13 +3,14 @@ const { Book } = require('../db/models/bookModel');
 const categoryModel = require('../db/models/categoryModel');
 
 class BookService {
+  // 홈페이지 베스트셀러
   async getBestSellers() {
     const bestSellers = await Book.find({ isBestSeller: true }).populate(
       'category_id'
     );
     return bestSellers;
   }
-
+// 카테고리별 조회
   async getBooksByCategory(categoryId, page = 1, perPage = 24) {
     const skip = (page - 1) * perPage;
     const category = await categoryModel.findByCategoryId(categoryId);
@@ -26,7 +27,7 @@ class BookService {
       category: category.name,
     };
   }
-
+// 상품 목록 조회 
   async getBooks(page = 1, perPage = 24) {
     const skip = (page - 1) * perPage;
     const total = await Book.countDocuments({});
@@ -41,22 +42,22 @@ class BookService {
       books,
     };
   }
-
+// 상품 상세 조회 
   async getBook(id) {
     const book = await Book.findById(id).populate('category_id');
     return book;
   }
-
+// 상품 추가 *admin
   async addBook(bookData) {
     const newBook = await Book.create(bookData);
     return newBook;
   }
-
+// 상품 삭제 *admin
   async deleteBook(id) {
     const deletedBook = await Book.deleteOne({ _id: id });
     return deletedBook;
   }
-
+// 상품 수정 *admin
   async updateBook(id, updateData) {
     const updatedBook = await Book.findByIdAndUpdate(id, updateData, {
       new: true,
