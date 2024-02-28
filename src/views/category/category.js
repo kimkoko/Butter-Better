@@ -35,7 +35,7 @@ async function getCategoryBooks() {
     const productListElement = document.getElementById('productList');
     const books = categoryBook.books;
 
-    books.slice(0, 16).forEach((book) => {
+    books.slice(0, 24).forEach((book) => {
       // 상품 요소 생성
       const productItem = document.createElement('li');
       productItem.classList.add('product-item');
