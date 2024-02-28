@@ -51,14 +51,14 @@ signForm.addEventListener("submit", async (event) => {
     const confirmPassword = document.getElementById("confirmPassword").value
     const phone = document.getElementById("phone").value
     const postCode = document.getElementById("postCode").value
-    const main = document.getElementById("main").value
+    const main = document.getElementById("address").value
     const detail = document.getElementById("detail").value
     
     
     try {
         
         if (password !== confirmPassword) {
-            window.alert("비밀번호와 확인 비밀번호가 일치하지 않습니다.");
+            window.alert("비밀번호가 일치하지 않습니다. 다시 입력해주세요.");
             return;
         }
         
