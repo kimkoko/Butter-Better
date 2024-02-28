@@ -1,4 +1,6 @@
-let products = {}
+let products = {};
+let currentPage = 1;
+let totalPage = 1;
 
 // ID로 현재 가지고 있는 제품들 중에서 찾기
 function findProductById(id) {
@@ -15,6 +17,28 @@ document.addEventListener('DOMContentLoaded', function () {
   const modal1 = document.getElementById("myModal1");
   const modal2 = document.getElementById("myModal2");
   
+  // 페이지네이션 버튼 가져오기
+  const prevPageBtn = document.querySelector(".previous-page a");
+  const nextPageBtn = document.querySelector(".next-page a");
+
+  // 이전 페이지로 이동
+  prevPageBtn.addEventListener("click", function (e) {
+    e.preventDefault();
+    if (currentPage > 1) {
+      currentPage--;
+      renderProductList();
+    }
+  });
+
+  // 다음 페이지로 이동
+  nextPageBtn.addEventListener("click", function (e) {
+    e.preventDefault();
+    if (currentPage < totalPage) {
+      currentPage++;
+      renderProductList();
+    }
+  });
+
   // 상품 추가 버튼에 이벤트 리스너 추가
   addBtn.addEventListener("click", function () {
     var pargraph = modal1.querySelector("p");
@@ -26,7 +50,6 @@ document.addEventListener('DOMContentLoaded', function () {
     // 저장 버튼에 이벤트 리스너 추가
     const saveBtn1 = document.getElementById("save-Btn1");
     saveBtn1.onclick = createProduct;
-    // saveBtn1.onclick = editProduct;
   });
   
   // 모달 닫기 함수
@@ -39,7 +62,6 @@ document.addEventListener('DOMContentLoaded', function () {
     if (e.target !== modal2) return;
     modal2.style.display = "none";
   });
-  
 });
 
 // Modal에서 입력된 상품 데이터 가져오기
@@ -89,7 +111,6 @@ function createProduct() {
       window.location.reload()
       renderProductList();
     } else {
-      
       alert('상품 추가 실패');
     }
   })
@@ -157,8 +178,6 @@ function connectModalEvent() {
   });
 }
 
-// saveBtn1.addEventListener("click", editProduct);
-
 // 수정 모달의 저장 버튼을 눌렀을 때 실행되는 함수
 function editProduct(id) {
   // Modal에서 입력된 상품 데이터 가져오기
@@ -207,7 +226,6 @@ function deleteProduct(product) {
     console.error('삭제 중 오류가 발생했습니다:', error);
     alert('삭제 실패');
   });
-  
 }
 
 // 제품 리스트 가져오기 //
@@ -217,31 +235,25 @@ import { API_HOST } from '../../common/api.js';
 async function renderProductList() {
   try {
     // API에서 상품 데이터 가져오기
-    const response = await fetch(`${API_HOST}/api/books`);
+    const response = await fetch(`${API_HOST}/api/books?page=${currentPage}`);
     if (!response.ok) {
       throw new Error('상품 데이터를 가져올 수 없습니다.');
-    } else {
-      console.log("성공이다!!")
     }
     
     const data = await response.json();
-    console.log('response: ', data)
-    // products = data.data.books // 이건 배열
     
-    // => 오브젝트로 변경
+    // 상품 데이터 설정
     products = {};
     data.data.books.forEach((book) => {
       products[book._id] = book;
     });
-    
-    
-    //토탈페이지값
-    let page = 1;
-    let totalPage = data.data.totalPage;
 
+    // 페이지 정보 설정
+    totalPage = data.data.totalPage;
 
-    const productListElement = document.getElementById('table-List');
-    
+    const productListElement = document.getElementById('tbody');
+
+    tbody.innerHTML = '';
     
     // 상품 데이터를 기반으로 상품 리스트 생성
     for (const [id, product] of Object.entries(products)) {
@@ -273,11 +285,16 @@ async function renderProductList() {
       
       productListElement.appendChild(row);
     };
-    //모달 불러오기
-    connectModalEvent();
     
+    // 모달 이벤트 다시 연결
+    connectModalEvent();
+    updatePagination();
   } catch (error) {
     console.error('상품 리스트를 렌더링하는 중 오류가 발생했습니다:', error);
   }
 }
 
+function updatePagination() {
+  const currentPageInfo = document.getElementById("currentPageInfo");
+  currentPageInfo.textContent = `Page ${currentPage} of ${totalPage}`;
+}
