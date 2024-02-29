@@ -31,115 +31,106 @@
     <header data-load-html="../common/header/header.html"></header>
 
     <div class="mainBox">
+        <h1>My Account</h1>
         <div class="inner">
-            <div class="inputBox">
-                <div class="box order">
-                    <h3>Order</h3>
-                    <div class="input">
-                        <form action="">
-                            <input type="text" placeholder="이름">
-                            <input type="email" placeholder="이메일">
-                            <input type="text" placeholder="휴대 전화, '-' 기호를 추가해 주세요.">
-                        </form>
+            <section class="order">
+                <h3>Order History</h3>
+                <div class="container">
+                    <div class="table__head">
+                        <p>주문 내역</p>
+                        <p>주문 금액</p>
+                        <p>진행 상태</p>
                     </div>
-                </div>
-
-                <div class="box delivery">
-                    <h3>Delivery</h3>
-                    <div class="input">
-                        <form action="">
-                            <div class="postalCode">
-                                <input type="number" placeholder="우편번호">
-                                <button type="button">주소 검색</button>
+                    <div class="table__body">
+                        <div class="table__body--top">
+                            <span>주문 일자</span>
+                            <b class='date'>${order.createAt}</b>
+                            <span>주문 번호</span>
+                            <b class="order-id">${order._id}</b>
+                        </div>
+                        <div class="table__body--bottom">
+                            <div class='products'>title 외 1종</div>
+                            <!-- ${order.products[0].name} 외 ${order.products.length - 1}종 -->
+                            <div class='total-price'>20000</div>
+                            <!-- ${order.total_price} -->
+                            <div class='status'>${order.status}<button class="btn-order-edit" type='button'>주문
+                                    수정</button>
                             </div>
-                            <input type="text" placeholder="기본 주소">
-                            <input type="text" placeholder="나머지 주소 (선택)">
-                            <select name="message" id="message" style="width: 100%; margin-top: 18px;"
-                                onchange="selectText()">
-                                <option value="0">배송 메세지 (선택)</option>
-                                <option value="1">부재 시, 경비실에 맡겨주세요.</option>
-                                <option value="2">배송 전에 미리 연락 바랍니다.</option>
-                                <option value="3">부재 시, 문 앞에 놓아주세요.</option>
-                                <option value="4">빠른 배송 부탁드립니다.</option>
-                                <option value="5">택배함에 보관해주세요.</option>
-                                <option value="6" class="input">기타 (직접 입력)</option>
-                            </select>
-
-                            <input type="text" class="messageInput off" placeholder="직접 입력" style="margin-top: 3px;">
-                        </form>
+                            <!-- 주문 상태가 '주문 완료'일 경우, 배송 .btn-order-edit에 클래스명 active 추가 / 그 외 비활성화 -->
+                        </div>
                     </div>
                 </div>
+            </section>
 
-                <div class="box delivery">
-                    <h3>Payment</h3>
-                    <div class="input">
-                        <div class="radio_select">
-                            <input type="radio" name="pay" id="card">
-                            <label for="card" class="pay_label">카드 결제</label>
-                        </div>
-                        <div class="radio_select">
-                            <input type="radio" name="pay" id="no_card" checked>
-                            <label for="no_card" class="pay_label">무통장 입금</label>
-                        </div>
-
-                    </div>
+            <section class="account">
+                <h3>Account Details</h3>
+                <div class="container">
+                    <ul class='info-box'>
+                        <li><span>Name</span><span class='name'>최세영</span></li>
+                        <li><span>Email</span><span class='email'>butter@better.com</span></li>
+                        <li><span>Phone</span><span class='phone'>010-1234-5678</span></li>
+                        <li><span>Address</span><span class='address'>서울특별시 성동구 성수2가제3동 광나루로6길 49</span></li>
+                    </ul>
+                    <button class='btn-edit' type='button'>EDIT</button>
+                    <button class='btn-delete' type='button'>DELETE ACCOUNT</button>
                 </div>
+            </section>
 
-                <button type="button" class="payButton">PAY NOW</button>
-            </div>
-
-            <div class="checkout">
-                <h3>Check Out</h3>
-                <div class="orderBox">
-                    <div>
-                        <ul class="products">
-                            <li class="product">
-                                <p class="img"><img src="../common/img/bn_ex_01.jpeg" alt=""></p>
-                                <p class="name">Title Here</p>
-                                <p class="num">1</p>
-                                <p class="price">₩17,000</p>
-                            </li>
-                        </ul>
-
-                        <div class="priceBox">
-                            <p class="subTotal">
-                                <span class="title">Subtotal</span>
-                                <span class="price">₩34,000</span>
-                            </p>
-                            <p class="shipping">
-                                <span class="title">Shipping</span>
-                                <span class="price">₩3,000</span>
-                            </p>
-                            <p class="total">
-                                <span class="title">Total</span>
-                                <span class="price">₩37,000</span>
-                            </p>
+            <!-- ******** 회원 정보 수정 모달 BELOW ******** -->
+            <div class="modal-container" id="edit-account">
+                <div class="modal">
+                    <div class="modal__edit-account">
+                        <p>Edit Account Details</p>
+                        <!-- 추가 모달 내용 -->
+                        <div class="form">
+                            <label for="name">Name *</label>
+                            <input type="text" id="name" placeholder="이름">
                         </div>
+
+                        <div class="form">
+                            <label for="email">Email *</label>
+                            <input type="text" id="email" placeholder="이메일">
+                        </div>
+                        <div class="form">
+                            <label for="phone">Phone *</label>
+                            <input type="text" id="phone" placeholder="휴대 전화, '-' 기호를 추가해 주세요.">
+                        </div>
+
+                        <div class="form address">
+                            <label for="confirmPassword">Address *</label>
+                            <div class="postalCode">
+                                <input type="text" placeholder="우편번호" id="postCode">
+                                <button type="button" id="searchAddressBtn">주소 검색</button>
+                            </div>
+                            <input type="text" placeholder="기본 주소" id="address">
+                            <input type="text" placeholder="나머지 주소 (선택)" id="detail">
+                        </div>
+
+                        <button class="btn-submit" type="submit">SAVE</button>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
 
-    <!-- 주문 완료 시 노출 -->
-    <div class="orderCompletion" style="display:  none;">
-        <div>
-            <h3>Thank You</h3>
-            <p class="text">
-                <ion-icon name="checkmark-circle"></ion-icon><br>
-                <span class="textSpan">고객님의 주문이 완료되었습니다.</span><br>
-                <span class="order orderNumber">주문 번호 : 2024-0220-000001</span><br>
-                <span class="order orderDate">주문 일자 : 2024-02-20 13:14:00</span>
-            </p>
-            <div class="buttons">
-                <button type="button" class="home" onclick="location.href='../home/home.html'">BACK TO MAIN</button>
-                <button type="button" class="mypage">CHECK PAYMENT</button>
+            <!-- ******** 탈퇴 알럿 BELOW ******** -->
+            <div class="modal-container" id='delete-account'>
+                <div class='modal'>
+                    <div class="modal__delete-account">
+                        <p>
+                            <ion-icon name="alert-circle"></ion-icon>
+                        </p>
+                        <p class="text">탈퇴하시겠습니까?</p>
+                        <div class="btn-group">
+                            <button class="btn-cancel" type='button'>취소</button>
+                            <button class="btn-submit" type='button'>확인</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
     <!-- footer -->
-    <footer data-load-html="../common/footer/footer.html">
+    <footer data-load-html=" ../common/footer/footer.html">
     </footer>
 </body>
 
