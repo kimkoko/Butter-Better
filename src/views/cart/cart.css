@@ -60,13 +60,28 @@
 }
 /* 경림님 코드 */
 .cartList table tr .quantity input {
-  width: 100px;
+  width: 80px;
   height: 49px;
   color: var(--orange-500);
   border: 1px solid var(--mocha-500);
   border-radius: 2px;
   font-size: 18px;
   text-align: center;
+}
+
+.cart-empty-message {
+  width: 100%;
+  text-align: center;
+  color: var(--camel-500);
+  font-size: 16px;
+  border-bottom: solid 1px var(--cream-700);
+  box-sizing: border-box;
+  padding: 54px 0;
+  font-weight: 500;
+  display: none;
+}
+.cart-empty-message.active {
+  display: block;
 }
 
 .infoBox {
@@ -79,7 +94,7 @@
 }
 .infoBox .text p {
   font-size: 16px;
-  font-weight: 600;
+  font-weight: 500;
   color: var(--camel-500);
   line-height: 1.8;
 }
@@ -106,7 +121,8 @@
   justify-content: space-between;
   margin-bottom: 60px;
 }
-.mainBox .buttonBox button {
+.mainBox .buttonBox button,
+.mainBox .buttonBox a {
   font-size: 18px;
   color: var(--orange-500);
   box-sizing: border-box;
@@ -114,7 +130,7 @@
   border: 1px solid var(--camel-500);
   border-radius: 4px;
 }
-.mainBox .buttonBox button.continue-shopping {
+.mainBox .buttonBox a.continue-shopping {
   margin-left: 32px;
 }
 .mainBox .buttonBox button.checkout {

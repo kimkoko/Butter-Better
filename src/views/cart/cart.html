@@ -56,7 +56,6 @@
                         <th>Total</th>
                     </thead>
 
-
                     <tr>
                         <td><input type="checkbox" class="checkbox ck"></td>
                         <td class="left">
@@ -72,6 +71,10 @@
                         <td class="total_price">₩15,000</td>
                     </tr>
                 </table>
+            </div>
+
+            <div class='cart-empty-message'>
+                <p>장바구니에 담은 상품이 없습니다.</p>
             </div>
 
             <div class="infoBox">
@@ -96,13 +99,13 @@
 
                 <div class="rightBox">
                     <!-- <button type="button" id="quantityBtn">QUANTITY EDIT</button> -->
-                    <button type="button" class="continue-shopping">CONTINUE SHOPPING</button>
-                    <button type="button" class="checkout">CHECK OUT</button>
+                    <a class="continue-shopping" href='/'>CONTINUE SHOPPING</a>
+                    <button type="button" class="checkout" onclick="location.href='/order'">CHECK OUT</button>
                 </div>
             </div>
         </div>
-
-        <!-- 수량 수정
+    </div>
+    <!-- 수량 수정
     <div class="modal-container" id="myModal1">
         <div class="modal">
             <div class="modal-content">
@@ -114,7 +117,7 @@
             </div>
         </div>
     </div> -->
-        <!-- <script>
+    <!-- <script>
         const quantityInput = document.getElementById('quantity-input');
 
         // 초기 수량 설정
@@ -128,8 +131,8 @@
         });
     </script> -->
 
-        <!-- footer -->
-        <footer data-load-html="../common/footer/footer.html"></footer>
+    <!-- footer -->
+    <footer data-load-html="../common/footer/footer.html"></footer>
 </body>
 
 </html>

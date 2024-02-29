@@ -53,8 +53,8 @@
   margin-bottom: 30px;
   position: relative;
 }
-.textBox button {
-  font-family: Pretendard !important;
+.textBox a {
+  font-family: 'Pretendard' !important;
   font-size: 30px;
   font-weight: 500;
   color: var(--orange-500);
@@ -66,7 +66,7 @@
   box-shadow: 6px 8px 30px rgba(136, 109, 75, 0.125);
 }
 
-.textBox button:hover {
+.textBox a:hover {
   background-color: var(--orange-500);
   color: var(--bg-color);
   transition: all 0.3s;
@@ -121,6 +121,7 @@
 }
 
 .slide_inner.first .imgBox::after {
+  animation: rotate 20s linear infinite;
   background-image: url(../common/img/banner_elem_01.png);
 }
 .slide_inner.second .imgBox::after {
@@ -238,4 +239,17 @@
 .Best-item .price {
   font-size: 18px;
   color: var(--camel-500);
+}
+
+@keyframes rotate {
+  from {
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
 }
