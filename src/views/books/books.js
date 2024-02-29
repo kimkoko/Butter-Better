@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // 페이지네이션 버튼 가져오기
   const prevPageBtn = document.querySelector('.previous-page a');
   const nextPageBtn = document.querySelector('.next-page a');
+  const productFilter = document.querySelector('.product-filter');
 
   // 이전 페이지로 이동
   prevPageBtn.addEventListener('click', function (e) {
@@ -27,19 +28,28 @@ document.addEventListener('DOMContentLoaded', function () {
       getAllBooks();
     }
   });
+
+  // 정렬 옵션 변경 시 이벤트 핸들러 추가
+  productFilter.addEventListener('change', function () {
+    getAllBooks();
+  });
 });
 
-/* All Books */
+/* 모든 책 가져오기 */
 async function getAllBooks() {
   try {
+    const productFilter = document.querySelector('.product-filter');
+    const selectedOption = productFilter.value;
+
     // 서버에서 모든 책 목록을 가져오는 API 호출
-    const response = await fetch(`${API_HOST}/api/books?page=${currentPage}`);
+    const response = await fetch(`${API_HOST}/api/books/sort?page=${currentPage}&option=${selectedOption}`);
 
     // API 응답 데이터를 JSON 형태로 변환
     const allBooks = await response.json();
-
     const books = allBooks.data.books;
+
     totalPage = allBooks.data.totalPage;
+
     // 여기서 책 목록을 활용하여 원하는 작업을 수행할 수 있습니다.
     const productListElement = document.getElementById('productList');
 
@@ -80,5 +90,5 @@ window.addEventListener('load', () => {
 
 function updatePagination() {
   const currentPageInfo = document.getElementById('currentPageInfo');
-  currentPageInfo.textContent = `Page ${currentPage} of ${totalPage}`;
+  currentPageInfo.textContent = `페이지 ${currentPage} / ${totalPage}`;
 }
