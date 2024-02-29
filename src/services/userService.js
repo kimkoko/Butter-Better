@@ -1,4 +1,5 @@
 const { User } = require('../db/models/userModel');
+const customError = require('../middlewares/customError');
 const { hashPassword, comparePassword } = require('../utils/hash-password');
 const UserDTO = require('../utils/userValidator');
 const jwt = require('jsonwebtoken');
@@ -10,7 +11,7 @@ class UserService {
         UserDTO.validateUserData(userData);
 
         const ifExists = await User.findOne({ email });
-        if (ifExists) throw new Error('이미 가입된 회원입니다.');
+        if (ifExists) throw new customError(403, '이미 가입된 회원입니다.');
 
         const hashedPassword = await hashPassword(password);
         const newUser = await User.create({
@@ -28,11 +29,11 @@ class UserService {
 
     async loginUser(email, password) {
         const user = await User.findOne({ email });
-        if (!user) throw new Error('이메일이 일치하지 않습니다.');
+        if (!user) throw new customError(401, '이메일이 일치하지 않습니다.');
         
         const correctPassword = user.password;
         if (!comparePassword(password, correctPassword)) {
-        throw new Error('비밀번호가 일치하지 않습니다.');
+        throw new customError(401, '비밀번호가 일치하지 않습니다.');
         }
 
         let token;
