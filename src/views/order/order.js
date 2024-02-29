@@ -2,25 +2,21 @@ import { API_HOST } from '../common/api.js';
 
 document.addEventListener("DOMContentLoaded", function () {
     loadOrderSummary();
-    setupSelectTextFunctionality(); // 수정된 부분: 이 함수를 호출하여 select 이벤트 리스너를 설정
+    setupSelectTextFunctionality();
     setupOrderSubmission();
 });
 
+/* 배송 메세지 직접 입력 선택 시 인풋 노출 */
 function setupSelectTextFunctionality() {
     const messageSelect = document.getElementById("message");
-    messageSelect.addEventListener("change", selectText);
-}
-
-function selectText() {
-    const select = document.getElementById("message");
-    const value = select.value;
-    const messageInput = document.querySelector(".messageInput");
-
-    if (value == "6") {
-        messageInput.classList.remove("off");
-    } else {
-        messageInput.classList.add("off");
-    }
+    messageSelect.addEventListener("change", function() {
+        const messageInput = document.querySelector(".messageInput");
+        if (this.value == "6") { // 'this'는 이벤트가 발생한 <select> 요소를 참조
+            messageInput.classList.remove("off");
+        } else {
+            messageInput.classList.add("off");
+        }
+    });
 }
 
 function setupOrderSubmission() {
@@ -35,18 +31,21 @@ async function submitOrder() {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                // 인증이 필요한 경우 인증 헤더 추가
+                // 인증이 필요한 경우 인증 헤더 추가, 현재 TEAM4는 인증이 필요없는 기능구현
                 //'Authorization': `Bearer ${accessToken}`,
             },
             body: JSON.stringify(orderData),
         });
+        console.log(orderData);
         if (!response.ok) {
             throw new Error(`주문 생성에 실패했습니다: ${response.statusText}`);
         }
 
-        const result = await response.json();
+        const order = await response.json();
         alert('주문이 성공적으로 완료되었습니다.');
-        showOrderCompletion(result.orderId); // 주문 완료 화면 또는 메시지 표시
+
+        showOrderCompletion(order._id, order.createdAt); // 주문 완료 화면 주문번호와 주문번호시간 출력
+
         localStorage.removeItem('cartItems'); // 주문 완료 후 장바구니 비우기
     } catch (error) {
         console.error('주문 생성 실패:', error);
@@ -104,17 +103,24 @@ function collectOrderData() {
 function showOrderCompletion(orderId) {
     // 주문 완료 화면 표시 로직
     const completionScreen = document.querySelector('.orderCompletion');
+    const orderNumberElement = document.querySelector('.orderNumber'); // 주문번호 생성
+    const orderDateElement = document.querySelector('.orderDate'); // 주문 일자를 표시할 요소
+
     completionScreen.style.display = 'block';
-    document.querySelector('.orderNumber').textContent = `주문 번호 : ${orderId}`;
-    // 주문 일자 등 추가 정보 표시 가능
+    orderNumberElement.textContent = `주문 번호: ${orderId}`;
+
+    // 서버로부터 받은 ISO 문자열 형태의 날짜를 보기 좋은 형태로 변환
+    const date = new Date(orderCreatedAt);
+    const formattedDate = date.toLocaleString(); // 'YYYY/MM/DD, HH:MM:SS' 형태로 변환
+    orderDateElement.textContent = `주문 일자: ${formattedDate}`;
 }
 
 
 //  --------------------로컬스토리지 정보 불러오기-------------------
-document.addEventListener("DOMContentLoaded", function () {
-    loadOrderSummary();
-    selectText(); // 배송 메세지 선택 관련 함수 호출
-});
+// document.addEventListener("DOMContentLoaded", function () {
+//     loadOrderSummary();
+//     selectText(); // 배송 메세지 선택 관련 함수 호출
+// });
 
 
 function loadOrderSummary() {
