@@ -32,10 +32,26 @@ categoryRouter.get('/books/:categoryId', async (req, res, next) => {
 
   res.status(200).json({
     status: 200,
-    message: '카테고리 별 목록 조회 성공',
+    message: '카테고리 별 상품 목록 조회 성공',
     data: { books },
   });
 });
+
+// 카테고리 정보 조회 *admin
+categoryRouter.get(
+  '/:categoryId',
+  loginRequired,
+  adminOnly,
+  asyncHandler(async (req, res, next) => {
+    const { categoryId } = req.params;
+    const category = await categoryService.getCategory(categoryId);
+    res.status(200).json({
+      status: 200,
+      message: '카테고리 정보 조회 성공',
+      data: category,
+    });
+  })
+);
 
 // 카테고리 추가 *admin
 categoryRouter.post(

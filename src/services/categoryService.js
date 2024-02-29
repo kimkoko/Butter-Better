@@ -11,6 +11,11 @@ class CategoryService {
     return await this.categoryModel.findAll({});
   }
 
+  // 카테고리 개별 조회
+  async getCategory(categoryId) {
+    return await this.categoryModel.findByCategoryId(categoryId);
+  }
+
   // 카테고리 추가
   async addCategory(categoryInfo) {
     const categoryName = await this.categoryModel.findByCategory(
