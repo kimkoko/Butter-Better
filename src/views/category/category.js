@@ -71,7 +71,7 @@ async function getCategoryBooks() {
       const productItem = document.createElement('li');
       productItem.classList.add('product-item');
       productItem.innerHTML = `
-            <a href="/src/views/detail/detail.html?id=${book._id}">
+            <a href="/detail?id=${book._id}">
                 <div class="img-container"><img src="${
                   book.img_url
                 }" alt="제품 이미지"></div>

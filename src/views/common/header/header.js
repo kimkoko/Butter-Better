@@ -28,7 +28,7 @@ async function fetchUser() {
         // 로그인되었을 경우 처리
         signOutBtn.classList.remove('hidden')
         // 유저 버튼?을 누르면 마이페이지로 이동
-        userBtn.href = '/src/views/mypage/mypage.html'
+        userBtn.href = '/mypage'
         
         // if (res.user.is_admin) adminBtn.classList.remove('hidden')
         // else adminBtn.classList.add('hidden')
@@ -45,7 +45,7 @@ async function fetchUser() {
         // 로그인되지 않았을 경우 처리
         signOutBtn.classList.add('hidden')
         // 유저 버튼?을 누르면 로그인페이지로 이동
-        userBtn.href = '/src/views/login/login.html'
+        userBtn.href = '/login'
         adminBtn.classList.add('hidden')
     }
 }
@@ -63,7 +63,7 @@ async function renderCategory() {
             const categoryItem = document.createElement('li');
             categoryItem.classList.add('menu');
             categoryItem.innerHTML = `
-            <a href="/src/views/category/category.html?category=${category._id}">${category.name}</a>
+            <a href="/category?category=${category._id}">${category.name}</a>
             `;
             
             // 상품 리스트에 상품 추가
@@ -90,7 +90,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             const res = await response.json();
             
             if (!response.ok) throw new Error(res.msg);
-            location.href = '/src/views/home/home.html';
+            location.href = '/';
             
         } catch (error) {
             console.error('로그아웃 중 오류가 발생했습니다:', error);

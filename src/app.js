@@ -67,4 +67,6 @@ app.use('/upload', express.static('src/public'));
 
 app.use('/upload', uploadRouter);
 
+app.use(express.static("/views"))
+
 module.exports = app;
