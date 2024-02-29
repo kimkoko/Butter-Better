@@ -1,4 +1,4 @@
-import { API_HOST } from '../common/api.js';
+import { API_HOST } from '/src/views/common/api.js';
 
 document.addEventListener('DOMContentLoaded', function () {
   const signinBtn = document.querySelector('.signin-btn');

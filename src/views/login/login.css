@@ -1,7 +1,13 @@
+.loginBox {
+  height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .login {
   box-sizing: border-box;
   padding: 80px 0;
-  /* border-bottom: 1px solid var(--camel-500); */
 
   /* width: 1200px;
     text-align: center;
@@ -62,13 +68,6 @@
   font-size: 18px;
   color: var(--orange-500);
   font-weight: 500;
-}
-
-.login label {
-  font-size: 18px;
-  color: var(--orange-500);
-  font-weight: 500;
-  text-align: left;
 }
 
 /* 회원가입, a태그 */
