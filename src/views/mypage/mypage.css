@@ -1,3 +1,6 @@
+.mainBox{
+  height: 63vh;
+}
 .mainBox h1 {
   font-size: 42px;
   font-weight: 600;
@@ -113,6 +116,7 @@
 }
 .account .info-box {
   background: #ffffff;
+  width: 100%;
   border: 1px solid var(--mocha-500);
   border-radius: 4px;
   padding: 32px;
@@ -220,7 +224,7 @@
   margin-left: 10px;
   border: 1px solid var(--camel-500);
 }
-.modal__edit-account .btn-submit {
+.modal__edit-account .btn-save {
   width: 100%;
   padding: 18px 0;
   box-sizing: border-box;
