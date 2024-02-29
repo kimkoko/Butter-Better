@@ -44,7 +44,6 @@ async function getCategoryBooks() {
 
     // categoryId 가져오기
     const categoryId = getCategoryIdFromUrl();
-    console.log('categoryId: ', categoryId);
 
     // categoryId를 사용하여 카테고리 정보를 가져오는 API 호출
     const response = await fetch(

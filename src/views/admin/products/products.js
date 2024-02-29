@@ -138,7 +138,7 @@ function updateModalContent(product) {
   const imageInput = document.querySelector("#myModal1 input[placeholder='이미지']");
   const quantityInput = document.querySelector("#myModal1 input[placeholder='수량']");
   const rateInput = document.querySelector("#myModal1 input[placeholder='별점']");
-  
+
   bestSellerInput.value = product.isBestSeller;
   titleInput.value = product.title;
   categoryInput.value = product.category_id._id;
@@ -148,7 +148,6 @@ function updateModalContent(product) {
   quantityInput.value = product.quantity;
   rateInput.value = product.rate;
 }
-
 function connectModalEvent() {
   // 모달 열기 버튼과 모달 가져오기
   const modalEditBtns = document.querySelectorAll(".modal-edit-btn");

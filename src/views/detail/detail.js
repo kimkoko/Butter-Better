@@ -94,7 +94,6 @@ function saveProductToLocalStorage(productInfo) {
 window.addEventListener('load', updateProductInfo);
 
 
-// ---------------------------------------------------------------------
 async function renderRecommendsList() {
   // TODO: API를 호출해서 상품 목록을 가져와서 반환합니다.
 
@@ -108,7 +107,6 @@ async function renderRecommendsList() {
     }
 
     const data = await response.json();
-    console.log(data)
     let products = data.data.books
 
     const productListElement = document.getElementById('recommendsList');
