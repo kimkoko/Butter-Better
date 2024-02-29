@@ -218,3 +218,17 @@ button.edit {
     transition: all 0.3s;
     background:var(--orange-500);
   }
+
+#myModal1 .formBox{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#myModal1 .formBox input{
+    width: 550px;
+}
+#myModal1 .formBox label{
+    margin-bottom: 0px;
+}
