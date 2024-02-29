@@ -12,7 +12,6 @@ async function getBestSellersList() {
         }
 
         const data = await response.json();
-        console.log(data.data);
         products = data.data; // 'products' 변수에 데이터 할당
         
         const maxProductsToShow = 8;

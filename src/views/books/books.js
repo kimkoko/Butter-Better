@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
     e.preventDefault();
     if (currentPage > 1) {
       currentPage--;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
       getAllBooks()
     }
   });
@@ -24,6 +25,7 @@ document.addEventListener('DOMContentLoaded', function () {
     e.preventDefault();
     if (currentPage < totalPage) {
       currentPage++;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
       getAllBooks()
     }
   });
@@ -39,7 +41,6 @@ async function getAllBooks() {
     
     // API 응답 데이터를 JSON 형태로 변환
     const allBooks = await response.json();
-    console.log('모든 책 목록:', allBooks);
 
     const books = allBooks.data.books
     totalPage = allBooks.data.totalPage
