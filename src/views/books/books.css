@@ -30,14 +30,7 @@
   text-align: left;
   margin-top: 48px;
 }
-.product-item a {
-  width: 250px;
-  height: 350px;
-  margin-bottom: 12px;
-  transition: box-shadow 0.3s ease-in;
-}
-
-.product-item a .img-container {
+.product-item .img-container {
   width: 250px;
   height: 350px;
   margin-bottom: 12px;
