@@ -98,7 +98,7 @@ npm install 의존성 설치 -> .env 생성 (\*별도 전달)
 
 ### 1. 화면 구성안
 
-!(https://storage.googleapis.com/elice_04/presentation/readme_img_01.png)
+![화면 구성](https://storage.googleapis.com/elice_04/presentation/readme_img_01.png)
 
 ### 2. [데이터 베이스 스키마]()
 
