@@ -126,6 +126,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
       // 상품의 부모 tr 요소를 페이지에서 삭제
       productRow.remove();
+      window.location.reload();
     });
 
     // 로컬 스토리지 업데이트

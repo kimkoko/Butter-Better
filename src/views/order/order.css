@@ -95,11 +95,12 @@ input[type='number']::-webkit-inner-spin-button {
 }
 .postalCode button {
   box-sizing: border-box;
+  width : 150px;
   padding: 13px 24px;
   font-size: 18px;
   color: var(--orange-500);
   border-radius: 4px;
-  margin-left: 10px;
+  margin-left: 15px;
   border: 1px solid var(--camel-500);
 }
 
@@ -178,6 +179,11 @@ input[type='number']::-webkit-inner-spin-button {
 }
 
 /* 주문 완료 */
+.orderCompletion{
+  align-items: center;
+  justify-content: center;
+  height: 90vh;
+}
 .orderCompletion > div {
   width: 1200px;
   margin: 0 auto;

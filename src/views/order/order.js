@@ -60,7 +60,7 @@ function collectOrderData() {
   const nameInput = document.querySelector('input[placeholder="이름"]');
   const emailInput = document.querySelector('input[placeholder="이메일"]');
   const phoneInput = document.querySelector(
-    'input[placeholder="휴대 전화, \'-\' 기호를 추가해 주세요."]'
+    'input[placeholder="휴대 전화"]'
   );
   const postcodeInput = document.querySelector('input[placeholder="우편번호"]');
   const mainAddressInput = document.querySelector(
@@ -122,7 +122,7 @@ function showOrderCompletion(orderId, orderCreatedAt) {
   const orderNumberElement = document.querySelector('.orderNumber'); // 주문번호 생성
   const orderDateElement = document.querySelector('.orderDate'); // 주문 일자를 표시할 요소
 
-  completionScreen.style.display = 'block';
+  completionScreen.style.display = 'flex';
   orderNumberElement.textContent = `주문 번호: ${orderId}`;
 
   // 서버로부터 받은 ISO 문자열 형태의 날짜를 보기 좋은 형태로 변환
@@ -192,3 +192,90 @@ function loadOrderSummary() {
 //         messageInput.classList.add("off")
 //     }
 // }
+
+//우편 번호api 실행 함수
+function execDaumPostcode() {
+  new daum.Postcode({
+    // 검색 완료 시 호출되는 콜백 함수
+    oncomplete: function(data) {
+      // 주소 변수
+      var addr = '';
+      
+      // 사용자가 도로명 주소를 선택했을 경우
+      if (data.userSelectedType === 'R') {
+        addr = data.roadAddress;
+      } else { // 사용자가 지번 주소를 선택했을 경우(J)
+        addr = data.jibunAddress;
+      }
+      
+      // 우편번호와 주소 정보를 해당 필드에 넣는다.
+      document.getElementById('postCode').value = data.zonecode;
+      document.getElementById("address").value = addr;
+      
+      // 커서를 상세주소 필드로 이동한다.
+      document.getElementById("detail").focus();
+    }
+  }).open();
+}
+// 다음 우편번호 API 실행 함수
+document.getElementById("searchAddressBtn").addEventListener("click", execDaumPostcode);
+
+
+
+
+// 주문 할 때 사용자 정보 찾아오기
+//유저 정보 찾아서 가져오기 
+async function findUser() {
+  try {
+    // API로 유저 정보 가져오기
+    const response = await fetch(`${API_HOST}/api/users/mypage`);
+    const res = await response.json();
+    
+    if (!response.ok) {
+      throw new Error("유저 정보를 불러오는데 실패했습니다.");
+    }
+    const user = res.user;
+    console.log(user)
+    
+    // 유저 정보 렌더링
+    renderUserInfo(user);
+    renderAccountDetails(user);
+    
+  } catch (error) {
+    console.error('유저정보를 렌더링하는 중 오류가 발생했습니다:', error);
+  }
+}
+
+
+// 유저 정보 넣을 곳
+function renderUserInfo(user) {
+  // 입력 필드에서 정보 수집
+  const nameInput = document.querySelector('input[placeholder="이름"]');
+  const emailInput = document.querySelector('input[placeholder="이메일"]');
+  const phoneInput = document.querySelector(
+    'input[placeholder="휴대 전화"]'
+  );
+  const postcodeInput = document.querySelector('input[placeholder="우편번호"]');
+  const mainAddressInput = document.querySelector(
+    'input[placeholder="기본 주소"]'
+  );
+  const detailAddressInput = document.querySelector(
+    'input[placeholder="나머지 주소 (선택)"]'
+  );
+
+
+
+  nameInput.value = user.name
+  emailInput.value = user.email
+  phoneInput.value = user.phone
+  
+  postcodeInput.value = user.address.postcode
+  mainAddressInput.value = user.address.main
+  detailAddressInput.value = user.address.detail
+
+
+}
+
+
+// 유저 정보 렌더링
+findUser()
