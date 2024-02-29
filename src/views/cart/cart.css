@@ -106,7 +106,8 @@
   justify-content: space-between;
   margin-bottom: 60px;
 }
-.mainBox .buttonBox button {
+.mainBox .buttonBox button,
+.mainBox .buttonBox a {
   font-size: 18px;
   color: var(--orange-500);
   box-sizing: border-box;
@@ -114,7 +115,7 @@
   border: 1px solid var(--camel-500);
   border-radius: 4px;
 }
-.mainBox .buttonBox button.continue-shopping {
+.mainBox .buttonBox a.continue-shopping {
   margin-left: 32px;
 }
 .mainBox .buttonBox button.checkout {
