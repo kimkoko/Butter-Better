@@ -88,46 +88,83 @@ function getProductDataFromModal() {
   
   return newProduct;
 }
-//이미지 업로드!!!!!!!!!!!!!!
+// //이미지 업로드!!!!!!!!!!!!!!
+
 document.addEventListener('DOMContentLoaded', function () {
-  // 이미지 업로드 버튼
   const uploadBtn = document.getElementById('upload-btn');
-  
-  // 버튼 클릭 이벤트 리스너
+  const fileInput = document.getElementById('file-input');
+
+  // '업로드' 버튼 클릭 시 파일 선택 다이얼로그를 엽니다.
   uploadBtn.addEventListener('click', function() {
-    // 페이지 이동
-    window.location.href = `${API_HOST}/upload`;
+    fileInput.click();
+  });
+
+  // 파일 선택 시 파일 이름을 텍스트 필드에 표시합니다.
+  fileInput.addEventListener('change', function() {
+    const selectedFile = this.files[0];
+    if (selectedFile) {
+      document.querySelector('input[placeholder="이미지"]').value = selectedFile.name;
+    } else {
+      document.querySelector('input[placeholder="이미지"]').value = '';
+    }
   });
 });
+
 
 // 새로운 제품(책) 추가
 function createProduct() {
   const newProduct = getProductDataFromModal();
   const modal1 = document.getElementById("myModal1");
+  const fileInput = document.getElementById('file-input');
+  const selectedFile = fileInput.files[0];
+
+  // 이미지 파일이 선택된 경우
+  if (selectedFile) {
+    const formData = new FormData();
+    formData.append('file', selectedFile);
+
+    // 이미지 업로드
+    fetch(`${API_HOST}/api/uploads`, { // 이미지 업로드 API 경로
+      method: 'POST',
+      body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log(data);
+      if (data.message === 'File uploaded successfully' && data.url) {
+        // 반환된 URL을 newProduct 객체에 추가
+        newProduct.img_url = data.url;
+
+        // API를 통해 새로운 제품 추가
+        return fetch(`${API_HOST}/api/books/admin`, {
+          method: 'post',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(newProduct),
+        });
+      } else {
+        throw new Error('File upload failed');
+      }
+    })
+    .then(response => {
+      if (response.ok) {
+        alert("새로운 상품이 추가되었습니다.");
+        modal1.style.display = "none";
+        window.location.reload()
+        renderProductList();
+      } else {
+        throw new Error('Product addition failed');
+      }
+    })
+    .catch(error => {
+      console.error('An error occurred while adding a product:', error);
+      alert('Product addition failed');
+    });
+  }
+}
+
   
-  // API를 통해 새로운 제품 추가
-  fetch(`${API_HOST}/api/books/admin`, {
-    method: 'post',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(newProduct),
-  })
-  .then(response => {
-    if (response.ok) {
-      alert("새로운 상품이 추가되었습니다.");
-      modal1.style.display = "none";
-      window.location.reload()
-      renderProductList();
-    } else {
-      alert('상품 추가 실패');
-    }
-  })
-  .catch(error => {
-    console.error('상품 추가 중 오류가 발생했습니다:', error);
-    alert('상품 추가 실패');
-  });
-};
 
 function updateModalContent(product) {
   const bestSellerInput = document.querySelector("#myModal1 input[placeholder='베스트셀러']");
@@ -186,32 +223,83 @@ function connectModalEvent() {
 
 // 수정 모달의 저장 버튼을 눌렀을 때 실행되는 함수
 function editProduct(id) {
-  // Modal에서 입력된 상품 데이터 가져오기
   const newProduct = getProductDataFromModal();
   const modal1 = document.getElementById("myModal1");
-  
-  fetch(`${API_HOST}/api/books/admin/${id}`, {
-    method: 'PATCH',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(newProduct),
-  })
-  .then(response => {
-    if (response.ok) {
-      alert("상품 정보가 수정되었습니다.");
-      modal1.style.display = "none";
-      window.location.reload()
-      renderProductList();
-    } else {
+  const fileInput = document.getElementById('file-input');
+  const selectedFile = fileInput.files[0];
+
+  // 이미지 파일이 선택된 경우
+  if (selectedFile) {
+    const formData = new FormData();
+    formData.append('file', selectedFile);
+
+    // 이미지 업로드
+    fetch(`${API_HOST}/api/uploads`, { // 이미지 업로드 API 경로
+      method: 'POST',
+      body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log(data);
+      if (data.message === 'File uploaded successfully' && data.url) {
+        // 반환된 URL을 newProduct 객체에 추가
+        newProduct.img_url = data.url;
+
+
+        // 상품 정보 수정 API 호출
+        return fetch(`${API_HOST}/api/books/admin/${id}`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(newProduct),
+        });
+      } else {
+        throw new Error('파일 업로드 실패');
+      }
+    })
+    .then(response => {
+      if (response.ok) {
+        alert("상품 정보가 수정되었습니다.");
+        modal1.style.display = "none";
+        window.location.reload()
+        renderProductList();
+      } else {
+        throw new Error('상품 수정 실패');
+      }
+    })
+    .catch(error => {
+      console.error('상품 수정 중 오류가 발생했습니다:', error);
       alert('상품 수정 실패');
-    }
-  })
-  .catch(error => {
-    console.error('상품 수정 중 오류가 발생했습니다:', error);
-    alert('상품 수정 실패');
-  });
+    });
+  }
+
+  // 이미지 파일이 선택되지 않은 경우
+  else {
+    fetch(`${API_HOST}/api/books/admin/${id}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newProduct),
+    })
+    .then(response => {
+      if (response.ok) {
+        alert("상품 정보가 수정되었습니다.");
+        modal1.style.display = "none";
+        window.location.reload()
+        renderProductList();
+      } else {
+        alert('상품 수정 실패');
+      }
+    })
+    .catch(error => {
+      console.error('상품 수정 중 오류가 발생했습니다:', error);
+      alert('상품 수정 실패');
+    });
+  }
 }
+
 
 function deleteProduct(product) {
   // 삭제요청 API
