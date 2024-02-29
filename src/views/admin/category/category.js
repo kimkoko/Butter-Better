@@ -1,4 +1,4 @@
-import { API_HOST } from '../../common/api.js';
+import { API_HOST } from '/src/views/common/api.js';
 
 
 // 카테고리 리스트
