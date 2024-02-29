@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
     e.preventDefault();
     if (currentPage > 1) {
       currentPage--;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
       getCategoryBooks()
     }
   });
@@ -24,6 +25,7 @@ document.addEventListener('DOMContentLoaded', function () {
     e.preventDefault();
     if (currentPage < totalPage) {
       currentPage++;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
       getCategoryBooks()
     }
   });
