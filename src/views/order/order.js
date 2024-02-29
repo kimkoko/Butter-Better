@@ -192,3 +192,30 @@ function loadOrderSummary() {
 //         messageInput.classList.add("off")
 //     }
 // }
+
+//우편 번호api 실행 함수
+function execDaumPostcode() {
+  new daum.Postcode({
+    // 검색 완료 시 호출되는 콜백 함수
+    oncomplete: function(data) {
+      // 주소 변수
+      var addr = '';
+      
+      // 사용자가 도로명 주소를 선택했을 경우
+      if (data.userSelectedType === 'R') {
+        addr = data.roadAddress;
+      } else { // 사용자가 지번 주소를 선택했을 경우(J)
+        addr = data.jibunAddress;
+      }
+      
+      // 우편번호와 주소 정보를 해당 필드에 넣는다.
+      document.getElementById('postCode').value = data.zonecode;
+      document.getElementById("address").value = addr;
+      
+      // 커서를 상세주소 필드로 이동한다.
+      document.getElementById("detail").focus();
+    }
+  }).open();
+}
+// 다음 우편번호 API 실행 함수
+document.getElementById("searchAddressBtn").addEventListener("click", execDaumPostcode);

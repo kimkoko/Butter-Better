@@ -23,6 +23,7 @@
     <script type="module" src="/src/views/order/order.js"></script>
     <script src="/src/views/common/loadHTML.js"></script>
     <script type="module" src="/src/views/common/header/header.js"></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     
 </head>
 
@@ -49,11 +50,11 @@
                     <div class="input">
                         <form action="">
                             <div class="postalCode">
-                                <input type="number" placeholder="우편번호">
-                                <button type="button">주소 검색</button>
+                                <input type="number" id="postCode" placeholder="우편번호">
+                                <button type="button" id="searchAddressBtn">주소 검색</button>
                             </div>
-                            <input type="text" placeholder="기본 주소">
-                            <input type="text" placeholder="나머지 주소 (선택)">
+                            <input type="text" id="address" placeholder="기본 주소">
+                            <input type="text" id="detail" placeholder="나머지 주소 (선택)">
                             <select name="message" id="message" style="width: 100%; margin-top: 18px;">
                                 <option value="0">배송 메세지 (선택)</option>
                                 <option value="1">부재 시, 경비실에 맡겨주세요.</option>
