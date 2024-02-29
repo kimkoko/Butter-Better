@@ -25,8 +25,6 @@ async function fetchUser() {
         const res = await response.json();
         if (!response.ok) throw new Error()
         
-        console.log(res.user)
-        
         // 로그인되었을 경우 처리
         signOutBtn.classList.remove('hidden')
         // 유저 버튼?을 누르면 마이페이지로 이동
