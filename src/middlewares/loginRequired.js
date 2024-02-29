@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const customError = require('./customError');
 
 module.exports = (req, res, next) => {   
     try {
@@ -9,6 +10,7 @@ module.exports = (req, res, next) => {
         next();
 
     } catch (err) {
+        err = new customError(401, '로그인이 필요합니다.');
         next(err);
     }
 }
