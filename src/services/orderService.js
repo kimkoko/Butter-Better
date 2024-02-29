@@ -26,7 +26,7 @@ class OrderService {
   async getOrdersByEmail(userEmail) {
     const orders = await this.orderModel.findAll();
     const ordersByEmail = orders.filter(
-      (order) => order.ordered.email === userEmail
+      (order) => order.orderer.email === userEmail
     );
     if (!ordersByEmail.length) {
       throw new customError(404, '해당 사용자의 주문 내역이 없습니다.');
