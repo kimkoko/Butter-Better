@@ -2,34 +2,30 @@ import { API_HOST } from '../common/api.js';
 let currentPage = 1;
 let totalPage = 1;
 
-
 // 페이지가 로드되면 상품 리스트 렌더링
 document.addEventListener('DOMContentLoaded', function () {
-  
   // 페이지네이션 버튼 가져오기
-  const prevPageBtn = document.querySelector(".previous-page a");
-  const nextPageBtn = document.querySelector(".next-page a");
+  const prevPageBtn = document.querySelector('.previous-page a');
+  const nextPageBtn = document.querySelector('.next-page a');
 
   // 이전 페이지로 이동
-  prevPageBtn.addEventListener("click", function (e) {
+  prevPageBtn.addEventListener('click', function (e) {
     e.preventDefault();
     if (currentPage > 1) {
       currentPage--;
-      getCategoryBooks()
+      getCategoryBooks();
     }
   });
 
   // 다음 페이지로 이동
-  nextPageBtn.addEventListener("click", function (e) {
+  nextPageBtn.addEventListener('click', function (e) {
     e.preventDefault();
     if (currentPage < totalPage) {
       currentPage++;
-      getCategoryBooks()
+      getCategoryBooks();
     }
   });
 });
-
-
 
 /* 카테고리별 정보 */
 async function getCategoryBooks() {
@@ -52,7 +48,7 @@ async function getCategoryBooks() {
     // API 응답 데이터를 JSON 형태로 변환
     const categoryBooks = await response.json();
     const categoryBook = categoryBooks.data.books;
-    
+
     totalPage = categoryBook.totalPage;
 
     // 카테고리 타이틀
@@ -66,9 +62,8 @@ async function getCategoryBooks() {
     // 카테고리별 리스트
     const productListElement = document.getElementById('productList');
     const books = categoryBook.books;
-    
-    productListElement.innerHTML = '';
 
+    productListElement.innerHTML = '';
 
     books.slice(0, 24).forEach((book) => {
       // 상품 요소 생성
@@ -76,7 +71,9 @@ async function getCategoryBooks() {
       productItem.classList.add('product-item');
       productItem.innerHTML = `
             <a href="/src/views/detail/detail.html?id=${book._id}">
-                <p class="img"><img src="${book.img_url}" alt="제품 이미지"></p>
+                <div class="img-container"><img src="${
+                  book.img_url
+                }" alt="제품 이미지"></div>
                 <h2>${book.title}</h2>
                 <span class="price">${book.price.toLocaleString()} 원</span>
             </a>
@@ -88,7 +85,7 @@ async function getCategoryBooks() {
   } catch (error) {
     console.error('카테고리별 정보를 가져오는 중 오류가 발생했습니다:', error);
   }
-  updatePagination() 
+  updatePagination();
 }
 
 // 페이지가 로드되면 상품 리스트 렌더링
@@ -97,6 +94,6 @@ window.addEventListener('load', () => {
 });
 
 function updatePagination() {
-  const currentPageInfo = document.getElementById("currentPageInfo");
+  const currentPageInfo = document.getElementById('currentPageInfo');
   currentPageInfo.textContent = `Page ${currentPage} of ${totalPage}`;
 }

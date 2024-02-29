@@ -11,7 +11,9 @@ async function getProductInfo(productId) {
 }
 
 async function updateProductInfo() {
-  const productInfoElement = document.querySelector('.mainBox .inner .topBox > div');
+  const productInfoElement = document.querySelector(
+    '.mainBox .inner .topBox > div'
+  );
   if (!productInfoElement) {
     alert('상품을 표시할 수 없습니다.');
     return;
@@ -39,9 +41,9 @@ async function updateProductInfo() {
   <h3 class="price">￦ <span class="price">${product.price.toLocaleString()}</span></h3>
   <div class="priceButton">
       <div class="quantityButton">
-          <button id="decreaseQuantity" class="button1"> - </button>
+          <button id="decreaseQuantity"><ion-icon name="remove-outline"></ion-icon></button>
           <span class="quantityInput"> 1 </span>
-          <button id="increaseQuantity" class="button2"> + </button>
+          <button id="increaseQuantity"><ion-icon name="add-outline"></button>
       </div>
       <!-- <p>￦<span class="price">17,000</span></p> -->
       <button type="button"  class="cartBtn">ADD TO CART</button>
@@ -52,20 +54,24 @@ async function updateProductInfo() {
   `;
 
   // 수량 감소 버튼 클릭 시 이벤트 핸들러
-document.getElementById('decreaseQuantity').addEventListener('click', function() {
-  const quantityInput = document.querySelector('.quantityInput');
-  let quantity = parseInt(quantityInput.textContent);
-  if (quantity > 1) {
-      quantityInput.textContent = --quantity;
-  }
-});
+  document
+    .getElementById('decreaseQuantity')
+    .addEventListener('click', function () {
+      const quantityInput = document.querySelector('.quantityInput');
+      let quantity = parseInt(quantityInput.textContent);
+      if (quantity > 1) {
+        quantityInput.textContent = --quantity;
+      }
+    });
 
-// 수량 증가 버튼 클릭 시 이벤트 핸들러
-document.getElementById('increaseQuantity').addEventListener('click', function() {
-  const quantityInput = document.querySelector('.quantityInput');
-  let quantity = parseInt(quantityInput.textContent);
-  quantityInput.textContent = ++quantity;
-});
+  // 수량 증가 버튼 클릭 시 이벤트 핸들러
+  document
+    .getElementById('increaseQuantity')
+    .addEventListener('click', function () {
+      const quantityInput = document.querySelector('.quantityInput');
+      let quantity = parseInt(quantityInput.textContent);
+      quantityInput.textContent = ++quantity;
+    });
 
   // 여기서 ADD TO CART 버튼에 이벤트 리스너를 직접 등록
   document.querySelector('.cartBtn').addEventListener('click', function () {
@@ -73,7 +79,7 @@ document.getElementById('increaseQuantity').addEventListener('click', function()
       name: product.title,
       price: product.price,
       quantity: parseInt(document.querySelector('.quantityInput').textContent),
-      img: product.img_url
+      img: product.img_url,
     };
     saveProductToLocalStorage(productInfo);
     alert('상품이 장바구니에 추가되었습니다!');
@@ -93,7 +99,6 @@ function saveProductToLocalStorage(productInfo) {
 
 window.addEventListener('load', updateProductInfo);
 
-
 // ---------------------------------------------------------------------
 async function renderRecommendsList() {
   // TODO: API를 호출해서 상품 목록을 가져와서 반환합니다.
@@ -104,12 +109,12 @@ async function renderRecommendsList() {
     if (!response.ok) {
       throw new Error('상품 데이터를 가져올 수 없습니다.');
     } else {
-      console.log("성공이다!!")
+      console.log('성공이다!!');
     }
 
     const data = await response.json();
-    console.log(data)
-    let products = data.data.books
+    console.log(data);
+    let products = data.data.books;
 
     const productListElement = document.getElementById('recommendsList');
 
@@ -123,13 +128,15 @@ async function renderRecommendsList() {
     products = selected;
 
     // 상품 데이터를 기반으로 상품 리스트 생성
-    products.forEach(product => {
+    products.forEach((product) => {
       // 상품 요소 생성
       const productItem = document.createElement('li');
       productItem.classList.add('Recommends-item');
       productItem.innerHTML = `
         <a href="/src/views/detail/detail.html?id=${product._id}">
-        <img src="${product.img_url}" alt="제품 이미지">
+        <div class="img-container"><img src="${
+          product.img_url
+        }" alt="제품 이미지"></div>
         <h2 class="Recommends-name">${product.title}</h2>
         <span class="Recommends-price">${product.price.toLocaleString()}</span>
             </a>
@@ -137,10 +144,6 @@ async function renderRecommendsList() {
 
       productListElement.appendChild(productItem);
     });
-
-
-
-
   } catch (error) {
     console.error('상품 리스트를 렌더링하는 중 오류가 발생했습니다:', error);
   }
