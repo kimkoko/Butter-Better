@@ -33,8 +33,8 @@ async function renderCategory() {
             const categoryItem = document.createElement('tr');
             categoryItem.classList.add('category');
             categoryItem.innerHTML = `
-            <td>${category.name}</td>
             <td>${category.sort}</td>
+            <td>${category.name}</td>
             <td>
                 <button type="button" id="openModalbtn1" class="edit" data-category-id="${category._id}">수정</button>
                 <button type="button" id="openModalbtn2" class="delete" data-category-id="${category._id}">삭제</button>
@@ -137,7 +137,7 @@ async function addCategory() {
 
 // moal1 초기화
 function initializeForm() {
-    const categoryNameInput = document.getElementById("categoryInput");
+    const categoryNameInput = document.querySelector("#myModal1 input[placeholder='카테고리']");
     const categorySortInput = document.querySelector("#myModal1 input[placeholder='순서, 0 부터 입력']");
     
     // 폼 필드 초기화
@@ -159,7 +159,7 @@ async function fetchCategoryById(categoryId) {
         const category = await response.json();
         console.log(category)
 
-        const categoryNameInput = document.getElementById("categoryInput");
+        const categoryNameInput = document.querySelector("#myModal1 input[placeholder='카테고리']");
         const categorySortInput = document.querySelector("#myModal1 input[placeholder='순서, 0 부터 입력']");
 
         // 폼에 카테고리 정보 채우기
@@ -175,9 +175,10 @@ async function fetchCategoryById(categoryId) {
 // 수정 삭제 클릭 이벤트
 function modalEditDelete() {
     const editButtons = document.querySelectorAll('.edit');
+    const deleteButtons = document.querySelectorAll('.delete');
     const modal1 = document.getElementById("myModal1");
 
-    // 수정
+    // 수정 버튼
     editButtons.forEach(editButton => {
         editButton.addEventListener('click', () => {
             const paragraph = modal1.querySelector("p");
@@ -198,13 +199,24 @@ function modalEditDelete() {
             console.log(saveBtn1)
         });
     });
+
+
+
+    // 삭제 버튼
+    deleteButtons.forEach(function (deleteButton) {
+        deleteButton.addEventListener("click", function () {
+            const categoryId = deleteButton.dataset.categoryId;
+            if (!categoryId) return;
+            deleteCategory(categoryId)
+        });
+    });
 }
 
 
 
 // 수정 폼에서 정보를 업데이트
 async function updateCategory(categoryId) {
-    const categoryNameInput = document.getElementById("categoryInput");
+    const categoryNameInput = document.querySelector("#myModal1 input[placeholder='카테고리']");
     const categorySortInput = document.querySelector("#myModal1 input[placeholder='순서, 0 부터 입력']");
     const modal1 = document.getElementById("myModal1");
 
@@ -235,7 +247,30 @@ async function updateCategory(categoryId) {
     } catch (error) {
         console.error('카테고리 정보를 업데이트하는 중 오류 발생:', error);
     }
+}
+
+
+
+// 삭제하기
+async function deleteCategory(categoryId) {
+
+    try {
+        const response = await fetch(`${API_HOST}/api/categories/${categoryId}`, {
+            method: "DELETE"
+        })
+
+        if (response.ok) {
+
+            window.alert("카테고리가 삭제되었습니다.");
+            window.location.reload()
+            getCategory();
+        }
+    } catch (error) {
+        console.error('삭제 중 오류가 발생했습니다:', error);
+        alert('삭제를 실패 했습니다.');
     }
+
+}
 
 // 페이지 로드
 window.addEventListener('load', () => {
