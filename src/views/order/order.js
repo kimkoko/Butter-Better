@@ -100,7 +100,7 @@ function collectOrderData() {
 }
 
 
-function showOrderCompletion(orderId) {
+function showOrderCompletion(orderId, orderCreatedAt) {
     // 주문 완료 화면 표시 로직
     const completionScreen = document.querySelector('.orderCompletion');
     const orderNumberElement = document.querySelector('.orderNumber'); // 주문번호 생성
