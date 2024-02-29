@@ -34,10 +34,7 @@
         <div class="inner">
             <div class="titleBox">
                 <h2 class="title">상품 관리</h2>
-                <div class="buttons">
-                    <button type="button" class="plus" id="upload-btn">+이미지 업로드</button>
-                    <button type="button" class="plus" id="add-btn">+ 상품 추가</button>
-                </div>
+                <button type="button" class="plus" id="add-btn">+ 상품 추가</button>
             </div>
             <div class="tableList">
                 <table id="table-List">
@@ -96,7 +93,11 @@
                 <input type="text" placeholder="카테고리">
                 <input type="text" placeholder="상품 설명">
                 <input type="text" placeholder="가격">
-                <input type="text" placeholder="이미지">
+            <div style="display: flex; justify-content: flex-start;">
+                <input type="file" id="file-input" style="display: none;">
+                <input type="text" id="file-name" placeholder="파일 이름" style="margin-right: 10px; width: 500px;" readonly>
+                <button id="upload-btn" class="upload-btn">업로드</button>
+            </div>
                 <input type="text" placeholder="수량">
                 <input type="text" placeholder="별점">
                 <button id="save-Btn1">저장</button>

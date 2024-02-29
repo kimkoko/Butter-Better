@@ -16,6 +16,22 @@ bookRouter.get(
   })
 );
 
+//책 정렬 조회
+bookRouter.get(
+  '/sort',
+  asyncHandler(async (req, res) => {
+    const page = Number(req.query.page || 1);
+    const perPage = Number(req.query.perPage || 24);
+    const option = req.query.option || '최신순';  
+    const result = await bookService.getBooksBySort(page, perPage, option);
+    res.status(200).json({
+      status: 200,
+      msg: '상품 정렬 조회 완료',
+      data: result,
+    });
+  })
+);
+
 // 상품 목록 조회
 bookRouter.get(
   '/',
