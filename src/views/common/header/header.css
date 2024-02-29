@@ -41,13 +41,13 @@ header nav {
   width: 100%;
   box-sizing: border-box;
   padding-bottom: 24px;
+  margin-left: -18px;
 }
 header nav .menus {
   width: auto;
   display: flex;
   gap: 4px;
 }
-
 header nav .menus .menu a {
   display: inline-block;
   box-sizing: border-box;
