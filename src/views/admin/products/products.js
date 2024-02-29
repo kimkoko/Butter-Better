@@ -11,7 +11,7 @@ function findProductById(id) {
 document.addEventListener('DOMContentLoaded', function () {
   // 페이지가 로드되면 상품 리스트 렌더링
   renderProductList();
-
+  
   // 모달 열기 버튼과 모달 가져오기
   const addBtn = document.getElementById("add-btn");
   const modal1 = document.getElementById("myModal1");
@@ -20,25 +20,27 @@ document.addEventListener('DOMContentLoaded', function () {
   // 페이지네이션 버튼 가져오기
   const prevPageBtn = document.querySelector(".previous-page a");
   const nextPageBtn = document.querySelector(".next-page a");
-
+  
   // 이전 페이지로 이동
   prevPageBtn.addEventListener("click", function (e) {
     e.preventDefault();
     if (currentPage > 1) {
       currentPage--;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
       renderProductList();
     }
   });
-
+  
   // 다음 페이지로 이동
   nextPageBtn.addEventListener("click", function (e) {
     e.preventDefault();
     if (currentPage < totalPage) {
       currentPage++;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
       renderProductList();
     }
   });
-
+  
   // 상품 추가 버튼에 이벤트 리스너 추가
   addBtn.addEventListener("click", function () {
     var pargraph = modal1.querySelector("p");
@@ -46,7 +48,8 @@ document.addEventListener('DOMContentLoaded', function () {
       pargraph.innerText = "상품 추가";
     }
     modal1.style.display = "flex";
-
+    initializeForm();   // 폼 초기화
+    
     // 저장 버튼에 이벤트 리스너 추가
     const saveBtn1 = document.getElementById("save-Btn1");
     saveBtn1.onclick = createProduct;
@@ -56,11 +59,6 @@ document.addEventListener('DOMContentLoaded', function () {
   modal1.addEventListener("mousedown", function (e) {
     if (e.target !== modal1) return;
     modal1.style.display = "none";
-  });
-  
-  modal2.addEventListener("mousedown", function (e) {
-    if (e.target !== modal2) return;
-    modal2.style.display = "none";
   });
 });
 
@@ -87,9 +85,20 @@ function getProductDataFromModal() {
     quantity: quantityInput.value,
     rate: rateInput.value,
   };
-
+  
   return newProduct;
 }
+//이미지 업로드!!!!!!!!!!!!!!
+document.addEventListener('DOMContentLoaded', function () {
+  // 이미지 업로드 버튼
+  const uploadBtn = document.getElementById('upload-btn');
+  
+  // 버튼 클릭 이벤트 리스너
+  uploadBtn.addEventListener('click', function() {
+    // 페이지 이동
+    window.location.href = `${API_HOST}/upload`;
+  });
+});
 
 // 새로운 제품(책) 추가
 function createProduct() {
@@ -129,7 +138,7 @@ function updateModalContent(product) {
   const imageInput = document.querySelector("#myModal1 input[placeholder='이미지']");
   const quantityInput = document.querySelector("#myModal1 input[placeholder='수량']");
   const rateInput = document.querySelector("#myModal1 input[placeholder='별점']");
-  
+
   bestSellerInput.value = product.isBestSeller;
   titleInput.value = product.title;
   categoryInput.value = product.category_id._id;
@@ -139,13 +148,11 @@ function updateModalContent(product) {
   quantityInput.value = product.quantity;
   rateInput.value = product.rate;
 }
-
 function connectModalEvent() {
   // 모달 열기 버튼과 모달 가져오기
   const modalEditBtns = document.querySelectorAll(".modal-edit-btn");
   const modalDeleteBtns = document.querySelectorAll(".modal-delete-btn");
   const modal1 = document.getElementById("myModal1");
-  const modal2 = document.getElementById("myModal2");
   
   // 수정버튼
   modalEditBtns.forEach(function (modalEditBtn) {
@@ -160,13 +167,13 @@ function connectModalEvent() {
       if (!productId) return;
       const product = findProductById(productId);
       updateModalContent(product)
-
+      
       // 저장 버튼에 이벤트 리스너 추가
       const saveBtn1 = document.getElementById("save-Btn1");
       saveBtn1.onclick = () => editProduct(productId);
     });
   });
-
+  
   // 삭제버튼
   modalDeleteBtns.forEach(function (modalDeleteBtn) {
     modalDeleteBtn.addEventListener("click", function () {
@@ -182,7 +189,7 @@ function editProduct(id) {
   // Modal에서 입력된 상품 데이터 가져오기
   const newProduct = getProductDataFromModal();
   const modal1 = document.getElementById("myModal1");
-
+  
   fetch(`${API_HOST}/api/books/admin/${id}`, {
     method: 'PATCH',
     headers: {
@@ -226,7 +233,27 @@ function deleteProduct(product) {
     alert('삭제 실패');
   });
 }
-
+// moal1 초기화
+function initializeForm() {
+  const bestSellerInput = document.querySelector("#myModal1 input[placeholder='베스트셀러']");
+  const titleInput = document.querySelector("#myModal1 input[placeholder='상품명']");
+  const categoryInput = document.querySelector("#myModal1 input[placeholder='카테고리']");
+  const contentInput = document.querySelector("#myModal1 input[placeholder='상품 설명']");
+  const priceInput = document.querySelector("#myModal1 input[placeholder='가격']");
+  const imageInput = document.querySelector("#myModal1 input[placeholder='이미지']");
+  const quantityInput = document.querySelector("#myModal1 input[placeholder='수량']");
+  const rateInput = document.querySelector("#myModal1 input[placeholder='별점']");
+  
+  // 폼 필드 초기화
+  bestSellerInput.value = "";
+  titleInput.value = "";
+  categoryInput.value = "";
+  contentInput.value = "";
+  priceInput.value = "";
+  imageInput.value = "";
+  quantityInput.value = "";
+  rateInput.value = "";
+}
 // 제품 리스트 가져오기 //
 import { API_HOST } from '../../common/api.js';
 
@@ -246,12 +273,12 @@ async function renderProductList() {
     data.data.books.forEach((book) => {
       products[book._id] = book;
     });
-
+    
     // 페이지 정보 설정
     totalPage = data.data.totalPage;
-
+    
     const productListElement = document.getElementById('tbody');
-
+    
     tbody.innerHTML = '';
     
     // 상품 데이터를 기반으로 상품 리스트 생성

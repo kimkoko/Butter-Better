@@ -1,19 +1,25 @@
 footer {
-    background-color: var(--orange-500);
-    height: 209px;
-    padding: 20px;
-    text-align: center;
+  background-color: var(--orange-500);
+  height: 209px;
+  padding: 20px;
+  text-align: center;
 }
 
 footer .logo {
-    display: inline-block;
-    margin: 50px 32px;
-	--bg-color:#FDF4E6;
-    color: var(--bg-color);
-    list-style: none;
+  display: inline-block;
+  margin: 50px 32px;
+  --bg-color: #fdf4e6;
+  color: var(--bg-color);
+  list-style: none;
+  transition: all 0.3s ease-in;
+}
+
+footer .logo:hover {
+  transform: scale(1.2);
+  color: var(--cream-500);
 }
 
 .copyright {
-    margin-top: 20px;
-    color: var(--bg-color);
+  margin-top: 20px;
+  color: var(--bg-color);
 }

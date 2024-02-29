@@ -39,15 +39,15 @@
     justify-content: space-between;
 }
 .postalCode input{
-    width: 467px;
+    width: 450px;
 }
 .postalCode button{
     box-sizing: border-box;
+    float: right;
     padding: 13px 24px;
     font-size: 18px;
     color: var(--orange-500);
     border-radius: 4px;
-    margin-left: 10px;
     border: 1px solid var(--camel-500);
 }
 input[type="number"]::-webkit-inner-spin-button {

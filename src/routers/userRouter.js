@@ -28,7 +28,7 @@ router.post(
     const { email, password } = req.body;
     
     const {token, role} = await userService.loginUser(email, password);
-    res.cookie('token', token, {path: '/'});
+    res.cookie('token', token);
 
     res.status(201).json({
       msg: '로그인 완료',

@@ -1,132 +1,130 @@
-.mainBox .inner{
-    width: 1200px;
-    margin: 0 auto;
+.mainBox .inner {
+  width: 1200px;
+  margin: 0 auto;
 }
 
-.mainBox .inner .titleBox{
-    text-align: center;
-    box-sizing: border-box;
-    padding: 60px 0;
+.mainBox .inner .titleBox {
+  text-align: center;
+  box-sizing: border-box;
+  padding: 60px 0;
 }
 
-.mainBox .inner .titleBox h2{
-    font-size: 42px;
-    color: var(--orange-500);
-    font-weight: 600;
+.mainBox .inner .titleBox h2 {
+  font-size: 42px;
+  color: var(--orange-500);
+  font-weight: 600;
 }
-.cartList table{
-    width: 100%;
-    border-top:1px solid var(--camel-500);
-    border-bottom:1px solid var(--camel-500);
-    font-weight: 600;
+.cartList table {
+  width: 100%;
+  border-top: 1px solid var(--camel-500);
+  border-bottom: 1px solid var(--camel-500);
+  font-weight: 600;
 }
-.cartList table .head{
-    color: var(--orange-500);
-
+.cartList table .head {
+  color: var(--orange-500);
 }
-.cartList table th{
-    font-size: 16px;
-    box-sizing: border-box;
-    padding: 24px 0px;
+.cartList table th {
+  font-size: 16px;
+  box-sizing: border-box;
+  padding: 24px 0px;
 }
-.cartList table th.left{
-    text-align: left;
+.cartList table th.left {
+  text-align: left;
 }
-.cartList table tr{
-    border-top:1px solid var(--camel-500);
+.cartList table tr {
+  border-top: 1px solid var(--camel-500);
 }
-.cartList table tr td{
-    text-align: center;
-    box-sizing: border-box;
-    padding: 24px 0;
-    color: var(--orange-500);
+.cartList table tr td {
+  text-align: center;
+  box-sizing: border-box;
+  padding: 24px 0;
+  color: var(--orange-500);
 }
-.cartList table tr td.left{
-    text-align: left;
+.cartList table tr td.left {
+  text-align: left;
 }
-.cartList table tr td.left .book{
-    display: flex;
-    align-items: center;
-
+.cartList table tr td.left .book {
+  display: flex;
+  align-items: center;
 }
-.cartList table tr td.left .book p.img{
-    height: 100px;
-    margin-right: 32px;
+.cartList table tr td.left .book p.img {
+  height: 100px;
+  margin-right: 32px;
 }
-.cartList table tr td.left .book p.img img{
-    height: 100%;
+.cartList table tr td.left .book p.img img {
+  height: 100%;
 }
-.cartList table tr td.left .book h3{
-    font-size: 20px;
-    color: var(--orange-500);
+.cartList table tr td.left .book h3 {
+  font-size: 20px;
+  color: var(--orange-500);
 }
 /* 경림님 코드 */
-.cartList table tr .quantity input{
-    width: 100px;
-    height: 49px;
-    color: var(--orange-500);
-    border: 1px solid var(--mocha-500);
-    border-radius: 2px;
-    font-size: 18px;
-    text-align: center;
+.cartList table tr .quantity input {
+  width: 100px;
+  height: 49px;
+  color: var(--orange-500);
+  border: 1px solid var(--mocha-500);
+  border-radius: 2px;
+  font-size: 18px;
+  text-align: center;
 }
 
-.infoBox{
-    box-sizing: border-box;
-    padding: 40px 0px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid var(--camel-500);
+.infoBox {
+  box-sizing: border-box;
+  padding: 40px 0px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--camel-500);
 }
-.infoBox .text p{
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--camel-500);
-    line-height: 1.8;
+.infoBox .text p {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--camel-500);
+  line-height: 1.8;
 }
-.totalPrice{
-    width: 23%;
-    color: var(--orange-500);
+.totalPrice {
+  width: 23%;
+  color: var(--orange-500);
 }
-.totalPrice .box{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-weight: 600;
-    font-size: 18px;
+.totalPrice .box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: 600;
+  font-size: 18px;
 }
-.totalPrice .box.total{
-    margin-top:12px;
-}
-
-.mainBox .buttonBox{
-    box-sizing: border-box;
-    padding: 40px 0;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 60px;
-}
-.mainBox .buttonBox button{
-    font-size: 18px;
-    color: var(--orange-500);
-    box-sizing: border-box;
-    padding: 18px 24px;
-    border: 1px solid var(--camel-500);
-    border-radius: 4px;
-}
-.mainBox .buttonBox button.continue-shopping{
-    margin-left: 32px;    
-}
-.mainBox .buttonBox button.checkout{
-    margin-left: 32px;
-    background: var(--orange-500);
-    color: #fff;
+.totalPrice .box.total {
+  margin-top: 12px;
 }
 
+.mainBox .buttonBox {
+  box-sizing: border-box;
+  padding: 40px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 60px;
+}
+.mainBox .buttonBox button {
+  font-size: 18px;
+  color: var(--orange-500);
+  box-sizing: border-box;
+  padding: 18px 24px;
+  border: 1px solid var(--camel-500);
+  border-radius: 4px;
+}
+.mainBox .buttonBox button.continue-shopping {
+  margin-left: 32px;
+}
+.mainBox .buttonBox button.checkout {
+  margin-left: 32px;
+  background: var(--orange-500);
+  color: var(--bg-color);
+  border: none;
+}
 
-    /* 모달 관련 */
+/* 모달 관련 */
 /* button {
     display: inline-block;
     box-sizing: border-box;

@@ -31,6 +31,7 @@
   transition: all 0.3s;
   border: 1px solid var(--orange-500);
   color: #fff;
+  margin-right: 20px;
 }
 
  /* 페이지네이션  */

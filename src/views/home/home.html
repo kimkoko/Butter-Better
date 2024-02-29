@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,7 +15,12 @@
 
     <!-- Link Swiper's CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-    
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="64x64" href="../common/img/faviconx64.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="../common/img/faviconx32.png" />
+    <link rel="shortcut icon" href="../common/img/favicon.io" />
+
     <!-- 커스텀 css -->
     <link rel="stylesheet" href="home.css">
     <link rel="stylesheet" href="../common/css/reset.css">
@@ -25,34 +31,34 @@
     <script type="module" src="../common/header/header.js"></script>
 
 </head>
+
 <body>
     <!-- header -->
     <header data-load-html="../common/header/header.html">
     </header>
-    
+
     <!-- main_banner -->
     <div class="swiper mySwiper">
         <div class="swiper-wrapper">
             <div class="swiper-slide swiper-slide-1">
-                <div class="slide_inner">
+                <div class="slide_inner first">
                     <div class="textBox">
                         <h3>
-                            MAIN HEADING<br>AT LEAST<br>THREE SENTCES HERE
+                            이태리 할머니 파스타<br>논나들이 물려주는<br />이탈리아 가정식 비법 요리
                         </h3>
                         <button type="button">See More</button>
                     </div>
-
                     <div class="imgBox">
-                        <img src="../common/img/bn_ex_01.jpeg" alt="표지">
+                        <img src="../common/img/bn_ex_01.png" alt="표지">
                     </div>
                 </div>
             </div>
 
             <div class="swiper-slide swiper-slide-2">
-                <div class="slide_inner">
+                <div class="slide_inner second">
                     <div class="textBox">
                         <h3>
-                            MAIN HEADING<br>AT LEAST<br>THREE SENTCES HERE
+                            채소 식탁<br />테이블민의 쉽고 맛있는<br />채소 한입 요리 레시피
                         </h3>
                         <button type="button">See More</button>
                     </div>
@@ -64,10 +70,10 @@
             </div>
 
             <div class="swiper-slide swiper-slide-3">
-                <div class="slide_inner">
+                <div class="slide_inner third">
                     <div class="textBox">
                         <h3>
-                            MAIN HEADING<br>AT LEAST<br>THREE SENTCES HERE
+                            오니쿡 요리책<br />간단하게 완성하는<br />맛있고 멋있는 한 접시
                         </h3>
                         <button type="button">See More</button>
                     </div>
@@ -84,15 +90,15 @@
             <div class="swiper-button-next"><ion-icon name="arrow-forward-sharp"></ion-icon></div>
             <div class="swiper-button-prev"><ion-icon name="arrow-back-sharp"></ion-icon></div>
         </div>
-        
+
     </div>
-    
+
     <main>
         <section class="Best-Sellers">
-            <h1>Best Sellers</h1>            
+            <h1>Best Sellers</h1>
         </section>
         <section>
-            <ul class="Best-list" id ="bestSellersList">
+            <ul class="Best-list" id="bestSellersList">
                 <!-- 제품을 반복하며 리스트 아이템을 생성
                 <li class="Best-item">
                     <a href="#">
@@ -127,8 +133,7 @@
 
     });
 
-    
+
 </script>
 
 </html>
-
