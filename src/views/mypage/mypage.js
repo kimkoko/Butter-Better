@@ -1,6 +1,126 @@
-import { API_HOST } from '../common/api.js';
+import { API_HOST } from '/src/views/common/api.js';
 
-// 마이페이지에서 유저 정보 수정 및 삭제하기
+
+// Order History
+async function renderOrderHistory() {
+  try {
+
+  
+    // API로 유저 정보 가져오기
+    const response = await fetch(`${API_HOST}/api/orders/user`);
+    const result = await response.json();
+    const orders = result.data
+    const order = result.orderer
+
+    // 주문 목록 리스트
+    const orderList = document.querySelector('.container');
+
+    // 카테고리 리스트를 받아온 후 각 카테고리에 대한 요청을 보냅니다.
+    for (const order of orders) {
+      
+      const userEmail = await findUser()
+      const ordererEamil = order.orderer.email
+    
+
+      if (userEmail === ordererEamil) {
+
+
+        // 주문 상태가 "주문 완료"인 경우에만 클래스 추가
+        const isOrderCompleted = order.order_status === "주문 완료";
+        const btnOrderEditClass = isOrderCompleted ? "btn-order-edit active" : "btn-order-edit";
+
+        // 리스트 생성
+        const orderContent = document.createElement('div');
+        orderContent.classList.add('table__body');
+        orderContent.innerHTML = `
+        <div class="table__body--top">
+              <span>주문 일자</span>
+              <b class='date'>${order.createdAt}</b> |
+              <span>주문 번호</span>
+              <b class="order-id">${order._id}</b>
+          </div>
+          <div class="table__body--bottom"> 
+              <div class='products'>
+                <span class="order-title">${order.products[0].name}</span> 외 ${order.products.length}종
+              </div>
+              <div class='total-price'>${order.total_price.toLocaleString()}</div>
+              <div class='status'>${order.order_status}<button class="${btnOrderEditClass}" type='button'>주문 수정</button>
+              </div>
+          </div>
+        `;
+
+          // 상품 리스트에 상품 추가
+          orderList.appendChild(orderContent); 
+          
+          buttons() 
+      } else {
+        const noSync = document.querySelector(".none")
+        noSync.style.display = "block"
+      }
+
+
+      // 주문자 정보 받아오기
+      const nameInput = document.querySelector('#edit-orderer input[placeholder="이름"]');
+      const emailInput = document.querySelector('#edit-orderer input[placeholder="이메일"]');
+      const phoneInput = document.querySelector('#edit-orderer input[placeholder="휴대 전화"]');
+      const postInput = document.querySelector('#edit-orderer input[placeholder="우편번호"]');
+      const addressInput = document.querySelector('#edit-orderer input[placeholder="기본 주소"]');
+      const detailInput = document.querySelector('#edit-orderer input[placeholder="나머지 주소 (선택)"]');
+      
+      nameInput.value = order.orderer.name;
+      emailInput.value = order.orderer.email;
+      phoneInput.value = order.orderer.phone;
+      postInput.value = order.orderer.address.postcode;
+      addressInput.value = order.orderer.address.main;
+      detailInput.value = order.orderer.address.detail;
+
+    } 
+
+
+  } catch (error) {
+    console.error('주문 정보를 렌더링하는 중 오류가 발생했습니다:', error);
+  }
+}
+
+
+// 주문자 정보
+function buttons() {
+  const editBtn = document.querySelectorAll('.btn-order-edit .active');
+  const submitBtn = document.querySelector('.btn-save');
+  const editModal = document.querySelector('#edit-orderer');
+
+  renderOrderHistory()
+  
+  console.log(editBtn)
+  
+
+  // 유저 정보 가져오기 및 수정 모달 열기
+  function openEditModal() {
+    editModal.style.display = 'flex';
+  }
+
+  // 수정 버튼 클릭 이벤트
+  editBtn.addEventListener('click', function () {
+    if (editModal) {
+      openEditModal();
+    }
+  });
+
+  // 수정 모달 닫기 이벤트
+  editModal.addEventListener("mousedown", function (e) {
+    if (e.target !== editModal) return;
+    editModal.style.display = "none";
+  });
+
+  // 저장 버튼 클릭 이벤트
+  submitBtn.addEventListener('click', function () {
+  });
+
+};
+
+
+
+// 회원 정보
 document.addEventListener('DOMContentLoaded', function () {
   const editBtn = document.querySelector('.btn-edit');
   const submitBtn = document.querySelector('.btn-save');
@@ -61,6 +181,7 @@ document.addEventListener('DOMContentLoaded', function () {
   deletecancleBtn.addEventListener('click', function () {
     deleteModal.style.display = "none";
   });
+
 });
 
 //유저 정보 찾아서 가져오기 
@@ -69,16 +190,20 @@ async function findUser() {
     // API로 유저 정보 가져오기
     const response = await fetch(`${API_HOST}/api/users/mypage`);
     const res = await response.json();
+    console.log(res)
     
     if (!response.ok) {
       throw new Error("유저 정보를 불러오는데 실패했습니다.");
     }
     const user = res.user;
-    console.log(user.phone);
+    const userEmail = user.email
+    
     
     // 유저 정보 렌더링
     renderUserInfo(user);
     renderAccountDetails(user);
+
+    return userEmail;
     
   } catch (error) {
     console.error('유저정보를 렌더링하는 중 오류가 발생했습니다:', error);
@@ -89,7 +214,7 @@ async function findUser() {
 function renderUserInfo(user) {
   const nameInput = document.querySelector('#edit-account input[placeholder="이름"]');
   const emailInput = document.querySelector('#edit-account input[placeholder="이메일"]');
-  const phoneInput = document.querySelector('#edit-account input[placeholder="휴대 전화, \'-\' 기호를 추가해 주세요."]');
+  const phoneInput = document.querySelector('#edit-account input[placeholder="휴대 전화"]');
   const postInput = document.querySelector('#edit-account input[placeholder="우편번호"]');
   const addressInput = document.querySelector('#edit-account input[placeholder="기본 주소"]');
   const detailInput = document.querySelector('#edit-account input[placeholder="나머지 주소 (선택)"]');
@@ -122,7 +247,7 @@ function renderAccountDetails(user) {
 function getUserDataFromModal() {
   const nameInput = document.querySelector('#edit-account input[placeholder="이름"]');
   const emailInput = document.querySelector('#edit-account input[placeholder="이메일"]');
-  const phoneInput = document.querySelector('#edit-account input[placeholder="휴대 전화, \'-\' 기호를 추가해 주세요."]');
+  const phoneInput = document.querySelector('#edit-account input[placeholder="휴대 전화"]');
   const postInput = document.querySelector('#edit-account input[placeholder="우편번호"]');
   const addressInput = document.querySelector('#edit-account input[placeholder="기본 주소"]');
   const detailInput = document.querySelector('#edit-account input[placeholder="나머지 주소 (선택)"]');
@@ -214,3 +339,6 @@ function execDaumPostcode() {
 }
 // 다음 우편번호 API 실행 함수
 document.getElementById("searchAddressBtn").addEventListener("click", execDaumPostcode);
+
+
+

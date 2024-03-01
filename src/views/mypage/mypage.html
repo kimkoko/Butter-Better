@@ -14,6 +14,7 @@
     <link rel="icon" type="image/png" sizes="64x64" href="../common/img/faviconx64.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="../common/img/faviconx32.png" />
     <link rel="shortcut icon" href="../common/img/favicon.io" />
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
     <!-- 커스텀 css -->
     <link rel="stylesheet" href="mypage.css">
@@ -23,13 +24,12 @@
     <script type="module" src="./mypage.js"></script>
     <script src="../common/loadHTML.js"></script>
     <script type="module" src="../common/header/header.js"></script>
-    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 </head>
 
 <body>
     <!-- header -->
-    <header data-load-html="../common/header/header.html"></header>
+    <header data-load-html="/src/views/common/header/header.html"></header>
 
     <div class="mainBox">
         <h1>My Account</h1>
@@ -42,24 +42,9 @@
                         <p>주문 금액</p>
                         <p>진행 상태</p>
                     </div>
-                    <div class="table__body">
-                        <div class="table__body--top">
-                            <span>주문 일자</span>
-                            <b class='date'>${order.createAt}</b>
-                            <span>주문 번호</span>
-                            <b class="order-id">${order._id}</b>
-                        </div>
-                        <div class="table__body--bottom">
-                            <div class='products'>title 외 1종</div>
-                            <!-- ${order.products[0].name} 외 ${order.products.length - 1}종 -->
-                            <div class='total-price'>20000</div>
-                            <!-- ${order.total_price} -->
-                            <div class='status'>${order.status}<button class="btn-order-edit" type='button'>주문
-                                    수정</button>
-                            </div>
-                            <!-- 주문 상태가 '주문 완료'일 경우, 배송 .btn-order-edit에 클래스명 active 추가 / 그 외 비활성화 -->
-                        </div>
-                    </div>
+                    <div class="none">
+                        <span>회원 정보와 일치하는 주문이 없습니다.</span>
+                    </div>     
                 </div>
             </section>
 
@@ -76,6 +61,44 @@
                     <button class='btn-delete' type='button'>DELETE ACCOUNT</button>
                 </div>
             </section>
+
+
+            <!-- ******** 회원 정보 수정 모달 BELOW ******** -->
+            <div class="modal-container" id="edit-orderer">
+                <div class="modal">
+                    <div class="modal__edit-orderer">
+                        <p>Edit Orderer Details</p>
+                        <!-- 추가 모달 내용 -->
+                        <div class="form">
+                            <label for="name">Name *</label>
+                            <input type="text" id="name" placeholder="이름">
+                        </div>
+
+                        <div class="form">
+                            <label for="email">Email *</label>
+                            <input type="text" id="email" placeholder="이메일">
+                        </div>
+                        <div class="form">
+                            <label for="phone">Phone *</label>
+                            <input type="text" id="phone" placeholder="휴대 전화">
+                        </div>
+
+                        <div class="form address">
+                            <label for="confirmPassword">Address *</label>
+                            <div class="postalCode">
+                                <input type="text" placeholder="우편번호" id="postCode">
+                                <button type="button" id="searchAddressBtn">주소 검색</button>
+                            </div>
+                            <input type="text" placeholder="기본 주소" id="address">
+                            <input type="text" placeholder="나머지 주소 (선택)" id="detail">
+                        </div>
+
+                        <button class="btn-save" type="submit">SAVE</button>
+                    </div>
+                </div>
+            </div>
+
+
 
             <!-- ******** 회원 정보 수정 모달 BELOW ******** -->
             <div class="modal-container" id="edit-account">
@@ -94,7 +117,7 @@
                         </div>
                         <div class="form">
                             <label for="phone">Phone *</label>
-                            <input type="text" id="phone" placeholder="휴대 전화, '-' 기호를 추가해 주세요.">
+                            <input type="text" id="phone" placeholder="휴대 전화">
                         </div>
 
                         <div class="form address">
@@ -131,7 +154,7 @@
     </div>
 
     <!-- footer -->
-    <footer data-load-html=" ../common/footer/footer.html">
+    <footer data-load-html="/src/views/common/footer/footer.html">
     </footer>
 </body>
 
