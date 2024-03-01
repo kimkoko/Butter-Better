@@ -10,15 +10,15 @@
 
 ### 홈 & 상품
 
-![홈] (https://storage.googleapis.com/elice_04/presentation/page_04.png)
+![홈](https://storage.googleapis.com/elice_04/presentation/page_04.png)
 
 ### 장바구니, 주문, 로그인, 마이페이지
 
-![상세] (https://storage.googleapis.com/elice_04/presentation/page_05.png)
+![상세](https://storage.googleapis.com/elice_04/presentation/page_05.png)
 
 ### 관리자
 
-![관리자] (https://storage.googleapis.com/elice_04/presentation/page_06.png)
+![관리자](https://storage.googleapis.com/elice_04/presentation/page_06.png)
 
 ## 📍 실행 방법
 
@@ -56,7 +56,7 @@ npm install 의존성 설치 -> .env 생성 (\*별도 전달)
 <img src="https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=Node.js&logoColor=white"/> <img src="https://img.shields.io/badge/express-000000?style=flat-square&logo=express&logoColor=white"/> <img src="https://img.shields.io/badge/MongoDB-47A248?style=flat-square&logo=MongoDB&logoColor=white"/>
 <img src="https://img.shields.io/badge/NGINX-009639?style=flat-square&logo=NGINX&logoColor=white"/> <img src="https://img.shields.io/badge/PM2-2B037A?style=flat-square&logo=PM2&logoColor=white"/>
 
-![기술스택] (https://storage.googleapis.com/elice_04/presentation/page_02.png)
+![기술스택](https://storage.googleapis.com/elice_04/presentation/page_02.png)
 
 ## 📍 기획
 
