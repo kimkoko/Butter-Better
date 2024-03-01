@@ -68,10 +68,11 @@ const books = await Book.find({})
     };
   }
 // 상품 목록 조회 
-  async getBooks(page = 1, perPage = 24) {
+  async getBooks(page = 1, perPage = 24, sortCriteria = { createdAt: -1 }) {
     const skip = (page - 1) * perPage;
     const total = await Book.countDocuments({});
     const books = await Book.find({})
+      .sort(sortCriteria)
       .skip(skip)
       .limit(perPage)
       .populate('category_id');
