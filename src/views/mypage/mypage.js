@@ -51,8 +51,7 @@ async function renderOrderHistory() {
 
           // 상품 리스트에 상품 추가
           orderList.appendChild(orderContent); 
-          
-          buttons() 
+
       } else {
         const noSync = document.querySelector(".none")
         noSync.style.display = "block"
@@ -74,6 +73,8 @@ async function renderOrderHistory() {
       addressInput.value = order.orderer.address.main;
       detailInput.value = order.orderer.address.detail;
 
+
+
     } 
 
 
@@ -82,15 +83,14 @@ async function renderOrderHistory() {
   }
 }
 
+renderOrderHistory()
+  
 
 // 주문자 정보
 function buttons() {
   const editBtn = document.querySelectorAll('.btn-order-edit .active');
   const submitBtn = document.querySelector('.btn-save');
   const editModal = document.querySelector('#edit-orderer');
-
-  renderOrderHistory()
-  
   console.log(editBtn)
   
 
@@ -117,6 +117,8 @@ function buttons() {
   });
 
 };
+
+
 
 
 
@@ -339,6 +341,5 @@ function execDaumPostcode() {
 }
 // 다음 우편번호 API 실행 함수
 document.getElementById("searchAddressBtn").addEventListener("click", execDaumPostcode);
-
 
 
