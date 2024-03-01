@@ -15,6 +15,8 @@ const userRouter = require('./routers/userRouter');
 const categoryRouter = require('./routers/categoryRouter');
 const orderRouter = require('./routers/orderRouter');
 const uploadRouter = require('./routers/uploadRouter');
+const loginRequired = require('./middlewares/loginRequired');
+const adminOnly = require('./middlewares/adminOnly');
 //connect to mongodb
 mongoose.connect(process.env.MONGO_URI);
 
@@ -26,18 +28,18 @@ db.once('open', () => {
 
 const app = express();
 
-app.use(viewRouter);
-app.use(cors());
-
 app.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json
 app.use(bodyParser.json());
 app.use(cookieParser());
 
+app.use('/admin', loginRequired, adminOnly);
+app.use(viewRouter);
+app.use(cors());
+
 app.get('/', (req, res) => {
   res.send('Butter and Better');
 });
-
 app.use('/api/books', bookRouter);
 app.use('/api/users', userRouter);
 app.use('/api/categories', categoryRouter);
