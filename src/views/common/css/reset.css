@@ -305,14 +305,21 @@ body {
   --cream-700: #e6d2b1;
 }
 
-
-#topbutton{
-  width: 45px;
-  height: 45px;
+#scrollToTopButton {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--bg-color);
+  border: solid 2px var(--orange-500);
+  border-radius: 100px;
   position: fixed;
-  bottom: 250px;
   right: 50px;
-  cursor: pointer;
-  color:var(--orange-500);
-  background-color: var( --cream-500);
+  bottom: 50px;
+  box-shadow: 6px 8px 30px rgba(136, 108, 75, 0.3);
+}
+#scrollToTopButton ion-icon {
+  color: var(--orange-500);
+  font-size: 24px;
 }

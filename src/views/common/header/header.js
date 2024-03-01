@@ -92,6 +92,20 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }
 
+  const btnScrollTop = document.getElementById('scrollToTopButton');
+
+  function showTopButton(button) {
+    button.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+    });
+  }
+
+  // 최상단 이동 버튼 이벤트 리스너 설정
+  if (btnScrollTop) showTopButton(btnScrollTop);
+
   // 장바구니 아이템 수 초기화
   updateCartItemCount();
   // 카테고리 렌더링
