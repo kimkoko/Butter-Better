@@ -379,7 +379,7 @@ async function renderProductList() {
       <td id="product-category">${product.category_id.name}</td>
       <td class="content" id="product-content">${product.content}</td>
       <td id="product-price">${product.price.toLocaleString()}</td>
-      <td class="img" id="product-img">${product.img_url}</td>
+      <td class="img" id="product-img"><img src="${product.img_url}" alt="제품 이미지" width="80px" heigth="60px" ></td>
       <td id="product-quantity">${product.quantity}</td>
       <td id="product-rate">${product.rate}</td>
       <td>
