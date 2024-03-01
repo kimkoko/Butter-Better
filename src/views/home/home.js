@@ -26,7 +26,7 @@ async function getBestSellersList() {
         const productItem = document.createElement('li');
         productItem.classList.add('Best-item');
         productItem.innerHTML = `
-                    <a href="/src/views/detail/detail.html?id=${product._id}">
+                    <a href="/detail?id=${product._id}">
                     <div class="img-container"><img src="${
                       product.img_url
                     }" alt="제품 이미지"></div>
