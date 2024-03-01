@@ -162,7 +162,7 @@ function updateOrderer(orderId) {
   })
   .then(response => {
     if (response.ok) {
-      alert("회원 정보가 수정되었습니다.");
+      alert("주문 정보가 수정되었습니다.");
     } else {
       alert('주문 정보 수정 실패');
     }
