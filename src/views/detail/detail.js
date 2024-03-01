@@ -11,15 +11,22 @@ async function getProductInfo(productId) {
 }
 // 로컬스토리지 cartItems [] 키값 밸류 생성 및 키값에 데이터저장
 function saveProductToLocalStorage(productInfo) {
+  // 로컬 스토리지에서 기존 카트 아이템을 가져오기
   let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+
+  // 제품이 이미 카트에 존재하는지 확인
   const existingProductIndex = cartItems.findIndex(item => item.name === productInfo.name);
 
   if (existingProductIndex === -1) {
+    // 카트에 존재하지 않는 경우, 새로운 아이템으로 추가
     cartItems.push(productInfo);
     localStorage.setItem('cartItems', JSON.stringify(cartItems));
     alert('상품이 장바구니에 추가되었습니다!');
   } else {
-    alert("장바구니에 같은 상품이 이미 있습니다.");
+    // 카트에 이미 존재하는 경우, 수량 업데이트
+    cartItems[existingProductIndex].quantity += productInfo.quantity;
+    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+    alert('장바구니에 있는 상품의 수량이 업데이트되었습니다!');
   }
 }
 
@@ -106,8 +113,7 @@ document.querySelector('.cartBtn').addEventListener('click', function () {
     img: product.img_url,
   };
   saveProductToLocalStorage(productInfo);
-  // 장바구니에 상품 추가 시 페이지 리로드는 제거할 수 있습니다.
-  // 이는 사용자 경험을 해칠 수 있으며, 상태 변경(알림 등)만으로 충분히 의사를 전달할 수 있습니다.
+
   window.location.reload();
   });
 }
