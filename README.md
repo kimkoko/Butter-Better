@@ -2,7 +2,7 @@
 
 ![커버](https://storage.googleapis.com/elice_04/presentation/readme_cover.png)
 
-![서비스소개] (https://storage.googleapis.com/elice_04/presentation/page_01.png)
+![서비스소개](https://storage.googleapis.com/elice_04/presentation/page_01.png)
 
 <br/>
 
