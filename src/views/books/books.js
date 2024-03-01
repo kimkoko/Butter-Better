@@ -92,5 +92,5 @@ window.addEventListener('load', () => {
 
 function updatePagination() {
   const currentPageInfo = document.getElementById('currentPageInfo');
-  currentPageInfo.textContent = `페이지 ${currentPage} / ${totalPage}`;
+  currentPageInfo.textContent = `Page ${currentPage} of ${totalPage}`;
 }
