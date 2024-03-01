@@ -58,54 +58,49 @@ async function loadOrders() {
   }
 }
 
-function displayOrders(orders) {
-  const tableBody = document.querySelector('.tableList table tbody');
-  tableBody.innerHTML = ''; // 기존의 테이블 내용을 초기화합니다.
 
-  // 주문 데이터 배열을 순회합니다.
-  orders.data.forEach(order => {
-      // 각 주문에 대한 HTML 요소를 생성합니다.
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-          <td>
-              <ul>
-                  <li><b>주문 일자 : </b> ${new Date(order.createdAt).toLocaleDateString()}</li>
-                  <li><b>주문 시간 : </b> ${new Date(order.createdAt).toLocaleTimeString()}</li>
-                  <li><b>주문 번호 : </b> ${order._id}</li>
-                  <li><b>상태 : </b> ${order.order_status}</li>
-                  <li><b>메세지 : </b> ${order.orderer.shipping_message || '없음'}</li>
-              </ul>
-          </td>
-          <td>
-              <ul>
-                  <li>${order.orderer.name}</li>
-                  <li>${order.orderer.email}</li>
-                  <li>${order.orderer.phone}</li>
-                  <li>${order.orderer.address.postcode} ${order.orderer.address.main}</li>
-              </ul>
-          </td>
-          <td class="center">
-              <ul>
-                  <li><b>상태 변경</b><br>
-                      <select name="state" class="stateSelect" data-order-id="${order._id}">
-                          <option value="주문 완료">주문 완료</option>
-                          <option value="배송중">배송중</option>
-                          <option value="배송 완료">배송 완료</option>
-                          <option value="주문 취소">주문 취소</option>
-                      </select>
-                  </li>
-              </ul>
-          </td>
-          <td>
-              <ul>
-                  <li>
-                      <button class="delete" data-order-id="${order._id}">삭제</button>
-                  </li>
-              </ul>
-          </td>
-      `;
-      tableBody.appendChild(tr);
-  });
+
+  function displayOrders(orders) {
+    const tableBody = document.querySelector('.tableList table tbody');
+    tableBody.innerHTML = ''; // 기존의 테이블 내용을 초기화합니다.
+
+    // 주문 데이터 배열을 순회합니다.
+    orders.data.forEach(order => {
+        // 각 주문에 대한 HTML 요소를 생성합니다.
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td>
+                <ul>
+                    <li><b>주문 일자 : </b> ${new Date(order.createdAt).toLocaleDateString()}</li>
+                    <li><b>주문 시간 : </b> ${new Date(order.createdAt).toLocaleTimeString()}</li>
+                    <li><b>주문 번호 : </b> ${order._id}</li>
+                    <li><b>상태 : </b> ${order.order_status}</li>
+                    <li><b>메세지 : </b> ${order.orderer.shipping_message || '없음'}</li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li>${order.orderer.name}</li>
+                    <li>${order.orderer.email}</li>
+                    <li>${order.orderer.phone}</li>
+                    <li>${order.orderer.address.postcode} ${order.orderer.address.main}</li>
+                </ul>
+            </td>
+            <td class="center">
+                <select name="state" class="stateSelect" data-order-id="${order._id}">
+                    <option value="주문 완료">주문 완료</option>
+                    <option value="배송중">배송중</option>
+                    <option value="배송 완료">배송 완료</option>
+                    <option value="주문 취소">주문 취소</option>
+                </select>
+            </td>
+            <td>
+                <button class="delete" data-order-id="${order._id}">삭제</button>
+            </td>
+        `;
+        tableBody.appendChild(tr);
+    });
+
 
   function setupOrderStatusChangeEventListener() {
     document.querySelectorAll('.stateSelect').forEach(selectElement => {
@@ -152,44 +147,44 @@ function displayOrders(orders) {
 
 
   function setupDeleteButtonEventListener() {
+    // 페이지에 존재하는 모든 삭제 버튼에 대해 이벤트 리스너를 설정
     document.querySelectorAll('.delete').forEach(button => {
         button.addEventListener('click', async function() {
-            // 'data-order-id' 속성을 통해 삭제할 주문의 ID를 얻습니다.
             const orderId = this.getAttribute('data-order-id');
-  
-            // 사용자에게 삭제를 확인받습니다.
             const isConfirmed = confirm('주문을 삭제하시겠습니까?');
+            
+            console.log("삭제 버튼 클릭, 주문 ID:", orderId);
             if (!isConfirmed) {
-                return; // 사용자가 취소하면 여기서 함수 실행을 중단합니다.
+                return; // 사용자가 취소하면 함수 실행 중단
             }
-  
+
             try {
-                // 주문 삭제 API 요청을 보냅니다.
                 const response = await fetch(`${API_HOST}/api/orders/admin/${orderId}`, {
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json',
-                        // 필요한 경우 인증 토큰을 추가합니다.
+                        // 인증 토큰이 필요한 경우 'Authorization': `Bearer ${accessToken}` 추가
                     },
                 });
-  
+
                 if (!response.ok) {
                     throw new Error('주문을 삭제하는 데 실패했습니다.');
                 }
-  
-                // 성공적으로 주문이 삭제되었다는 메시지를 표시합니다.
+
                 alert('주문이 성공적으로 삭제되었습니다.');
-  
-                // 여기에서 해당 버튼이 속한 <tr> 요소를 찾아서 삭제합니다.
+
+                // 현재 클릭된 버튼이 속한 <tr> 요소를 찾아서 삭제
                 this.closest('tr').remove();
-  
+
             } catch (error) {
                 console.error('주문 삭제 오류:', error);
                 alert('주문 삭제에 실패했습니다.');
             }
         });
     });
-  }
+}
+    const deletearray = document.querySelectorAll('.delete')
+    console.log(deletearray);
 
 
   // 모든 주문 데이터가 페이지에 추가된 후, 상태 변경 및 삭제 버튼에 대한 이벤트 리스너를 설정합니다.
