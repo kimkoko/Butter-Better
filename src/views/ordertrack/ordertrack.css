@@ -133,15 +133,6 @@
   min-width: 80px;
   display: inline-block;
 }
-.account .btn-edit {
-  width: 100%;
-  padding: 18px 0;
-  box-sizing: border-box;
-  border-radius: 4px;
-  font-size: 20px;
-  color: var(--bg-color);
-  transition: all 0.2s ease-in;
-}
 .account .btn-edit:hover {
   background-color: var(--orange-500);
 }
@@ -234,4 +225,3 @@
 .modal__edit-account .btn-save:hover {
   background-color: var(--orange-500);
 }
-
