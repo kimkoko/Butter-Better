@@ -116,7 +116,7 @@ async function renderRecommendsList() {
 
   try {
     // API에서 상품 데이터 가져오기
-    const response = await fetch(`${API_HOST}/api/books`);
+    const response = await fetch(`${API_HOST}/api/books/all`);
     if (!response.ok) {
       throw new Error('상품 데이터를 가져올 수 없습니다.');
     } else {
