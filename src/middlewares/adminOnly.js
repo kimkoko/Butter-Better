@@ -1,3 +1,4 @@
+const customError = require('../middlewares/customError');
 module.exports = (req, res, next) => {
     if (req.cookies && req.user.role === 'admin') {
         next();
