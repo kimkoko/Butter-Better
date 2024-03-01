@@ -97,13 +97,14 @@ function collectOrderData() {
       email: emailInput.value,
       phone: phoneInput.value,
       name: nameInput.value,
+      shipping_message: selectedMessage,
       address: {
         postcode: postcodeInput.value,
         main: mainAddressInput.value,
         default: detailAddressInput.value || '', // 'default'가 아니라 'detail'이 될 가능성도 확인 필요
       },
     },
-    message: selectedMessage,
+    // message: selectedMessage,
     shipping_fee: shippingFee,
     total_price: totalPrice,
     order_status: '주문 완료', // 초기 주문 상태 설정

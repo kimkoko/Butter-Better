@@ -11,9 +11,17 @@ td ul li{
 td ul li b{
     font-weight: bold;
 }
+.option-select{
+    font-size: 30px;
+}
 #state{
     margin-top: 10px;
 }
 .center{
     text-align: center;
+}
+
+.delete {
+    width: 100px;
+    height: 60px;
 }

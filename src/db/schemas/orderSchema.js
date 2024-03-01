@@ -42,6 +42,10 @@ const OrdererSchema = new Schema(
       type: AddressSchema,
       // required: true,
     },
+    shipping_message: {
+      type: String,
+      // required: true,
+    },
   },
   { _id: false }
 );
@@ -56,10 +60,10 @@ const OrderSchema = new Schema(
       type: OrdererSchema,
       // required: true,
     },
-    message: {
-      type: String,
-      // required: true,
-    },
+    // message: {
+    //   type: String,
+    //   // required: true,
+    // },
     shipping_fee: {
       type: Number,
       // required: true,
