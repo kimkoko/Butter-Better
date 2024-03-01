@@ -14,11 +14,11 @@ class BookService {
   async getBooksBySort(page = 1, perPage = 24, option = '최신순') {
     const skip = (page - 1) * perPage;
     const total = await Book.countDocuments({}); 
-    let filter = { createdAt: -1 }
+    let filter =  { _id: -1 }
 
 switch (option) {
     case '최신순':
-        filter = { createdAt: -1 }
+        filter =  { _id: -1 }
         break;
     case '인기순':
         filter = { rate: -1 }
@@ -31,7 +31,7 @@ switch (option) {
         break;
     default:
       case '최신순':
-      filter = { createdAt: -1 }
+      filter =  { _id: -1 }
         break;
 }
 const books = await Book.find({})
