@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', function () {
 // Modal에서 입력된 상품 데이터 가져오기
 function getProductDataFromModal() {
   // 모달 내 입력 필드 값 가져오기
-  const bestSellerInput = document.querySelector("#myModal1 input[placeholder='베스트셀러']");
+  const bestSellerInput = document.getElementById("BestsellerInput");
   const titleInput = document.querySelector("#myModal1 input[placeholder='상품명']");
   const contentInput = document.querySelector("#myModal1 input[placeholder='상품 설명']");
   const categoryInput = document.querySelector("#myModal1 input[placeholder='카테고리']");
@@ -76,7 +76,7 @@ function getProductDataFromModal() {
   
   // 새로운 제품 정보를 객체로 만들기
   const newProduct = {
-    isBestSeller: bestSellerInput.value,
+    isBestSeller: bestSellerInput.checked,
     title: titleInput.value,
     category_id: categoryInput.value,
     content: contentInput.value,
@@ -93,7 +93,7 @@ function getProductDataFromModal() {
 document.addEventListener('DOMContentLoaded', function () {
   const uploadBtn = document.getElementById('upload-btn');
   const fileInput = document.getElementById('file-input');
-
+const categorySelect = document.getElementById('categorySelect');
   // '업로드' 버튼 클릭 시 파일 선택 다이얼로그를 엽니다.
   uploadBtn.addEventListener('click', function() {
     fileInput.click();
@@ -167,7 +167,7 @@ function createProduct() {
   
 
 function updateModalContent(product) {
-  const bestSellerInput = document.querySelector("#myModal1 input[placeholder='베스트셀러']");
+  const bestSellerInput = document.getElementById("BestsellerInput");
   const titleInput = document.querySelector("#myModal1 input[placeholder='상품명']");
   const categoryInput = document.querySelector("#myModal1 input[placeholder='카테고리']");
   const contentInput = document.querySelector("#myModal1 input[placeholder='상품 설명']");
@@ -176,7 +176,7 @@ function updateModalContent(product) {
   const quantityInput = document.querySelector("#myModal1 input[placeholder='수량']");
   const rateInput = document.querySelector("#myModal1 input[placeholder='별점']");
 
-  bestSellerInput.value = product.isBestSeller;
+  bestSellerInput.checked = product.isBestSeller;
   titleInput.value = product.title;
   categoryInput.value = product.category_id._id;
   contentInput.value = product.content;
@@ -185,6 +185,7 @@ function updateModalContent(product) {
   quantityInput.value = product.quantity;
   rateInput.value = product.rate;
 }
+
 function connectModalEvent() {
   // 모달 열기 버튼과 모달 가져오기
   const modalEditBtns = document.querySelectorAll(".modal-edit-btn");
@@ -323,7 +324,7 @@ function deleteProduct(product) {
 }
 // moal1 초기화
 function initializeForm() {
-  const bestSellerInput = document.querySelector("#myModal1 input[placeholder='베스트셀러']");
+  const bestSellerInput = document.getElementById("BestsellerInput");
   const titleInput = document.querySelector("#myModal1 input[placeholder='상품명']");
   const categoryInput = document.querySelector("#myModal1 input[placeholder='카테고리']");
   const contentInput = document.querySelector("#myModal1 input[placeholder='상품 설명']");
@@ -333,7 +334,7 @@ function initializeForm() {
   const rateInput = document.querySelector("#myModal1 input[placeholder='별점']");
   
   // 폼 필드 초기화
-  bestSellerInput.value = "";
+  bestSellerInput.checked = "";
   titleInput.value = "";
   categoryInput.value = "";
   contentInput.value = "";
@@ -374,7 +375,9 @@ async function renderProductList() {
       const row = document.createElement('tr');
       row.classList.add('products-list');
       row.innerHTML = `
-      <td id="product-BestSeller">${product.isBestSeller}</td>
+      <td id="product-BestSeller">
+      <input type="checkbox" ${product.isBestSeller ? 'checked' : ''}>
+    </td>
       <td id="product-title">${product.title}</td>
       <td id="product-category">${product.category_id.name}</td>
       <td class="content" id="product-content">${product.content}</td>
