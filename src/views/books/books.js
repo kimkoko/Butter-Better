@@ -43,7 +43,7 @@ async function getAllBooks() {
 
     // 서버에서 모든 책 목록을 가져오는 API 호출
     const response = await fetch(
-      `${API_HOST}/api/books/sort?page=${currentPage}&option=${selectedOption}`
+      `${API_HOST}/api/books/all/sort?page=${currentPage}&option=${selectedOption}`
     );
 
     // API 응답 데이터를 JSON 형태로 변환
