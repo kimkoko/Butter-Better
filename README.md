@@ -68,7 +68,7 @@ npm install 의존성 설치 -> .env 생성 (\*별도 전달)
   `npm start` 혹은 `npm run dev`
 
 - pm2 서버로 실행 시
-  `pm2 start`
+  `pm2 --name express start npm -- run dev`
 
 ### 테스트 계정
 
