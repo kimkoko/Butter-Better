@@ -119,9 +119,13 @@ document.addEventListener('DOMContentLoaded', function () {
   
     // 선택된 상품이 없으면 알림 띄우기
     if (selectedCheckboxes.length === 0) {
-      alert('주문하실 상품을 선택해주세요.');
-      return; // 이벤트 리스너 함수 종료
+      if (!this.alertShown) {
+        alert('주문하실 상품을 선택해주세요.');
+        this.alertShown = true; 
+      }
+      return;
     }
+    this.alertShown = false;
     
     // 선택된 상품 정보를 담을 배열
     const selectedItemsForOrder = [];
