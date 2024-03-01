@@ -6,6 +6,18 @@ let totalPage = 1;
 function findProductById(id) {
   return products[id];
 }
+// 카테고리 리스트
+// 카테고리 리스트를 불러오고 각 카테고리에 대한 요청을 보내는 함수
+async function getCategory() {
+  try {
+    const response = await fetch(`${API_HOST}/api/categories`);
+    const result = await response.json();
+    return result.data
+    
+  } catch (error) {
+    console.error('카테고리 정보를 불러오는 중 오류 발생:', error);
+  }
+}
 
 // 페이지가 로드될 때
 document.addEventListener('DOMContentLoaded', function () {
@@ -53,6 +65,27 @@ document.addEventListener('DOMContentLoaded', function () {
     // 저장 버튼에 이벤트 리스너 추가
     const saveBtn1 = document.getElementById("save-Btn1");
     saveBtn1.onclick = createProduct;
+    
+    // 카테고리 목록 가져와서 셀렉트 박스 업데이트
+    getCategory().then(categories => {
+      const categorySelect = document.getElementById('categorySelect');
+      
+      // 기존의 내용을 지우고 새로운 카테고리 목록으로 업데이트
+      categorySelect.innerHTML = '';
+      
+      // 새로운 옵션(카테고리)을 추가
+      const placeholderOption = document.createElement('option');
+      placeholderOption.value = '';
+      placeholderOption.text = '카테고리 선택';
+      categorySelect.appendChild(placeholderOption);
+      
+      categories.forEach(category => {
+        const option = document.createElement('option');
+        option.value = category._id;
+        option.text = category.name;
+        categorySelect.appendChild(option);
+      });
+    });
   });
   
   // 모달 닫기 함수
@@ -68,7 +101,7 @@ function getProductDataFromModal() {
   const bestSellerInput = document.getElementById("BestsellerInput");
   const titleInput = document.querySelector("#myModal1 input[placeholder='상품명']");
   const contentInput = document.querySelector("#myModal1 input[placeholder='상품 설명']");
-  const categoryInput = document.querySelector("#myModal1 input[placeholder='카테고리']");
+  const categoryInput = document.getElementById("categorySelect");
   const priceInput = document.querySelector("#myModal1 input[placeholder='가격']");
   const imageInput = document.querySelector("#myModal1 input[placeholder='이미지']");
   const quantityInput = document.querySelector("#myModal1 input[placeholder='수량']");
@@ -93,12 +126,12 @@ function getProductDataFromModal() {
 document.addEventListener('DOMContentLoaded', function () {
   const uploadBtn = document.getElementById('upload-btn');
   const fileInput = document.getElementById('file-input');
-const categorySelect = document.getElementById('categorySelect');
+  const categorySelect = document.getElementById('categorySelect');
   // '업로드' 버튼 클릭 시 파일 선택 다이얼로그를 엽니다.
   uploadBtn.addEventListener('click', function() {
     fileInput.click();
   });
-
+  
   // 파일 선택 시 파일 이름을 텍스트 필드에 표시합니다.
   fileInput.addEventListener('change', function() {
     const selectedFile = this.files[0];
@@ -117,12 +150,12 @@ function createProduct() {
   const modal1 = document.getElementById("myModal1");
   const fileInput = document.getElementById('file-input');
   const selectedFile = fileInput.files[0];
-
+  
   // 이미지 파일이 선택된 경우
   if (selectedFile) {
     const formData = new FormData();
     formData.append('file', selectedFile);
-
+    
     // 이미지 업로드
     fetch(`${API_HOST}/api/uploads`, { // 이미지 업로드 API 경로
       method: 'POST',
@@ -134,7 +167,7 @@ function createProduct() {
       if (data.message === 'File uploaded successfully' && data.url) {
         // 반환된 URL을 newProduct 객체에 추가
         newProduct.img_url = data.url;
-
+        
         // API를 통해 새로운 제품 추가
         return fetch(`${API_HOST}/api/books/admin`, {
           method: 'post',
@@ -164,21 +197,22 @@ function createProduct() {
   }
 }
 
-  
+
 
 function updateModalContent(product) {
   const bestSellerInput = document.getElementById("BestsellerInput");
   const titleInput = document.querySelector("#myModal1 input[placeholder='상품명']");
-  const categoryInput = document.querySelector("#myModal1 input[placeholder='카테고리']");
+  const categoryInput = document.getElementById("categorySelect");
   const contentInput = document.querySelector("#myModal1 input[placeholder='상품 설명']");
   const priceInput = document.querySelector("#myModal1 input[placeholder='가격']");
   const imageInput = document.querySelector("#myModal1 input[placeholder='이미지']");
   const quantityInput = document.querySelector("#myModal1 input[placeholder='수량']");
   const rateInput = document.querySelector("#myModal1 input[placeholder='별점']");
-
+  
   bestSellerInput.checked = product.isBestSeller;
   titleInput.value = product.title;
-  categoryInput.value = product.category_id._id;
+  categoryInput.value = product.category_id.name;
+  console.log(product.category_id.name);
   contentInput.value = product.content;
   priceInput.value = product.price;
   imageInput.value = product.img_url;
@@ -206,6 +240,27 @@ function connectModalEvent() {
       const product = findProductById(productId);
       updateModalContent(product)
       
+      getCategory().then(categories => {
+        const categorySelect = document.getElementById('categorySelect');
+  
+        categorySelect.innerHTML = '';
+
+        // 새로운 옵션(카테고리)을 추가
+        const placeholderOption = document.createElement('option');
+        placeholderOption.value = '';
+        placeholderOption.text = '카테고리 선택';
+        categorySelect.appendChild(placeholderOption);
+        
+        categories.forEach(category => {
+          const option = document.createElement('option');
+          option.value = category._id;
+          option.text = category.name;
+          categorySelect.appendChild(option);
+        });
+
+        categorySelect.value = product.category_id._id;
+      });
+      
       // 저장 버튼에 이벤트 리스너 추가
       const saveBtn1 = document.getElementById("save-Btn1");
       saveBtn1.onclick = () => editProduct(productId);
@@ -228,12 +283,12 @@ function editProduct(id) {
   const modal1 = document.getElementById("myModal1");
   const fileInput = document.getElementById('file-input');
   const selectedFile = fileInput.files[0];
-
+  
   // 이미지 파일이 선택된 경우
   if (selectedFile) {
     const formData = new FormData();
     formData.append('file', selectedFile);
-
+    
     // 이미지 업로드
     fetch(`${API_HOST}/api/uploads`, { // 이미지 업로드 API 경로
       method: 'POST',
@@ -245,8 +300,8 @@ function editProduct(id) {
       if (data.message === 'File uploaded successfully' && data.url) {
         // 반환된 URL을 newProduct 객체에 추가
         newProduct.img_url = data.url;
-
-
+        
+        
         // 상품 정보 수정 API 호출
         return fetch(`${API_HOST}/api/books/admin/${id}`, {
           method: 'PATCH',
@@ -274,7 +329,7 @@ function editProduct(id) {
       alert('상품 수정 실패');
     });
   }
-
+  
   // 이미지 파일이 선택되지 않은 경우
   else {
     fetch(`${API_HOST}/api/books/admin/${id}`, {
@@ -326,7 +381,7 @@ function deleteProduct(product) {
 function initializeForm() {
   const bestSellerInput = document.getElementById("BestsellerInput");
   const titleInput = document.querySelector("#myModal1 input[placeholder='상품명']");
-  const categoryInput = document.querySelector("#myModal1 input[placeholder='카테고리']");
+  const categoryInput = document.getElementById("categorySelect");
   const contentInput = document.querySelector("#myModal1 input[placeholder='상품 설명']");
   const priceInput = document.querySelector("#myModal1 input[placeholder='가격']");
   const imageInput = document.querySelector("#myModal1 input[placeholder='이미지']");
@@ -376,8 +431,8 @@ async function renderProductList() {
       row.classList.add('products-list');
       row.innerHTML = `
       <td id="product-BestSeller">
-      <input type="checkbox" ${product.isBestSeller ? 'checked' : ''}>
-    </td>
+      <input type="checkbox" ${product.isBestSeller ? 'checked' : ''} disabled>
+      </td>
       <td id="product-title">${product.title}</td>
       <td id="product-category">${product.category_id.name}</td>
       <td class="content" id="product-content">${product.content}</td>
