@@ -8,13 +8,21 @@ function loadCartItems() {
 
   cartList.innerHTML = ''; // 기존 목록 초기화
 
-  cartItems.forEach((item, index) => {
-      const price = parseInt(item.price);
-      let quantity = parseInt(item.quantity); // 수량을 정수로 변환
-      const total_price = price * quantity; // 총 가격 계산
+  // 장바구니 비었을 경우, 안내 메시지
+  const cartItemEmpty = document.querySelector('.cart-empty-message'); // 상품 없음 안내 메시지
+  if (cartItems.length === 0) {
+    cartItemEmpty.classList.add('active');
+  } else {
+    cartItemEmpty.classList.remove('active');
+  }
 
-      const row = document.createElement('tr');
-      row.innerHTML = `
+  cartItems.forEach((item, index) => {
+    const price = parseInt(item.price);
+    let quantity = parseInt(item.quantity); // 수량을 정수로 변환
+    const total_price = price * quantity; // 총 가격 계산
+
+    const row = document.createElement('tr');
+    row.innerHTML = `
           <td><input type="checkbox" class="checkbox ck"></td>
           <td class="left">
               <div class="book">
@@ -29,46 +37,53 @@ function loadCartItems() {
           <td class="total_price">${total_price.toLocaleString()}원</td>
       `;
 
-      cartList.appendChild(row);
+    cartList.appendChild(row);
 
-      // 수량 변경 이벤트 리스너
-      const quantityInput = row.querySelector('.quantity input');
-      const totalPriceCell = row.querySelector('.total_price');
+    // 수량 변경 이벤트 리스너
+    const quantityInput = row.querySelector('.quantity input');
+    const totalPriceCell = row.querySelector('.total_price');
 
-      quantityInput.addEventListener('change', function () {
-          const updatedQuantity = parseInt(this.value);
-          const updatedTotalPrice = price * updatedQuantity; // 변경된 수량으로 총 가격 재계산
+    quantityInput.addEventListener('change', function () {
+      const updatedQuantity = parseInt(this.value);
+      const updatedTotalPrice = price * updatedQuantity; // 변경된 수량으로 총 가격 재계산
 
-          // 총 가격 셀 업데이트
-          totalPriceCell.textContent = `${updatedTotalPrice.toLocaleString()}원`;
+      // 총 가격 셀 업데이트
+      totalPriceCell.textContent = `${updatedTotalPrice.toLocaleString()}원`;
 
-          // 로컬 스토리지의 해당 아이템 수량 업데이트
-          cartItems[index].quantity = updatedQuantity;
-          localStorage.setItem('cartItems', JSON.stringify(cartItems));
+      // 로컬 스토리지의 해당 아이템 수량 업데이트
+      cartItems[index].quantity = updatedQuantity;
+      localStorage.setItem('cartItems', JSON.stringify(cartItems));
 
-          // 전체 총액과 배송비 업데이트
-          updateTotalAndShipping();
-      });
+      // 전체 총액과 배송비 업데이트
+      updateTotalAndShipping();
+    });
 
-      // 체크박스 클릭 이벤트 리스너
-      const checkbox = row.querySelector('.checkbox');
-      checkbox.addEventListener('change', function () {
-          updateTotalAndShipping(); // 총 가격과 배송비 업데이트
-      });
+    // 체크박스 클릭 이벤트 리스너
+    const checkbox = row.querySelector('.checkbox');
+    checkbox.addEventListener('change', function () {
+      updateTotalAndShipping(); // 총 가격과 배송비 업데이트
+    });
   });
 }
 
 function updateTotalAndShipping() {
   const totalPriceElement = document.querySelector('.totalPrice .total .price');
-  const shippingPriceElement = document.querySelector('.totalPrice .shoping .price');
+  const shippingPriceElement = document.querySelector(
+    '.totalPrice .shoping .price'
+  );
 
   let totalProductPrice = 0; // 선택된 상품들의 총 상품 가격
   const selectedItems = document.querySelectorAll('.ck:checked'); // 선택된 상품 체크박스들
 
   selectedItems.forEach((checkbox) => {
-    const index = checkbox.closest('tr').querySelector('.quantity input').dataset.index;
-    const quantity = parseInt(checkbox.closest('tr').querySelector('.quantity input').value);
-    const price = parseInt(JSON.parse(localStorage.getItem('cartItems'))[index].price);
+    const index = checkbox.closest('tr').querySelector('.quantity input')
+      .dataset.index;
+    const quantity = parseInt(
+      checkbox.closest('tr').querySelector('.quantity input').value
+    );
+    const price = parseInt(
+      JSON.parse(localStorage.getItem('cartItems'))[index].price
+    );
     totalProductPrice += quantity * price;
   });
 
@@ -119,7 +134,6 @@ document.addEventListener('DOMContentLoaded', function () {
       updateTotalAndShipping();
     });
   });
-
 
   // 삭제 버튼 클릭 이벤트
   removeButton.addEventListener('click', () => {
