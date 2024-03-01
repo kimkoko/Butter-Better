@@ -138,11 +138,13 @@ function getOrderer() {
       postcode: postInput.value,
       main: addressInput.value,
       detail: detailInput.value,
-    },
+    }
   };
+
+  const order = { orderer };
   
-  
-  return orderer;
+  return order;
+
 }
 
 
