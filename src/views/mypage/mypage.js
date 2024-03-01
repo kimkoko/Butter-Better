@@ -73,6 +73,9 @@ async function renderOrderHistory() {
         // orderId 반환
         const order_Id = order._id
         ButtonEvents(order_Id);
+
+        const noSync = document.querySelector(".none")
+        noSync.style.display = "none"
       } else {
         
         const noSync = document.querySelector(".none")

@@ -303,7 +303,7 @@
   box-sizing: border-box;
   padding: 90px 0;
   opacity: 40%;
-  display: none !important;
+  display: none;
 }
 
 /* MODAL > 주문자 정보 수정 *********************************************/
@@ -385,6 +385,7 @@
   border-radius: 4px;
   font-size: 20px;
   color: var(--bg-color);
+  background: var(--camel-500);
   transition: all 0.2s ease-in;
 }
 .modal__edit-orderer .btn-save1:hover {

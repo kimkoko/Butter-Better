@@ -82,7 +82,7 @@ async function getOrderHistory(orderId) {
     const result = await response.json();
 
     if (response.ok) {
-      window.location.href = `${API_HOST}/src/views/order-track/order-track.html`;
+      window.location.href = `${API_HOST}/ordertrack`;
     } else {
       alert(`주문 조회 실패: ${result.msg}`);
     }
