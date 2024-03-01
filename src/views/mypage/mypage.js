@@ -7,16 +7,13 @@ window.addEventListener('DOMContentLoaded', () => {
 // Order History
 async function renderOrderHistory() {
   try {
-
-  
+    
     // API로 유저 정보 가져오기
     const response = await fetch(`${API_HOST}/api/orders/user`);
     const result = await response.json();
     const orders = result.data
     
-
-
-
+    
     // 주문 목록 리스트
     const orderList = document.querySelector('.container');
     
@@ -25,64 +22,48 @@ async function renderOrderHistory() {
       
       const userEmail = await findUser()
       const ordererEamil = order.orderer.email
-    
-
+      
+      
       if (userEmail === ordererEamil) {
-
-
+        
+        
         // 주문 상태가 "주문 완료"인 경우에만 클래스 추가
         const isOrderCompleted = order.order_status === "주문 완료";
         const btnOrderEditClass = isOrderCompleted ? "btn-order-edit active" : "btn-order-edit";
-
+        
         // 리스트 생성
         const orderContent = document.createElement('div');
         orderContent.classList.add('table__body');
-
-        const date = new Date(order.createdAt);
-        const formattedDate = date.toLocaleString('ko-KR');
         orderContent.innerHTML = `
         <div class="table__body--top">
-              <span>주문 일자</span>
-              <b class='date'>${order.createdAt}</b> |
-              <span>주문 번호</span>
-              <b class="order-id">${order._id}</b>
-          </div>
-          <div class="table__body--bottom"> 
-              <div class='products'>
-                <span class="order-title">${order.products[0].name}</span> 외 ${order.products.length-1}종
-              </div>
-              <div class='total-price'>${order.total_price.toLocaleString()}</div>
-              <div class='status'>${order.order_status}<button class="${btnOrderEditClass}" type='button'>주문 수정</button>
-              </div>
-          </div>
+        <span>주문 일자</span>
+        <b class='date'>${order.createdAt}</b> |
+        <span>주문 번호</span>
+        <b class="order-id">${order._id}</b>
+        </div>
+        <div class="table__body--bottom"> 
+        <div class='products'>
+        <span class="order-title">${order.products[0].name}</span> 외 ${order.products.length-1}종
+        </div>
+        <div class='total-price'>${order.total_price.toLocaleString()}</div>
+        <div class='status'>${order.order_status}<button class="${btnOrderEditClass}" type='button'>주문 수정</button>
+        </div>
+        </div>
         `;
         
         // 상품 리스트에 상품 추가
         orderList.appendChild(orderContent); 
-        ButtonEvents()
-
-
+        
+        
         // 주문자 정보 받아오기
-        const nameInput = document.querySelector(
-          '#edit-orderer input[placeholder="이름"]'
-        );
-        const emailInput = document.querySelector(
-          '#edit-orderer input[placeholder="이메일"]'
-        );
-        const phoneInput = document.querySelector(
-          '#edit-orderer input[placeholder="휴대 전화"]'
-        );
-        const postInput = document.querySelector(
-          '#edit-orderer input[placeholder="우편번호"]'
-        );
-        const addressInput = document.querySelector(
-          '#edit-orderer input[placeholder="기본 주소"]'
-        );
-        const detailInput = document.querySelector(
-          '#edit-orderer input[placeholder="나머지 주소 (선택)"]'
-        );
-        console.log(detailInput);
-
+        const nameInput = document.querySelector('#edit-orderer input[placeholder="이름"]');
+        const emailInput = document.querySelector('#edit-orderer input[placeholder="이메일"]');
+        const phoneInput = document.querySelector('#edit-orderer input[placeholder="휴대 전화"]');
+        const postInput = document.querySelector('#edit-orderer input[placeholder="우편번호"]');
+        const addressInput = document.querySelector('#edit-orderer input[placeholder="기본 주소"]');
+        const detailInput = document.querySelector('#edit-orderer input[placeholder="나머지 주소 (선택)"]');
+        console.log(detailInput)
+        
         nameInput.value = order.orderer.name;
         emailInput.value = order.orderer.email;
         phoneInput.value = order.orderer.phone;
@@ -92,21 +73,22 @@ async function renderOrderHistory() {
         
         // orderId 반환
         const order_Id = order._id
-        console.log(order_Id)
-
+        ButtonEvents(order_Id);
       } else {
-
+        
         const noSync = document.querySelector(".none")
         noSync.style.display = "block"
       }
-
+      
     } 
-
-
+    
+    
   } catch (error) {
     console.error('주문 정보를 렌더링하는 중 오류가 발생했습니다:', error);
   }
 }
+
+
 
 // 주문자 정보
 function ButtonEvents(order_Id) {
@@ -122,32 +104,31 @@ function ButtonEvents(order_Id) {
       editModal.style.display = 'flex';
     });
   });
-
-
+  
   // 수정 모달 닫기 이벤트
-  editModal.addEventListener('mousedown', function (e) {
+  editModal.addEventListener("mousedown", function (e) {
     if (e.target !== editModal) return;
-    editModal.style.display = 'none';
+    editModal.style.display = "none";
   });
   
   // 저장 버튼 클릭 이벤트
   submitBtn.addEventListener('click', function () {
-    updateOrderer()
+    // 저장 버튼 클릭 시 updateOrderer 함수에 order_Id를 전달
+    updateOrderer(order_Id);
     editModal.style.display = "none";
   });
-
-};
+}
 
 
 
 // 모달에 입력 된 정보로 유저 정보 수정하기
 function getOrderer() {
-  const nameInput = document.querySelector('#edit-account input[placeholder="이름"]');
-  const emailInput = document.querySelector('#edit-account input[placeholder="이메일"]');
-  const phoneInput = document.querySelector('#edit-account input[placeholder="휴대 전화"]');
-  const postInput = document.querySelector('#edit-account input[placeholder="우편번호"]');
-  const addressInput = document.querySelector('#edit-account input[placeholder="기본 주소"]');
-  const detailInput = document.querySelector('#edit-account input[placeholder="나머지 주소 (선택)"]');
+  const nameInput = document.querySelector('#edit-orderer input[placeholder="이름"]');
+  const emailInput = document.querySelector('#edit-orderer input[placeholder="이메일"]');
+  const phoneInput = document.querySelector('#edit-orderer input[placeholder="휴대 전화"]');
+  const postInput = document.querySelector('#edit-orderer input[placeholder="우편번호"]');
+  const addressInput = document.querySelector('#edit-orderer input[placeholder="기본 주소"]');
+  const detailInput = document.querySelector('#edit-orderer input[placeholder="나머지 주소 (선택)"]');
   
   const orderer = {
     name: nameInput.value,
@@ -159,15 +140,17 @@ function getOrderer() {
       detail: detailInput.value,
     },
   };
-
-
+  
+  
   return orderer;
 }
+
+
 
 // 수정 폼에서 주문자 정보를 업데이트
 function updateOrderer(orderId) {
   const newUser = getOrderer();
-  const orderId = renderOrderHistory()
+  // orderId 값을 사용하여 주문 정보 업데이트
   fetch(`${API_HOST}/api/orders/${orderId}`, {
     method: 'PATCH',
     headers: {
@@ -177,11 +160,7 @@ function updateOrderer(orderId) {
   })
   .then(response => {
     if (response.ok) {
-      editModal.style.display = "none";
-      window.location.reload()
       alert("회원 정보가 수정되었습니다.");
-      
-      
     } else {
       alert('주문 정보 수정 실패');
     }
@@ -190,6 +169,9 @@ function updateOrderer(orderId) {
     console.error('수정 중 오류가 발생했습니다:', err);
   });
 }
+
+
+
 
 // 회원 정보
 document.addEventListener('DOMContentLoaded', function () {
@@ -200,10 +182,12 @@ document.addEventListener('DOMContentLoaded', function () {
   const deleteSubmitBtn = document.querySelector('.btn-submit');
   const deleteModal = document.querySelector('#delete-account');
   const editModal = document.querySelector('#edit-account');
-
+  
   //유저 정보 찾아서 ACCOUNT DETAILS 렌더링
   findUser();
-
+  
+  
+  
   // 유저 정보 가져오기 및 수정 모달 열기
   function openEditModal() {
     findUser();
@@ -218,9 +202,9 @@ document.addEventListener('DOMContentLoaded', function () {
   });
   
   // 수정 모달 닫기 이벤트
-  editModal.addEventListener('mousedown', function (e) {
+  editModal.addEventListener("mousedown", function (e) {
     if (e.target !== editModal) return;
-    editModal.style.display = 'none';
+    editModal.style.display = "none";
   });
   
   // 저장 버튼 클릭 이벤트
@@ -236,9 +220,9 @@ document.addEventListener('DOMContentLoaded', function () {
   });
   
   // 삭제 모달 닫기 이벤트
-  deleteModal.addEventListener('mousedown', function (e) {
+  deleteModal.addEventListener("mousedown", function (e) {
     if (e.target !== deleteModal) return;
-    deleteModal.style.display = 'none';
+    deleteModal.style.display = "none";
   });
   
   // 삭제 확인 버튼 클릭 이벤트
@@ -248,30 +232,32 @@ document.addEventListener('DOMContentLoaded', function () {
   
   // 삭제 취소 버튼 클릭 이벤트
   deletecancleBtn.addEventListener('click', function () {
-    deleteModal.style.display = 'none';
+    deleteModal.style.display = "none";
   });
-
+  
 });
 
-//유저 정보 찾아서 가져오기
+//유저 정보 찾아서 가져오기 
 async function findUser() {
   try {
     // API로 유저 정보 가져오기
     const response = await fetch(`${API_HOST}/api/users/mypage`);
     const res = await response.json();
-    console.log(res);
-
+    console.log(res)
+    
     if (!response.ok) {
-      throw new Error('유저 정보를 불러오는데 실패했습니다.');
+      throw new Error("유저 정보를 불러오는데 실패했습니다.");
     }
     const user = res.user;
-    const userEmail = user.email;
-
+    const userEmail = user.email
+    
+    
     // 유저 정보 렌더링
     renderUserInfo(user);
     renderAccountDetails(user);
     
     return userEmail;
+    
   } catch (error) {
     console.error('유저정보를 렌더링하는 중 오류가 발생했습니다:', error);
   }
@@ -279,31 +265,20 @@ async function findUser() {
 
 // 유저 정보 렌더링을 위한 함수
 function renderUserInfo(user) {
-  const nameInput = document.querySelector(
-    '#edit-account input[placeholder="이름"]'
-  );
-  const emailInput = document.querySelector(
-    '#edit-account input[placeholder="이메일"]'
-  );
-  const phoneInput = document.querySelector(
-    '#edit-account input[placeholder="휴대 전화"]'
-  );
-  const postInput = document.querySelector(
-    '#edit-account input[placeholder="우편번호"]'
-  );
-  const addressInput = document.querySelector(
-    '#edit-account input[placeholder="기본 주소"]'
-  );
-  const detailInput = document.querySelector(
-    '#edit-account input[placeholder="나머지 주소 (선택)"]'
-  );
-
+  const nameInput = document.querySelector('#edit-account input[placeholder="이름"]');
+  const emailInput = document.querySelector('#edit-account input[placeholder="이메일"]');
+  const phoneInput = document.querySelector('#edit-account input[placeholder="휴대 전화"]');
+  const postInput = document.querySelector('#edit-account input[placeholder="우편번호"]');
+  const addressInput = document.querySelector('#edit-account input[placeholder="기본 주소"]');
+  const detailInput = document.querySelector('#edit-account input[placeholder="나머지 주소 (선택)"]');
+  
   nameInput.value = user.name;
   emailInput.value = user.email;
   phoneInput.value = user.phone;
   postInput.value = user.address.postcode;
   addressInput.value = user.address.main;
   detailInput.value = user.address.detail;
+  
 }
 // Account details 랜더링
 function renderAccountDetails(user) {
@@ -318,27 +293,18 @@ function renderAccountDetails(user) {
   addressDetail.textContent = `${user.address.main} ${user.address.detail}`;
 }
 
+
+
+
 // 모달에 입력 된 정보로 유저 정보 수정하기
 function getUserDataFromModal() {
-  const nameInput = document.querySelector(
-    '#edit-account input[placeholder="이름"]'
-  );
-  const emailInput = document.querySelector(
-    '#edit-account input[placeholder="이메일"]'
-  );
-  const phoneInput = document.querySelector(
-    '#edit-account input[placeholder="휴대 전화"]'
-  );
-  const postInput = document.querySelector(
-    '#edit-account input[placeholder="우편번호"]'
-  );
-  const addressInput = document.querySelector(
-    '#edit-account input[placeholder="기본 주소"]'
-  );
-  const detailInput = document.querySelector(
-    '#edit-account input[placeholder="나머지 주소 (선택)"]'
-  );
-
+  const nameInput = document.querySelector('#edit-account input[placeholder="이름"]');
+  const emailInput = document.querySelector('#edit-account input[placeholder="이메일"]');
+  const phoneInput = document.querySelector('#edit-account input[placeholder="휴대 전화"]');
+  const postInput = document.querySelector('#edit-account input[placeholder="우편번호"]');
+  const addressInput = document.querySelector('#edit-account input[placeholder="기본 주소"]');
+  const detailInput = document.querySelector('#edit-account input[placeholder="나머지 주소 (선택)"]');
+  
   const user = {
     name: nameInput.value,
     email: emailInput.value,
@@ -351,6 +317,9 @@ function getUserDataFromModal() {
   };
   return user;
 }
+
+
+
 
 //수정된 유저정보 저장하기
 function saveUserInfo() {
@@ -384,42 +353,41 @@ function deleteUser() {
   fetch(`${API_HOST}/api/users/`, {
     method: 'DELETE',
   })
-    .then((response) => {
-      if (response.ok) {
-        alert('회원 탈퇴가 완료되었습니다.');
-        window.location.href = '/';
-      } else {
-        alert('회원 탈퇴 실패');
-      }
-    })
-    .catch((err) => {
-      console.error('회원 탈퇴 중 오류가 발생했습니다:', err);
-    });
+  .then(response => {
+    if (response.ok) {
+      alert("회원 탈퇴가 완료되었습니다.");
+      window.location.href = '/';
+    } else {
+      alert('회원 탈퇴 실패');
+    }
+  })
+  .catch((err) => {
+    console.error('회원 탈퇴 중 오류가 발생했습니다:', err);
+  });
 }
 
 //우편 번호api 실행 함수
 function execDaumPostcode() {
   new daum.Postcode({
     // 검색 완료 시 호출되는 콜백 함수
-    oncomplete: function (data) {
+    oncomplete: function(data) {
       // 주소 변수
       var addr = '';
-
+      
       // 사용자가 도로명 주소를 선택했을 경우
       if (data.userSelectedType === 'R') {
         addr = data.roadAddress;
-      } else {
-        // 사용자가 지번 주소를 선택했을 경우(J)
+      } else { // 사용자가 지번 주소를 선택했을 경우(J)
         addr = data.jibunAddress;
       }
-
+      
       // 우편번호와 주소 정보를 해당 필드에 넣는다.
       document.getElementById('postCode').value = data.zonecode;
-      document.getElementById('address').value = addr;
-
+      document.getElementById("address").value = addr;
+      
       // 커서를 상세주소 필드로 이동한다.
-      document.getElementById('detail').focus();
-    },
+      document.getElementById("detail").focus();
+    }
   }).open();
 }
 // 다음 우편번호 API 실행 함수
