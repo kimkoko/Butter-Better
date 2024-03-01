@@ -48,7 +48,11 @@ async function submitOrder() {
 
     showOrderCompletion(order.data._id, order.data.createdAt); // 주문 완료 화면 주문번호와 주문번호시간 출력
 
-    localStorage.removeItem('cartItems'); // 주문 완료 후 장바구니 비우기
+    // 주문 완료 후 장바구니 비우기
+    localStorage.removeItem('cartItems'); 
+  
+    // 선택된 상품 데이터도 삭제
+    localStorage.removeItem('selectedItemsForOrder');
   } catch (error) {
     console.error('주문 생성 실패:', error);
   }
@@ -130,13 +134,14 @@ function showOrderCompletion(orderId, orderCreatedAt) {
 }
 
 //  --------------------로컬스토리지 정보 불러오기-------------------
-// document.addEventListener("DOMContentLoaded", function () {
-//     loadOrderSummary();
-//     selectText(); // 배송 메세지 선택 관련 함수 호출
-// });
 
 function loadOrderSummary() {
-  const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+  // 쇼핑하면서 담았던 전체장바구니 cartItems로 로컬스토리지에 담아두었던것을 주문페이지에서 꺼내기
+  // const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+
+  // 장바구니에서 사고싶은것만 상품선택한것을 배열로만들어 로컬스토리지에 새로운값으로 selectedItemsForOrder 에담은것을 꺼내기
+  // 'selectedItemsForOrder' 키를 사용하여 로컬 스토리지에서 선택된 상품 정보 불러오기
+  const selectedCartItems = JSON.parse(localStorage.getItem('selectedItemsForOrder')) || [];
   const productsListElement = document.querySelector('.products'); // 주문 상품 리스트 컨테이너
   const subTotalElement = document.querySelector('.subTotal .price'); // 소계 가격 표시 요소
   const totalElement = document.querySelector('.total .price'); // 총 가격 표시 요소
@@ -145,14 +150,17 @@ function loadOrderSummary() {
   // 기존에 표시된 상품 목록 초기화
   productsListElement.innerHTML = '';
 
-  const cartItemEmpty = document.querySelector('.cart-empty-message'); // 상품 없음 안내 메시지
-  if (cartItems.length === 0) {
-    cartItemEmpty.classList.add('active');
-  } else {
-    cartItemEmpty.classList.remove('active');
-  }
+  // const cartItemEmpty = document.querySelector('.cart-empty-message'); // 상품 없음 안내 메시지
+  // if (cartItems.length === 0) {
+  //   cartItemEmpty.classList.add('active');
+  // } else {
+  //   cartItemEmpty.classList.remove('active');
+  // }
 
-  cartItems.forEach((item) => {
+  // cartItems.forEach((item) => {
+  //   const productPrice = parseInt(item.price) * parseInt(item.quantity);
+  //   subTotalPrice += productPrice; // 소계 가격 계산
+    selectedCartItems.forEach((item) => {
     const productPrice = parseInt(item.price) * parseInt(item.quantity);
     subTotalPrice += productPrice; // 소계 가격 계산
 
@@ -184,19 +192,6 @@ function loadOrderSummary() {
     subTotalPrice + shippingCost
   ).toLocaleString()}`;
 }
-
-// /* 배송 메세지 직접 입력 선택 시 인풋 노출 */
-// function selectText () {
-//     const select = document.getElementById("message")
-//     const value = select.options[select.selectedIndex].value
-//     const messageInput = document.querySelector(".messageInput")
-
-//     if (value == 6) {
-//         messageInput.classList.remove("off")
-//     } else {
-//         messageInput.classList.add("off")
-//     }
-// }
 
 //우편 번호api 실행 함수
 function execDaumPostcode() {

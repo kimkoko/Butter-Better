@@ -68,36 +68,37 @@ function loadCartItems() {
 
 function updateTotalAndShipping() {
   const totalPriceElement = document.querySelector('.totalPrice .total .price');
-  const shippingPriceElement = document.querySelector(
-    '.totalPrice .shoping .price'
-  );
+  const shippingPriceElement = document.querySelector('.totalPrice .shoping .price');
 
   let totalProductPrice = 0; // 선택된 상품들의 총 상품 가격
   const selectedItems = document.querySelectorAll('.ck:checked'); // 선택된 상품 체크박스들
 
   selectedItems.forEach((checkbox) => {
-    const index = checkbox.closest('tr').querySelector('.quantity input')
-      .dataset.index;
-    const quantity = parseInt(
-      checkbox.closest('tr').querySelector('.quantity input').value
-    );
-    const price = parseInt(
-      JSON.parse(localStorage.getItem('cartItems'))[index].price
-    );
+    const index = checkbox.closest('tr').querySelector('.quantity input').dataset.index;
+    const quantity = parseInt(checkbox.closest('tr').querySelector('.quantity input').value);
+    const price = parseInt(JSON.parse(localStorage.getItem('cartItems'))[index].price);
     totalProductPrice += quantity * price;
   });
 
-  const shippingCost = totalProductPrice < 30000 ? 3000 : 0;
+  // 배송비 및 총 가격 초기 값 설정
+  let shippingCost = 0;
+  let finalTotalPrice = 0;
+
+  if (totalProductPrice !== 0) {
+    // 상품 총 가격이 30000원 미만이면 3000원, 그 이상이면 0원으로 설정
+    shippingCost = totalProductPrice < 30000 ? 3000 : 0;
+    finalTotalPrice = totalProductPrice + shippingCost;
+  }
 
   // Infobox 내 Shipping 및 Total 업데이트
   shippingPriceElement.textContent = `₩${shippingCost.toLocaleString()}`;
-  const finalTotalPrice = totalProductPrice + shippingCost;
   totalPriceElement.textContent = `₩${finalTotalPrice.toLocaleString()}`;
 
   // 추가된 부분: infobox의 total 업데이트
   const totalElement = document.querySelector('.totalPrice .total .price');
   totalElement.textContent = `₩${finalTotalPrice.toLocaleString()}`;
 }
+
 
 document.addEventListener('DOMContentLoaded', function () {
   // 전체 선택 체크박스
@@ -106,8 +107,45 @@ document.addEventListener('DOMContentLoaded', function () {
   const selectOneCheckboxes = document.querySelectorAll('.ck');
   // 삭제 버튼
   const removeButton = document.getElementById('removeBtn');
+  // 장바구니 전체삭제 버튼
+  const removeAllButton = document.getElementById('removeallBtn');
   // 주문하기 버튼
-  // const checkoutButton = document.querySelector('.checkout');
+  const checkoutButton = document.querySelector('.checkout');
+
+  // 주문하기 버튼 클릭 이벤트 리스너
+  checkoutButton.addEventListener('click', function() {
+    // 선택된 상품 정보를 담을 배열
+    const selectedItemsForOrder = [];
+
+    // 체크박스로 선택된 모든 상품 찾기
+    document.querySelectorAll('.ck:checked').forEach(checkbox => {
+      const productRow = checkbox.closest('tr');
+      const index = productRow.querySelector('.quantity input').dataset.index; // 상품 인덱스
+      const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+      const selectedItem = cartItems[index];
+    
+      // 선택된 상품 정보를 배열에 추가
+      if (selectedItem) {
+        selectedItemsForOrder.push(selectedItem);
+      }
+    });
+
+    // 선택된 상품 정보를 로컬 스토리지에 'selectedItemsForOrder' 키로 저장
+    localStorage.setItem('selectedItemsForOrder', JSON.stringify(selectedItemsForOrder));
+
+    // 주문 페이지로 이동
+    // 여기서는 예시를 위해 URL을 '/order'로 설정합니다. 실제 프로젝트에 맞는 경로를 사용해주세요.
+    window.location.href = '/order';
+  });
+    
+  // "REMOVE ALL" 버튼 클릭 이벤트 리스너
+  removeAllButton.addEventListener('click', function() {
+    // 로컬 스토리지에서 'cartItems' 항목 삭제
+    localStorage.removeItem('cartItems');
+    
+    // 페이지 새로고침으로 장바구니 목록 업데이트
+    window.location.reload();
+  });
 
   // 전체 선택 체크박스 클릭 이벤트
   selectAllCheckbox.addEventListener('click', () => {

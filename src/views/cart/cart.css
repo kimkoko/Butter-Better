@@ -122,6 +122,9 @@
   justify-content: space-between;
   margin-bottom: 60px;
 }
+.mainBox .buttonBox #removeallBtn {
+  margin-left: 10px;
+}
 .mainBox .buttonBox button,
 .mainBox .buttonBox a {
   font-size: 18px;
