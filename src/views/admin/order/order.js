@@ -91,13 +91,11 @@ function displayOrders(orders) {
                 </ul>
             </td>
             <td class="center">
-                <select name="state" class="stateSelect" data-order-id="${
-                  order._id
-                }">
-                    <option value="주문 완료">주문 완료</option>
-                    <option value="배송중">배송중</option>
-                    <option value="배송 완료">배송 완료</option>
-                    <option value="주문 취소">주문 취소</option>
+                <select name="state" class="stateSelect" data-order-id="${order._id}">
+                  <option value="주문 완료" ${order.order_status === '주문 완료' ? 'selected' : ''}>주문 완료</option>
+                  <option value="배송중" ${order.order_status === '배송중' ? 'selected' : ''}>배송중</option>
+                  <option value="배송 완료" ${order.order_status === '배송 완료' ? 'selected' : ''}>배송 완료</option>
+                  <option value="주문 취소" ${order.order_status === '주문 취소' ? 'selected' : ''}>주문 취소</option>
                 </select>
             </td>
             <td>
