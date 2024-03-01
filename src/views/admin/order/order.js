@@ -107,76 +107,89 @@ function displayOrders(orders) {
       tableBody.appendChild(tr);
   });
 
-  // 주문상태 변경에 따른 ~
   function setupOrderStatusChangeEventListener() {
     document.querySelectorAll('.stateSelect').forEach(selectElement => {
-        selectElement.addEventListener('change', async function() {
-            const orderId = this.getAttribute('data-order-id'); // 주문 ID를 가져옵니다.
-            const newStatus = this.value; // 새로운 주문 상태를 가져옵니다.
+      selectElement.addEventListener('change', async function() {
+        const orderId = this.getAttribute('data-order-id'); // 주문 ID를 가져옵니다.
+        const newStatus = this.value; // 새로운 주문 상태를 가져옵니다.
+  
+        try {
+          const response = await fetch(`${API_HOST}/api/orders/admin/${orderId}`, {
+            method: 'PATCH',
+            headers: {
+              'Content-Type': 'application/json',
+              // 'Authorization': `Bearer ${accessToken}`, // 인증 토큰이 필요한 경우 추가
+            },
+            body: JSON.stringify({ order_status: newStatus }),
+          });
+  
+          if (!response.ok) {
+            throw new Error('주문 상태를 변경하는 데 실패했습니다.');
+          }
+  
+          // 성공적으로 상태가 변경되었음을 사용자에게 알립니다.
+          alert('주문 상태가 성공적으로 변경되었습니다.');
 
+          // 페이지를 새로고침하여 변경사항을 반영합니다.
+          window.location.reload();
+  
+          // 변경된 주문 상태를 반영하기 위해 셀렉트 박스의 값을 업데이트합니다.
+          // 이 부분은 실제로는 필요하지 않을 수 있습니다. 왜냐하면 셀렉트 박스의 값이 이미
+          // 사용자에 의해 변경되었기 때문입니다. 하지만, 상태가 프로그래매틱하게 변경되는
+          // 다른 시나리오를 대비하여 이를 포함할 수 있습니다.
+          this.value = newStatus;
+  
+        } catch (error) {
+          console.error('주문 상태 변경 오류:', error);
+          alert('주문 상태 변경에 실패했습니다.');
+          // 실패한 경우, 사용자에게 상태 변경 실패를 알리고, 셀렉트 박스를 이전 상태로 되돌립니다.
+          // 이를 위해 셀렉트 박스의 이전 값을 저장해둘 필요가 있습니다. 예를 들어, 상태 변경 시도 전에
+          // 셀렉트 박스의 현재 값을 어딘가에 저장하고, 실패 시 그 값을 다시 셀렉트 박스의 값으로 설정합니다.
+        }
+      });
+    });
+  }
+
+
+  function setupDeleteButtonEventListener() {
+    document.querySelectorAll('.delete').forEach(button => {
+        button.addEventListener('click', async function() {
+            // 'data-order-id' 속성을 통해 삭제할 주문의 ID를 얻습니다.
+            const orderId = this.getAttribute('data-order-id');
+  
+            // 사용자에게 삭제를 확인받습니다.
+            const isConfirmed = confirm('주문을 삭제하시겠습니까?');
+            if (!isConfirmed) {
+                return; // 사용자가 취소하면 여기서 함수 실행을 중단합니다.
+            }
+  
             try {
+                // 주문 삭제 API 요청을 보냅니다.
                 const response = await fetch(`${API_HOST}/api/orders/admin/${orderId}`, {
-                    method: 'PATCH',
+                    method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json',
-                        // 'Authorization': `Bearer ${accessToken}`, // 인증 토큰이 필요한 경우 추가
+                        // 필요한 경우 인증 토큰을 추가합니다.
                     },
-                    body: JSON.stringify({ order_status: newStatus }),
                 });
-
+  
                 if (!response.ok) {
-                    throw new Error('주문 상태를 변경하는 데 실패했습니다.');
+                    throw new Error('주문을 삭제하는 데 실패했습니다.');
                 }
-
-                // 성공적으로 상태가 변경되었음을 사용자에게 알립니다.
-                alert('주문 상태가 성공적으로 변경되었습니다.');
+  
+                // 성공적으로 주문이 삭제되었다는 메시지를 표시합니다.
+                alert('주문이 성공적으로 삭제되었습니다.');
+  
+                // 여기에서 해당 버튼이 속한 <tr> 요소를 찾아서 삭제합니다.
+                this.closest('tr').remove();
+  
             } catch (error) {
-                console.error('주문 상태 변경 오류:', error);
-                alert('주문 상태 변경에 실패했습니다.');
+                console.error('주문 삭제 오류:', error);
+                alert('주문 삭제에 실패했습니다.');
             }
         });
     });
-}
-
-function setupDeleteButtonEventListener() {
-  // 페이지 내의 모든 삭제 버튼에 대해 이벤트 리스너를 설정합니다.
-  document.querySelectorAll('.delete').forEach(button => {
-      button.addEventListener('click', async function() {
-          // 'data-order-id' 속성을 통해 삭제할 주문의 ID를 얻습니다.
-          const orderId = this.getAttribute('data-order-id');
-
-          // 사용자에게 삭제 확인을 요청하는 추가 로직이 있을 수 있습니다.
-          const isConfirmed = confirm('주문을 삭제하시겠습니까?');
-          if (!isConfirmed) {
-              return; // 사용자가 취소하면 여기서 함수 실행을 중단합니다.
-          }
-
-          try {
-              // 주문 삭제 API 요청을 보냅니다.
-              const response = await fetch(`${API_HOST}/api/orders/admin/${orderId}`, {
-                  method: 'DELETE',
-                  headers: {
-                      'Content-Type': 'application/json',
-                      // 필요한 경우 인증 토큰을 추가합니다.
-                      // 'Authorization': `Bearer ${accessToken}`,
-                  },
-              });
-
-              if (!response.ok) {
-                  throw new Error('주문을 삭제하는 데 실패했습니다.');
-              }
-
-              // 성공적으로 주문이 삭제되었다는 메시지를 표시합니다.
-              alert('주문이 성공적으로 삭제되었습니다.');
-              // 삭제 후 주문 목록을 다시 불러오는 로직이 필요할 수 있습니다.
-              loadOrders();
-          } catch (error) {
-              console.error('주문 삭제 오류:', error);
-              alert('주문 삭제에 실패했습니다.');
-          }
-      });
-  });
-}
+  }
 
 
   // 모든 주문 데이터가 페이지에 추가된 후, 상태 변경 및 삭제 버튼에 대한 이벤트 리스너를 설정합니다.
