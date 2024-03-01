@@ -14,6 +14,8 @@ async function renderOrderHistory() {
     const response = await fetch(`${API_HOST}/api/orders/user`);
     const result = await response.json();
     const orders = result.data
+    
+
 
 
     // 주문 목록 리스트
@@ -74,16 +76,18 @@ async function renderOrderHistory() {
         addressInput.value = order.orderer.address.main;
         detailInput.value = order.orderer.address.default;
 
+        // orderId 반환
+        const order_Id = order._id
+        console.log(order_Id)
+
       } else {
 
         const noSync = document.querySelector(".none")
         noSync.style.display = "block"
       }
 
-
-
-
     } 
+
 
   } catch (error) {
     console.error('주문 정보를 렌더링하는 중 오류가 발생했습니다:', error);
@@ -114,10 +118,67 @@ function ButtonEvents() {
 
   // 저장 버튼 클릭 이벤트
   submitBtn.addEventListener('click', function () {
-
+    updateOrderer()
+    editModal.style.display = "none";
   });
 
 };
+
+
+
+// 모달에 입력 된 정보로 유저 정보 수정하기
+function getOrderer() {
+  const nameInput = document.querySelector('#edit-account input[placeholder="이름"]');
+  const emailInput = document.querySelector('#edit-account input[placeholder="이메일"]');
+  const phoneInput = document.querySelector('#edit-account input[placeholder="휴대 전화"]');
+  const postInput = document.querySelector('#edit-account input[placeholder="우편번호"]');
+  const addressInput = document.querySelector('#edit-account input[placeholder="기본 주소"]');
+  const detailInput = document.querySelector('#edit-account input[placeholder="나머지 주소 (선택)"]');
+  
+  const orderer = {
+    name: nameInput.value,
+    email: emailInput.value,
+    phone: phoneInput.value,
+    address: {
+      postcode: postInput.value,
+      main: addressInput.value,
+      detail: detailInput.value,
+    },
+  };
+
+
+  return orderer;
+}
+
+
+
+// 수정 폼에서 주문자 정보를 업데이트
+function updateOrderer() {
+  const newUser = getOrderer();
+  const orderId = renderOrderHistory()
+  fetch(`${API_HOST}/api/orders/${orderId}`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(newUser),
+  })
+  .then(response => {
+    if (response.ok) {
+      editModal.style.display = "none";
+      window.location.reload()
+      alert("회원 정보가 수정되었습니다.");
+      
+      
+    } else {
+      alert('주문 정보 수정 실패');
+    }
+  })
+  .catch((err) => {
+    console.error('수정 중 오류가 발생했습니다:', err);
+  });
+}
+
 
 
 
