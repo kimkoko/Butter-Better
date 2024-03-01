@@ -53,6 +53,17 @@ async function updateProductInfo() {
 </div>
   `;
 
+  const productPrice = document.querySelector('.topBox .price');
+  const btnCart = document.querySelector('.topBox .priceButton .cartBtn');
+  // 상품 재고가 0일 경우, sold-out 태그
+  if (product.quantity === 0) {
+    productPrice.classList.add('sold-out');
+    btnCart.classList.add('inactive');
+  } else {
+    productPrice.classList.remove('sold-out');
+    btnCart.classList.remove('inactive');
+  }
+
   // 수량 감소 버튼 클릭 시 이벤트 핸들러
   document
     .getElementById('decreaseQuantity')

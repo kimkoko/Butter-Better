@@ -4,11 +4,11 @@ const ProductSchema = new Schema(
   {
     name: {
       type: String,
-      // require: true,
+      require: true,
     },
     img_url: {
       type: String,
-      // required: true,
+      required: true,
     },
     quantity: { type: Number },
   },
@@ -28,23 +28,22 @@ const OrdererSchema = new Schema(
   {
     email: {
       type: String,
-      // required: true,
+      required: true,
     },
     phone: {
       type: String,
-      // required: true,
+      required: true,
     },
     name: {
       type: String,
-      // required: true,
+      required: true,
     },
     address: {
       type: AddressSchema,
-      // required: true,
+      required: true,
     },
     shipping_message: {
       type: String,
-      // required: true,
     },
   },
   { _id: false }
@@ -54,29 +53,24 @@ const OrderSchema = new Schema(
   {
     products: {
       type: [ProductSchema],
-      // required: true,
+      required: true,
     },
     orderer: {
       type: OrdererSchema,
-      // required: true,
+      required: true,
     },
-    // message: {
-    //   type: String,
-    //   // required: true,
-    // },
     shipping_fee: {
       type: Number,
-      // required: true,
     },
     total_price: {
       type: Number,
-      // required: true,
+      required: true,
     },
     order_status: {
       type: String,
       enum: ['주문 완료', '배송 중', '배송 완료', '주문 취소'],
       default: '주문 완료',
-      // required: true,
+      required: true,
     },
     deleted_at: {
       type: Date,

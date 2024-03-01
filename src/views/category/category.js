@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const nextPageBtn = document.querySelector('.next-page a');
   const productFilter = document.querySelector('.product-filter');
 
-   // 이전 페이지로 이동
+  // 이전 페이지로 이동
   prevPageBtn.addEventListener('click', function (e) {
     e.preventDefault();
     if (currentPage > 1) {
@@ -56,14 +56,13 @@ function sortProductsByOption(option) {
     .then((categoryBooks) => {
       const books = categoryBooks.data.books.books;
 
-      
       totalPage = categoryBooks.data.books.totalPage;
 
-    const categoryName = document.getElementById('categoryName');
-    categoryName.innerText = `${categoryBooks.data.books.category}`;
+      const categoryName = document.getElementById('categoryName');
+      categoryName.innerText = `${categoryBooks.data.books.category}`;
 
-    const totalText = document.getElementById('totalCount');
-    totalText.innerText = `${categoryBooks.data.books.productCount} products`;
+      const totalText = document.getElementById('totalCount');
+      totalText.innerText = `${categoryBooks.data.books.productCount} products`;
 
       switch (option) {
         case '최신상품':
@@ -99,11 +98,20 @@ function renderSortedProducts(sortedBooks) {
     productItem.classList.add('product-item');
     productItem.innerHTML = `
         <a href="/detail?id=${book._id}">
-            <div class="img-container"><img src="${book.img_url}" alt="제품 이미지"></div>
+            <div class="img-container"><img src="${
+              book.img_url
+            }" alt="제품 이미지"></div>
             <h2>${book.title}</h2>
             <span class="price">${book.price.toLocaleString()} 원</span>
         </a>
     `;
+
+    // 상품 재고가 0일 경우, sold-out 태그
+    if (book.quantity === 0) {
+      productItem.classList.add('sold-out');
+    } else {
+      productItem.classList.remove('sold-out');
+    }
 
     productListElement.appendChild(productItem);
   });
