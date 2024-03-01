@@ -20,7 +20,7 @@ class OrderModel {
   }
 
   async delete(orderId) {
-    return await Order.findOneAndDelete(orderId);
+    return await Order.findByIdAndDelete(orderId);
   }
 }
 
