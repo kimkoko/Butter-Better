@@ -9,6 +9,19 @@ async function getProductInfo(productId) {
     console.error('상품 리스트를 렌더링하는 중 오류가 발생했습니다:', error);
   }
 }
+// 로컬스토리지 cartItems [] 키값 밸류 생성 및 키값에 데이터저장
+function saveProductToLocalStorage(productInfo) {
+  let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+  const existingProductIndex = cartItems.findIndex(item => item.name === productInfo.name);
+
+  if (existingProductIndex === -1) {
+    cartItems.push(productInfo);
+    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+    alert('상품이 장바구니에 추가되었습니다!');
+  } else {
+    alert("장바구니에 같은 상품이 이미 있습니다.");
+  }
+}
 
 async function updateProductInfo() {
   const productInfoElement = document.querySelector(
@@ -84,17 +97,18 @@ async function updateProductInfo() {
       quantityInput.textContent = ++quantity;
     });
 
-  // 여기서 ADD TO CART 버튼에 이벤트 리스너를 직접 등록
-  document.querySelector('.cartBtn').addEventListener('click', function () {
-    const productInfo = {
-      name: product.title,
-      price: product.price,
-      quantity: parseInt(document.querySelector('.quantityInput').textContent),
-      img: product.img_url,
-    };
-    saveProductToLocalStorage(productInfo);
-    alert('상품이 장바구니에 추가되었습니다!');
-    window.location.reload();
+  // ADD TO CART 버튼에 이벤트 리스너 등록
+document.querySelector('.cartBtn').addEventListener('click', function () {
+  const productInfo = {
+    name: product.title,
+    price: product.price,
+    quantity: parseInt(document.querySelector('.quantityInput').textContent),
+    img: product.img_url,
+  };
+  saveProductToLocalStorage(productInfo);
+  // 장바구니에 상품 추가 시 페이지 리로드는 제거할 수 있습니다.
+  // 이는 사용자 경험을 해칠 수 있으며, 상태 변경(알림 등)만으로 충분히 의사를 전달할 수 있습니다.
+  window.location.reload();
   });
 }
 
@@ -103,11 +117,8 @@ function getProductIdFromUrl() {
   return url.searchParams.get('id');
 }
 
-function saveProductToLocalStorage(productInfo) {
-  let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-  cartItems.push(productInfo);
-  localStorage.setItem('cartItems', JSON.stringify(cartItems));
-}
+
+
 
 window.addEventListener('load', updateProductInfo);
 
