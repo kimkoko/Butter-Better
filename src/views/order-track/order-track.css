@@ -1,5 +1,5 @@
 .mainBox {
-  min-height: 714px;
+  height: 63vh;
 }
 .mainBox h1 {
   font-size: 42px;
@@ -17,12 +17,6 @@
   justify-content: space-between;
   gap: 48px;
   position: relative;
-}
-.mainBox .inner section h3 {
-  font-size: 32px;
-  font-weight: 500;
-  color: var(--camel-500);
-  margin-bottom: 18px;
 }
 
 /* ORDER STYLE BELOW *********************************************/
@@ -97,10 +91,6 @@
   color: var(--camel-500);
   font-weight: 400;
   display: none;
-  transition: all 0.2s ease-in;
-}
-.order .table__body--bottom .btn-order-edit:hover {
-  border-color: var(--mocha-500);
 }
 .order .table__body--bottom .btn-order-edit.active {
   display: block;
@@ -150,7 +140,6 @@
   border-radius: 4px;
   font-size: 20px;
   color: var(--bg-color);
-  background: var(--camel-500);
   transition: all 0.2s ease-in;
 }
 .account .btn-edit:hover {
@@ -159,10 +148,6 @@
 .account .btn-delete {
   color: var(--camel-500);
   text-decoration: underline;
-  transition: all 0.3s ease-in;
-}
-.account .btn-delete:hover {
-  color: var(--mocha-500);
 }
 
 /* MODAL STYLE BELOW *********************************************/
@@ -243,7 +228,6 @@
   border-radius: 4px;
   font-size: 20px;
   color: var(--bg-color);
-  background: var(--camel-500);
   transition: all 0.2s ease-in;
 }
 .modal__edit-account .btn-save:hover {
@@ -294,99 +278,4 @@
 .modal__delete-account .btn-group .btn-submit {
   background-color: var(--orange-500);
   color: var(--bg-color);
-}
-
-.none {
-  border-top: solid 1px var(--camel-500);
-  color: var(--camel-500);
-  text-align: center;
-  box-sizing: border-box;
-  padding: 90px 0;
-  opacity: 40%;
-  display: none !important;
-}
-
-/* MODAL > 주문자 정보 수정 *********************************************/
-
-.modal__edit-orderer {
-  color: var(--camel-500);
-  font-size: 32px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 640px;
-  padding: 40px;
-  background-color: white;
-  row-gap: 18px;
-}
-.modal__edit-orderer .form {
-  width: 100%;
-}
-.modal__edit-orderer .form.address {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  row-gap: 18px;
-}
-.modal__edit-orderer .form.address label {
-  margin-bottom: 0;
-}
-.modal__edit-orderer input {
-  width: 100%;
-  height: 60px;
-  padding: 8px;
-  box-sizing: border-box;
-  border-radius: 4px;
-}
-.modal__edit-orderer p {
-  width: 100%;
-  height: 60px;
-  padding: 8px;
-  box-sizing: border-box;
-  border-radius: 4px;
-  text-align: center;
-}
-.modal__edit-orderer .postalCode {
-  width: 100%;
-  display: flex;
-  gap: 14px;
-}
-.modal__edit-orderer .postalCode input {
-  width: 100%;
-}
-.modal__edit-orderer .postalCode button {
-  white-space: nowrap;
-  padding: 14px 24px;
-  height: 60px;
-  box-sizing: border-box;
-  font-size: 18px;
-  color: var(--orange-500);
-  border-radius: 4px;
-  margin-left: 10px;
-  border: 1px solid var(--camel-500);
-}
-.modal__edit-orderer .btn-save {
-  width: 100%;
-  padding: 18px 0;
-  box-sizing: border-box;
-  border-radius: 4px;
-  font-size: 20px;
-  color: var(--bg-color);
-  background: var(--camel-500);
-  transition: all 0.2s ease-in;
-}
-.modal__edit-orderer .btn-save:hover {
-  background-color: var(--orange-500);
-}
-.modal__edit-orderer .btn-save1 {
-  width: 100%;
-  padding: 18px 0;
-  box-sizing: border-box;
-  border-radius: 4px;
-  font-size: 20px;
-  color: var(--bg-color);
-  transition: all 0.2s ease-in;
-}
-.modal__edit-orderer .btn-save1:hover {
-  background-color: var(--orange-500);
 }

@@ -10,6 +10,46 @@ class BookService {
     );
     return bestSellers;
   }
+// 정렬 
+  async getBooksBySort(page = 1, perPage = 24, option = '최신순') {
+    const skip = (page - 1) * perPage;
+    const total = await Book.countDocuments({}); 
+    let filter =  { _id: -1 }
+
+switch (option) {
+    case '최신순':
+        filter =  { _id: -1 }
+        break;
+    case '인기순':
+        filter = { rate: -1 }
+        break;
+    case '낮은 가격순':
+        filter = { price: 1 }
+        break;
+    case '높은 가격순':
+        filter = { price: -1 }
+        break;
+    default:
+      case '최신순':
+      filter =  { _id: -1 }
+        break;
+}
+const books = await Book.find({})
+    .sort(filter)
+    .skip(skip)
+    .limit(perPage)
+    .populate('category_id');
+
+    return {
+      totalPage: Math.ceil(total / perPage),
+      productCount: total,
+      books,
+      filter
+    };
+}
+
+
+
 // 카테고리별 조회
   async getBooksByCategory(categoryId, page = 1, perPage = 24) {
     const skip = (page - 1) * perPage;
@@ -28,10 +68,11 @@ class BookService {
     };
   }
 // 상품 목록 조회 
-  async getBooks(page = 1, perPage = 24) {
+  async getBooks(page = 1, perPage = 24, sortCriteria = { createdAt: -1 }) {
     const skip = (page - 1) * perPage;
     const total = await Book.countDocuments({});
     const books = await Book.find({})
+      .sort(sortCriteria)
       .skip(skip)
       .limit(perPage)
       .populate('category_id');
@@ -65,5 +106,25 @@ class BookService {
     return updatedBook;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 module.exports = new BookService();

@@ -10,15 +10,15 @@ const ProductSchema = new Schema(
       type: String,
       required: true,
     },
-    quantity: { type: Number, required: true },
+    quantity: { type: Number },
   },
   { _id: false }
 );
 
 const AddressSchema = new Schema(
   {
-    postcode: { type: String, required: true },
-    main: { type: String, required: true },
+    postcode: { type: String },
+    main: { type: String },
     default: { type: String },
   },
   { _id: false }
@@ -42,6 +42,9 @@ const OrdererSchema = new Schema(
       type: AddressSchema,
       required: true,
     },
+    shipping_message: {
+      type: String,
+    },
   },
   { _id: false }
 );
@@ -56,13 +59,8 @@ const OrderSchema = new Schema(
       type: OrdererSchema,
       required: true,
     },
-    message: {
-      type: String,
-      required: true,
-    },
     shipping_fee: {
       type: Number,
-      required: true,
     },
     total_price: {
       type: Number,

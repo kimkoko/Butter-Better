@@ -1,104 +1,118 @@
 import { API_HOST } from '../common/api.js';
+
 let currentPage = 1;
 let totalPage = 1;
 
-
 // 페이지가 로드되면 상품 리스트 렌더링
 document.addEventListener('DOMContentLoaded', function () {
-  
-  // 페이지네이션 버튼 가져오기
-  const prevPageBtn = document.querySelector(".previous-page a");
-  const nextPageBtn = document.querySelector(".next-page a");
+  const prevPageBtn = document.querySelector('.previous-page a');
+  const nextPageBtn = document.querySelector('.next-page a');
+  const productFilter = document.querySelector('.product-filter');
 
   // 이전 페이지로 이동
-  prevPageBtn.addEventListener("click", function (e) {
+  prevPageBtn.addEventListener('click', function (e) {
     e.preventDefault();
     if (currentPage > 1) {
       currentPage--;
       window.scrollTo({ top: 0, behavior: 'smooth' });
-      getCategoryBooks()
+      getCategoryBooks();
     }
   });
 
   // 다음 페이지로 이동
-  nextPageBtn.addEventListener("click", function (e) {
+  nextPageBtn.addEventListener('click', function (e) {
     e.preventDefault();
     if (currentPage < totalPage) {
       currentPage++;
       window.scrollTo({ top: 0, behavior: 'smooth' });
-      getCategoryBooks()
+      getCategoryBooks();
     }
+  });
+
+  productFilter.addEventListener('change', function () {
+    // 선택한 옵션에 따라 상품 정렬 함수 호출
+    sortProductsByOption(productFilter.value);
+  });
+
+  window.addEventListener('load', () => {
+    sortProductsByOption(productFilter.value);
   });
 });
 
-
-
-/* 카테고리별 정보 */
-async function getCategoryBooks() {
-  try {
-    // categoryId 가져오는 함수
-    function getCategoryIdFromUrl() {
-      const url = new URL(window.location.href);
-      return url.searchParams.get('category');
-    }
-
-    // categoryId 가져오기
-    const categoryId = getCategoryIdFromUrl();
-    console.log('categoryId: ', categoryId);
-
-    // categoryId를 사용하여 카테고리 정보를 가져오는 API 호출
-    const response = await fetch(
-      `${API_HOST}/api/categories/books/${categoryId}?page=${currentPage}`
-    );
-
-    // API 응답 데이터를 JSON 형태로 변환
-    const categoryBooks = await response.json();
-    const categoryBook = categoryBooks.data.books;
-    
-    totalPage = categoryBook.totalPage;
-
-    // 카테고리 타이틀
-    const categoryName = document.getElementById('categoryName');
-    categoryName.innerText = `${categoryBook.category}`;
-
-    // 리스트에 뿌려지는 아이템 갯수
-    const totalText = document.getElementById('totalCount');
-    totalText.innerText = `${categoryBook.productCount} products`;
-
-    // 카테고리별 리스트
-    const productListElement = document.getElementById('productList');
-    const books = categoryBook.books;
-    
-    productListElement.innerHTML = '';
-
-
-    books.slice(0, 24).forEach((book) => {
-      // 상품 요소 생성
-      const productItem = document.createElement('li');
-      productItem.classList.add('product-item');
-      productItem.innerHTML = `
-            <a href="/src/views/detail/detail.html?id=${book._id}">
-                <p class="img"><img src="${book.img_url}" alt="제품 이미지"></p>
-                <h2>${book.title}</h2>
-                <span class="price">${book.price.toLocaleString()} 원</span>
-            </a>
-        `;
-
-      // 상품 리스트에 상품 추가
-      productListElement.appendChild(productItem);
-    });
-  } catch (error) {
-    console.error('카테고리별 정보를 가져오는 중 오류가 발생했습니다:', error);
-  }
-  updatePagination() 
+function updatePagination() {
+  const currentPageInfo = document.getElementById('currentPageInfo');
+  currentPageInfo.textContent = `Page ${currentPage} of ${totalPage}`;
 }
 
-// 페이지가 로드되면 상품 리스트 렌더링
-window.addEventListener('load', () => {
-  getCategoryBooks();
-});
+function sortProductsByOption(option) {
+  function getCategoryIdFromUrl() {
+    const url = new URL(window.location.href);
+    return url.searchParams.get('category');
+  }
 
-function updatePagination() {
-  const currentPageInfo = document.getElementById("currentPageInfo");
-  currentPageInfo.textContent = `Page ${currentPage} of ${totalPage}`;
+  const categoryId = getCategoryIdFromUrl();
+  fetch(`${API_HOST}/api/categories/books/${categoryId}?page=${currentPage}`)
+    .then((response) => response.json())
+    .then((categoryBooks) => {
+      const books = categoryBooks.data.books.books;
+
+      totalPage = categoryBooks.data.books.totalPage;
+
+      const categoryName = document.getElementById('categoryName');
+      categoryName.innerText = `${categoryBooks.data.books.category}`;
+
+      const totalText = document.getElementById('totalCount');
+      totalText.innerText = `${categoryBooks.data.books.productCount} products`;
+
+      switch (option) {
+        case '최신상품':
+          books.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+          break;
+        case '인기상품':
+          books.sort((a, b) => b.rate - a.rate);
+          break;
+        case '낮은 가격순':
+          books.sort((a, b) => a.price - b.price);
+          break;
+        case '높은 가격순':
+          books.sort((a, b) => b.price - a.price);
+          break;
+        default:
+          break;
+      }
+
+      renderSortedProducts(books);
+      updatePagination();
+    })
+    .catch((error) => {
+      console.error('상품을 정렬하는 중 오류가 발생했습니다:', error);
+    });
+}
+
+function renderSortedProducts(sortedBooks) {
+  const productListElement = document.getElementById('productList');
+  productListElement.innerHTML = '';
+
+  sortedBooks.slice(0, 24).forEach((book) => {
+    const productItem = document.createElement('li');
+    productItem.classList.add('product-item');
+    productItem.innerHTML = `
+        <a href="/detail?id=${book._id}">
+            <div class="img-container"><img src="${
+              book.img_url
+            }" alt="제품 이미지"></div>
+            <h2>${book.title}</h2>
+            <span class="price">${book.price.toLocaleString()} 원</span>
+        </a>
+    `;
+
+    // 상품 재고가 0일 경우, sold-out 태그
+    if (book.quantity === 0) {
+      productItem.classList.add('sold-out');
+    } else {
+      productItem.classList.remove('sold-out');
+    }
+
+    productListElement.appendChild(productItem);
+  });
 }

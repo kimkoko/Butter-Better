@@ -11,27 +11,28 @@
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" sizes="64x64" href="../common/img/faviconx64.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="../common/img/faviconx32.png" />
-    <link rel="shortcut icon" href="../common/img/favicon.io" />
+    <link rel="icon" type="image/png" sizes="64x64" href="/src/views/common/img/faviconx64.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/src/views/common/img/faviconx32.png" />
+    <link rel="shortcut icon" href="/src/views/common/img/favicon.io" />
 
     <!-- 커스텀 css -->
-    <link rel="stylesheet" href="order.css">
-    <link rel="stylesheet" href="../common/css/reset.css">
-    <link rel="stylesheet" href="../common/header/header.css">
-    <link rel="stylesheet" href="../common/footer/footer.css">
-    <script type="text/javascript" src="../order/order.js"></script>
-    <script src="../common/loadHTML.js"></script>
-    <script type="module" src="../common/header/header.js"></script>
+    <link rel="stylesheet" href="/src/views/order/order.css">
+    <link rel="stylesheet" href="/src/views/common/css/reset.css">
+    <link rel="stylesheet" href="/src/views/common/header/header.css">
+    <link rel="stylesheet" href="/src/views/common/footer/footer.css">
+    <script type="module" src="/src/views/order/order.js"></script>
+    <script src="/src/views/common/loadHTML.js"></script>
+    <script type="module" src="/src/views/common/header/header.js"></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 </head>
 
 <body>
     <!-- header -->
-    <header data-load-html="../common/header/header.html"></header>
+    <header data-load-html="/src/views/common/header/header.html"></header>
 
     <div class="mainBox">
-        <div class="inner">
+        <div class="inner order-checkout">
             <div class="inputBox">
                 <div class="box contact">
                     <h3>Contact</h3>
@@ -39,7 +40,7 @@
                         <form action="">
                             <input type="text" placeholder="이름">
                             <input type="email" placeholder="이메일">
-                            <input type="text" placeholder="휴대 전화, '-' 기호를 추가해 주세요.">
+                            <input type="text" placeholder="휴대 전화">
                         </form>
                     </div>
                 </div>
@@ -49,13 +50,12 @@
                     <div class="input">
                         <form action="">
                             <div class="postalCode">
-                                <input type="number" placeholder="우편번호">
-                                <button type="button">주소 검색</button>
+                                <input type="number" id="postCode" placeholder="우편번호">
+                                <button type="button" id="searchAddressBtn">주소 검색</button>
                             </div>
-                            <input type="text" placeholder="기본 주소">
-                            <input type="text" placeholder="나머지 주소 (선택)">
-                            <select name="message" id="message" style="width: 100%; margin-top: 18px;"
-                                onchange="selectText()">
+                            <input type="text" id="address" placeholder="기본 주소">
+                            <input type="text" id="detail" placeholder="나머지 주소 (선택)">
+                            <select name="message" id="message" style="width: 100%; margin-top: 18px;">
                                 <option value="0">배송 메세지 (선택)</option>
                                 <option value="1">부재 시, 경비실에 맡겨주세요.</option>
                                 <option value="2">배송 전에 미리 연락 바랍니다.</option>
@@ -92,9 +92,10 @@
                 <h3>Check Out</h3>
                 <div class="orderBox">
                     <div>
+                        <p class='cart-empty-message'>장바구니에 담은 상품이 없습니다.</p>
                         <ul class="products">
                             <li class="product">
-                                <p class="img"><img src="../common/img/bn_ex_01.jpeg" alt=""></p>
+                                <p class="img"><img src="" alt=""></p>
                                 <p class="name">Title Here</p>
                                 <p class="num">1</p>
                                 <p class="price">₩17,000</p>
@@ -128,18 +129,18 @@
             <p class="text">
                 <ion-icon name="checkmark-circle"></ion-icon><br>
                 <span class="textSpan">고객님의 주문이 완료되었습니다.</span><br>
-                <span class="order orderNumber">주문 번호 : 2024-0220-000001</span><br>
+                <span class="order orderNumber" id="orderNumber">주문 번호 : 2024-0220-000001</span><br>
                 <span class="order orderDate">주문 일자 : 2024-02-20 13:14:00</span>
             </p>
             <div class="buttons">
-                <button type="button" class="home" onclick="location.href='../home/home.html'">BACK TO MAIN</button>
-                <button type="button" class="mypage">CHECK PAYMENT</button>
+                <button type="button" class="home" onclick="location.href='/'">BACK TO MAIN</button>
+                <button type="button" class="mypage" onclick="location.href='/mypage'">CHECK PAYMENT</button>
             </div>
         </div>
     </div>
 
     <!-- footer -->
-    <footer data-load-html="../common/footer/footer.html">
+    <footer data-load-html="/src/views/common/footer/footer.html">
     </footer>
 </body>
 

@@ -1,6 +1,7 @@
 function filterFormatOrder(order) {
-  const { _id, products, orderer, total_price, order_status } = order;
-  return { _id, products, orderer, total_price, order_status };
+  const { _id, products, orderer, total_price, order_status, createdAt } =
+    order;
+  return { _id, products, orderer, total_price, order_status, createdAt };
 }
 
 function filterResponseOrder(toResponse) {

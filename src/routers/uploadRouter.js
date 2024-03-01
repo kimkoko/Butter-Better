@@ -28,7 +28,7 @@ uploadRouter.post('/', upload.single('file'), (req, res, next) => {
         // 파일 시스템에서 파일을 읽어서 스트림
       fs.createReadStream(req.file.path).pipe(blobStream);
     } else {
-      throw new Error('File upload failed');
+      throw new customError(400, 'File upload failed');
     }
   } catch (error) {
     next(error);

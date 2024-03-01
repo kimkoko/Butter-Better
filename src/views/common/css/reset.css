@@ -280,19 +280,50 @@ input[type='radio']:checked {
 
 html,
 body {
-  font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto,
-    'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR',
-    'Malgun Gothic', sans-serif;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui,
+    Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR',
+    'Malgun Gothic', sans-serif !important;
   font-size: 16px;
   font-weight: normal;
   background-color: var(--bg-color);
 }
 
+html,
+body {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
 :root {
   --bg-color: #fdf4e6;
   --orange-500: #ff4f37;
+  --orange-700: #bb3a29;
   --camel-500: #886d4b;
   --mocha-500: #443523;
   --cream-300: #fffdfa;
   --cream-700: #e6d2b1;
+}
+
+#scrollToTopButton {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--bg-color);
+  border: solid 2px var(--orange-500);
+  border-radius: 100px;
+  position: fixed;
+  right: 50px;
+  bottom: 50px;
+  box-shadow: 6px 8px 30px rgba(136, 108, 75, 0.3);
+  transition: all 0.2s linear;
+}
+#scrollToTopButton ion-icon {
+  color: var(--orange-500);
+  font-size: 24px;
+}
+#scrollToTopButton:hover {
+  bottom: 55px;
 }

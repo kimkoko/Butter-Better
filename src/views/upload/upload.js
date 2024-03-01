@@ -31,7 +31,11 @@ const storage = multer.diskStorage({
 
 const fileFilter = function (req, file, cb) {
   // 파일이 JPEG 또는 PNG 이미지인 경우 true를 반환
-  if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
+  if (file.mimetype === 'image/jpeg' ||
+      file.mimetype === 'image/png' ||
+      file.mimetype === 'image/gif' ||
+      file.mimetype === 'image/bmp' ||
+      file.mimetype === 'image/webp') {
     cb(null, true);
   } else {
     // 그렇지 않은 경우 false를 반환
@@ -45,7 +49,7 @@ const upload = multer({
   bucket: bucket,
   fileFilter: fileFilter,
   limits: {
-    fileSize: 1024 * 1024 * 3 // 3MB 파일 크기 제한
+    fileSize: 1024 * 1024 * 8 // 3MB 파일 크기 제한
   }
 });// 'file'은 클라이언트가 파일을 보낼 때 사용하는 필드의 이름
 
