@@ -8,13 +8,13 @@ function loadCartItems() {
 
   cartList.innerHTML = ''; // 기존 목록 초기화
 
-  // 장바구니 비었을 경우, 안내 메시지
-  const cartItemEmpty = document.querySelector('.cart-empty-message'); // 상품 없음 안내 메시지
-  if (cartItems.length === 0) {
-    cartItemEmpty.classList.add('active');
-  } else {
-    cartItemEmpty.classList.remove('active');
-  }
+  // // 장바구니 비었을 경우, 안내 메시지
+  // const cartItemEmpty = document.querySelector('.cart-empty-message'); // 상품 없음 안내 메시지
+  // if (cartItems.length === 0) {
+  //   cartItemEmpty.classList.add('active');
+  // } else {
+  //   cartItemEmpty.classList.remove('active');
+  // }
 
   cartItems.forEach((item, index) => {
     const price = parseInt(item.price);
@@ -114,11 +114,19 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // 주문하기 버튼 클릭 이벤트 리스너
   checkoutButton.addEventListener('click', function() {
+    // 체크박스로 선택된 모든 상품 찾기
+    const selectedCheckboxes = document.querySelectorAll('.ck:checked');
+  
+    // 선택된 상품이 없으면 알림 띄우기
+    if (selectedCheckboxes.length === 0) {
+      alert('주문하실 상품을 선택해주세요.');
+      return; // 이벤트 리스너 함수 종료
+    }
+    
     // 선택된 상품 정보를 담을 배열
     const selectedItemsForOrder = [];
-
-    // 체크박스로 선택된 모든 상품 찾기
-    document.querySelectorAll('.ck:checked').forEach(checkbox => {
+  
+    selectedCheckboxes.forEach(checkbox => {
       const productRow = checkbox.closest('tr');
       const index = productRow.querySelector('.quantity input').dataset.index; // 상품 인덱스
       const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
@@ -129,14 +137,14 @@ document.addEventListener('DOMContentLoaded', function () {
         selectedItemsForOrder.push(selectedItem);
       }
     });
-
+  
     // 선택된 상품 정보를 로컬 스토리지에 'selectedItemsForOrder' 키로 저장
     localStorage.setItem('selectedItemsForOrder', JSON.stringify(selectedItemsForOrder));
-
+  
     // 주문 페이지로 이동
-    // 여기서는 예시를 위해 URL을 '/order'로 설정합니다. 실제 프로젝트에 맞는 경로를 사용해주세요.
-    window.location.href = '/order';
+    window.location.href = '/order'; // 주문 페이지로 이동
   });
+  
     
   // "REMOVE ALL" 버튼 클릭 이벤트 리스너
   removeAllButton.addEventListener('click', function() {
@@ -206,19 +214,3 @@ document.addEventListener('DOMContentLoaded', function () {
     selectAllCheckbox.checked = false;
   });
 });
-
-// document.addEventListener('DOMContentLoaded', function () {
-//     // 모달 열기 버튼과 모달 가져오기
-//     const quantityBtn = document.getElementById("quantityBtn");
-//     const modal1 = document.getElementById("myModal1");
-
-//     quantityBtn.addEventListener('click', function() {
-//         modal1.style.display = "flex";
-//     });
-
-// // 모달 닫기 함수
-// modal1.addEventListener("click", function(e) {
-//     if (e.target !== modal1) return;
-//     modal1.style.display = "none";
-//   })
-// });
