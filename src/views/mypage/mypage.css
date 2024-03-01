@@ -1,6 +1,5 @@
-
-.mainBox{
-  /* height: 63vh; */
+.mainBox {
+  min-height: 714px;
 }
 .mainBox h1 {
   font-size: 42px;
@@ -98,7 +97,10 @@
   color: var(--camel-500);
   font-weight: 400;
   display: none;
-
+  transition: all 0.2s ease-in;
+}
+.order .table__body--bottom .btn-order-edit:hover {
+  border-color: var(--mocha-500);
 }
 .order .table__body--bottom .btn-order-edit.active {
   display: block;
@@ -149,10 +151,18 @@
   font-size: 20px;
   color: var(--bg-color);
   background: var(--camel-500);
+  transition: all 0.2s ease-in;
+}
+.account .btn-edit:hover {
+  background-color: var(--orange-500);
 }
 .account .btn-delete {
   color: var(--camel-500);
   text-decoration: underline;
+  transition: all 0.3s ease-in;
+}
+.account .btn-delete:hover {
+  color: var(--mocha-500);
 }
 
 /* MODAL STYLE BELOW *********************************************/
@@ -234,6 +244,10 @@
   font-size: 20px;
   color: var(--bg-color);
   background: var(--camel-500);
+  transition: all 0.2s ease-in;
+}
+.modal__edit-account .btn-save:hover {
+  background-color: var(--orange-500);
 }
 
 /* MODAL > 탈퇴 알럿 *********************************************/
@@ -282,8 +296,7 @@
   color: var(--bg-color);
 }
 
-
-.none{
+.none {
   border-top: solid 1px var(--camel-500);
   color: var(--camel-500);
   text-align: center;
@@ -292,8 +305,6 @@
   opacity: 40%;
   display: none !important;
 }
-
-
 
 /* MODAL > 주문자 정보 수정 *********************************************/
 
@@ -362,6 +373,10 @@
   font-size: 20px;
   color: var(--bg-color);
   background: var(--camel-500);
+  transition: all 0.2s ease-in;
+}
+.modal__edit-orderer .btn-save:hover {
+  background-color: var(--orange-500);
 }
 .modal__edit-orderer .btn-save1 {
   width: 100%;
@@ -370,5 +385,8 @@
   border-radius: 4px;
   font-size: 20px;
   color: var(--bg-color);
-  background: var(--camel-500);
+  transition: all 0.2s ease-in;
+}
+.modal__edit-orderer .btn-save1:hover {
+  background-color: var(--orange-500);
 }

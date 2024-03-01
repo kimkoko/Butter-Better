@@ -140,7 +140,10 @@
   border-radius: 4px;
   font-size: 20px;
   color: var(--bg-color);
-  background: var(--camel-500);
+  transition: all 0.2s ease-in;
+}
+.account .btn-edit:hover {
+  background-color: var(--orange-500);
 }
 .account .btn-delete {
   color: var(--camel-500);
@@ -225,7 +228,10 @@
   border-radius: 4px;
   font-size: 20px;
   color: var(--bg-color);
-  background: var(--camel-500);
+  transition: all 0.2s ease-in;
+}
+.modal__edit-account .btn-save:hover {
+  background-color: var(--orange-500);
 }
 
 /* MODAL > 탈퇴 알럿 *********************************************/

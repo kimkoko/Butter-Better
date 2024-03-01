@@ -62,9 +62,14 @@
   padding: 20px;
   margin-top: 24px;
   margin-bottom: 10px;
+  font-size: 18px;
 
   background-color: var(--camel-500);
   color: var(--cream-300);
+  transition: all 0.2s ease-in;
+}
+.login-box .signin-btn:hover {
+  background-color: var(--orange-500);
 }
 .login h2 {
   font-size: 18px;
@@ -160,9 +165,13 @@
   padding: 20px;
   margin-top: 24px;
   margin-bottom: 10px;
-
+  font-size: 18px;
   background-color: var(--camel-500);
   color: var(--cream-300);
+  transition: all 0.2s ease-in;
+}
+.order-track .container .btn-submit:hover {
+  background-color: var(--orange-500);
 }
 
 .order-track .container .btn-back {

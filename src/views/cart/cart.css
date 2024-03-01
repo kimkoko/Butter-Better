@@ -130,6 +130,11 @@
   padding: 18px 24px;
   border: 1px solid var(--camel-500);
   border-radius: 4px;
+  transition: all 0.2s ease-in;
+}
+.mainBox .buttonBox button:hover,
+.mainBox .buttonBox a:hover {
+  box-shadow: 6px 8px 30px rgba(136, 108, 75, 0.3);
 }
 .mainBox .buttonBox a.continue-shopping {
   margin-left: 32px;
