@@ -296,7 +296,7 @@
   color: var(--bg-color);
 }
 
-.none {
+.empty-order-message {
   border-top: solid 1px var(--camel-500);
   color: var(--camel-500);
   text-align: center;
@@ -304,6 +304,9 @@
   padding: 90px 0;
   opacity: 40%;
   display: none;
+}
+.empty-order-message.active {
+  display: block;
 }
 
 /* MODAL > 주문자 정보 수정 *********************************************/

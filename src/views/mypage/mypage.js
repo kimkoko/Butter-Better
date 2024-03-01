@@ -89,17 +89,16 @@ async function renderOrderHistory() {
         phoneInput.value = order.orderer.phone;
         postInput.value = order.orderer.address.postcode;
         addressInput.value = order.orderer.address.main;
-        detailInput.value = order.orderer.address.default;
+        detailInput.value = order.orderer.address.detail;
 
         // orderId 반환
         const order_Id = order._id;
         ButtonEvents(order_Id);
 
-        const noSync = document.querySelector('.none');
-        noSync.style.display = 'none';
-      } else {
-        const noSync = document.querySelector('.none');
-        noSync.style.display = 'block';
+        const noSync = document.querySelector('.empty-order-message ');
+        orderList.length === 0
+          ? noSync.classList.add('active')
+          : noSync.classList.remove('active');
       }
     }
   } catch (error) {
