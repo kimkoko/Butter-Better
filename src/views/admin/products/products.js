@@ -405,7 +405,7 @@ import { API_HOST } from '../../common/api.js';
 async function renderProductList() {
   try {
     // API에서 상품 데이터 가져오기
-    const response = await fetch(`${API_HOST}/api/books?page=${currentPage}`);
+    const response = await fetch(`${API_HOST}/api/books/all?page=${currentPage}`);
     if (!response.ok) {
       throw new Error('상품 데이터를 가져올 수 없습니다.');
     }
