@@ -62,7 +62,6 @@ async function renderOrderHistory() {
         const postInput = document.querySelector('#edit-orderer input[placeholder="우편번호"]');
         const addressInput = document.querySelector('#edit-orderer input[placeholder="기본 주소"]');
         const detailInput = document.querySelector('#edit-orderer input[placeholder="나머지 주소 (선택)"]');
-        console.log(detailInput)
         
         nameInput.value = order.orderer.name;
         emailInput.value = order.orderer.email;
@@ -245,7 +244,6 @@ async function findUser() {
     // API로 유저 정보 가져오기
     const response = await fetch(`${API_HOST}/api/users/mypage`);
     const res = await response.json();
-    console.log(res)
     
     if (!response.ok) {
       throw new Error("유저 정보를 불러오는데 실패했습니다.");
