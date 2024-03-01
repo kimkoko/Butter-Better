@@ -1,4 +1,4 @@
-import { API_HOST } from '../common/api.js';
+import { API_HOST } from '/src/views/common/api.js';
 const signForm = document.getElementById("signForm")
 const mainBox = document.getElementById("mainBox")
 const messageDiv = document.getElementById("messageDiv")
@@ -59,6 +59,8 @@ signForm.addEventListener("submit", async (event) => {
         
         if (password !== confirmPassword) {
             window.alert("비밀번호가 일치하지 않습니다. 다시 입력해주세요.");
+            const inputs = document.querySelector('#confirmPassword');
+            inputs.focus()
             return;
         }
         
@@ -84,7 +86,7 @@ signForm.addEventListener("submit", async (event) => {
         if(response.ok) {
             
             // 회원가입 완료 영역 노출
-            messageDiv.style.display = "block"
+            messageDiv.style.display = "flex"
             mainBox.style.display = "none"
             
             return
@@ -114,7 +116,8 @@ signForm.addEventListener("submit", async (event) => {
             // 비밀번호 8자 확인
             if (password.length < 8) {
                 window.alert('비밀번호는 최소 8자 이상이어야 합니다.');
-                
+                const inputs = document.querySelector('#password');
+                inputs.focus()
                 return
             }
             
@@ -123,7 +126,8 @@ signForm.addEventListener("submit", async (event) => {
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailRegex.test(email)) {
                 window.alert('유효한 이메일 형식이 아닙니다.');
-                
+                const inputs = document.querySelector('#email');
+                inputs.focus()
                 return
             }
             

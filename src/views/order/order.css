@@ -13,13 +13,16 @@
   width: 560px;
 }
 .mainBox .inner .inputBox .box {
-  margin-bottom: 18px;
+  margin-bottom: 24px;
 }
 .mainBox .inner .inputBox .box h3 {
   font-size: 32px;
   font-weight: 500;
   color: var(--camel-500);
   margin-bottom: 18px;
+}
+.mainBox .inner .inputBox .box.contact input:first-child {
+  margin-top: 0;
 }
 .mainBox .inner .inputBox .box input {
   width: 100%;
@@ -95,11 +98,12 @@ input[type='number']::-webkit-inner-spin-button {
 }
 .postalCode button {
   box-sizing: border-box;
+  width: 150px;
   padding: 13px 24px;
   font-size: 18px;
   color: var(--orange-500);
   border-radius: 4px;
-  margin-left: 10px;
+  margin-left: 15px;
   border: 1px solid var(--camel-500);
 }
 
@@ -131,6 +135,21 @@ input[type='number']::-webkit-inner-spin-button {
   font-size: 20px;
   font-weight: 600;
   overflow: hidden;
+}
+.cart-empty-message {
+  width: 100%;
+  text-align: center;
+  color: var(--camel-500);
+  font-size: 16px;
+  font-weight: 500;
+  box-sizing: border-box;
+  border-bottom: solid 1px var(--cream-700);
+  padding: 54px 0;
+  display: none;
+}
+
+.cart-empty-message.active {
+  display: block;
 }
 .checkout .orderBox > div .products li {
   display: flex;
@@ -178,6 +197,11 @@ input[type='number']::-webkit-inner-spin-button {
 }
 
 /* 주문 완료 */
+.orderCompletion {
+  align-items: center;
+  justify-content: center;
+  min-height: 714px;
+}
 .orderCompletion > div {
   width: 1200px;
   margin: 0 auto;
@@ -237,4 +261,5 @@ input[type='number']::-webkit-inner-spin-button {
   margin-left: 32px;
   background: var(--orange-500);
   color: #fff;
+  border: none;
 }

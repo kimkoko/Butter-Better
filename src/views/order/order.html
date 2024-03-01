@@ -23,7 +23,8 @@
     <script type="module" src="/src/views/order/order.js"></script>
     <script src="/src/views/common/loadHTML.js"></script>
     <script type="module" src="/src/views/common/header/header.js"></script>
-    
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
 </head>
 
 <body>
@@ -39,7 +40,7 @@
                         <form action="">
                             <input type="text" placeholder="이름">
                             <input type="email" placeholder="이메일">
-                            <input type="text" placeholder="휴대 전화, '-' 기호를 추가해 주세요.">
+                            <input type="text" placeholder="휴대 전화">
                         </form>
                     </div>
                 </div>
@@ -49,11 +50,11 @@
                     <div class="input">
                         <form action="">
                             <div class="postalCode">
-                                <input type="number" placeholder="우편번호">
-                                <button type="button">주소 검색</button>
+                                <input type="number" id="postCode" placeholder="우편번호">
+                                <button type="button" id="searchAddressBtn">주소 검색</button>
                             </div>
-                            <input type="text" placeholder="기본 주소">
-                            <input type="text" placeholder="나머지 주소 (선택)">
+                            <input type="text" id="address" placeholder="기본 주소">
+                            <input type="text" id="detail" placeholder="나머지 주소 (선택)">
                             <select name="message" id="message" style="width: 100%; margin-top: 18px;">
                                 <option value="0">배송 메세지 (선택)</option>
                                 <option value="1">부재 시, 경비실에 맡겨주세요.</option>
@@ -91,9 +92,10 @@
                 <h3>Check Out</h3>
                 <div class="orderBox">
                     <div>
+                        <p class='cart-empty-message'>장바구니에 담은 상품이 없습니다.</p>
                         <ul class="products">
                             <li class="product">
-                                <p class="img"><img src="/src/views/common/img/bn_ex_01.jpeg" alt=""></p>
+                                <p class="img"><img src="" alt=""></p>
                                 <p class="name">Title Here</p>
                                 <p class="num">1</p>
                                 <p class="price">₩17,000</p>
@@ -131,8 +133,8 @@
                 <span class="order orderDate">주문 일자 : 2024-02-20 13:14:00</span>
             </p>
             <div class="buttons">
-                <button type="button" class="home" onclick="location.href='/src/views/home/home.html'">BACK TO MAIN</button>
-                <button type="button" class="mypage">CHECK PAYMENT</button>
+                <button type="button" class="home" onclick="location.href='/'">BACK TO MAIN</button>
+                <button type="button" class="mypage" onclick="location.href='/mypage'">CHECK PAYMENT</button>
             </div>
         </div>
     </div>

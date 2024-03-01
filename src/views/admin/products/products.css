@@ -1,8 +1,20 @@
+.upload-btn {
+  background-color: bisque;
+  box-sizing: border-box;
+  padding: 14px 20px;
+  font-size: 18px;
+  border: 1px solid var(--cream-700);
+  border-radius: 4px;
+  width: 130px;
+}
 .img {
   overflow: hidden;
   text-overflow: ellipsis;
   line-height: 16px;    
   max-width: 30px;
+}
+#categorySelect{
+  width: 550px;
 }
 .content {
   max-width: 40px;

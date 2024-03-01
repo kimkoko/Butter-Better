@@ -16,14 +16,13 @@
     <link rel="shortcut icon" href="../common/img/favicon.io" />
 
     <!-- 커스텀 css -->
-    <link rel="stylesheet" href="mypage.css">
+    <link rel="stylesheet" href="order-track.css">
     <link rel="stylesheet" href="../common/css/reset.css">
     <link rel="stylesheet" href="../common/header/header.css">
     <link rel="stylesheet" href="../common/footer/footer.css">
     <script type="module" src="./mypage.js"></script>
     <script src="../common/loadHTML.js"></script>
     <script type="module" src="../common/header/header.js"></script>
-    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 </head>
 
@@ -32,10 +31,9 @@
     <header data-load-html="../common/header/header.html"></header>
 
     <div class="mainBox">
-        <h1>My Account</h1>
+        <h1>Order Track</h1>
         <div class="inner">
             <section class="order">
-                <h3>Order History</h3>
                 <div class="container">
                     <div class="table__head">
                         <p>주문 내역</p>
@@ -64,7 +62,6 @@
             </section>
 
             <section class="account">
-                <h3>Account Details</h3>
                 <div class="container">
                     <ul class='info-box'>
                         <li><span>Name</span><span class='name'>최세영</span></li>
@@ -73,7 +70,6 @@
                         <li><span>Address</span><span class='address'>서울특별시 성동구 성수2가제3동 광나루로6길 49</span></li>
                     </ul>
                     <button class='btn-edit' type='button'>EDIT</button>
-                    <button class='btn-delete' type='button'>DELETE ACCOUNT</button>
                 </div>
             </section>
 
@@ -108,22 +104,6 @@
                         </div>
 
                         <button class="btn-save" type="submit">SAVE</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ******** 탈퇴 알럿 BELOW ******** -->
-            <div class="modal-container" id='delete-account'>
-                <div class='modal'>
-                    <div class="modal__delete-account">
-                        <p>
-                            <ion-icon name="alert-circle"></ion-icon>
-                        </p>
-                        <p class="text">탈퇴하시겠습니까?</p>
-                        <div class="btn-group">
-                            <button class="btn-cancel" type='button'>취소</button>
-                            <button class="btn-submit" type='button'>확인</button>
-                        </div>
                     </div>
                 </div>
             </div>
