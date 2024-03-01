@@ -9,6 +9,26 @@ async function getProductInfo(productId) {
     console.error('상품 리스트를 렌더링하는 중 오류가 발생했습니다:', error);
   }
 }
+// 로컬스토리지 cartItems [] 키값 밸류 생성 및 키값에 데이터저장
+function saveProductToLocalStorage(productInfo) {
+  // 로컬 스토리지에서 기존 카트 아이템을 가져오기
+  let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+
+  // 제품이 이미 카트에 존재하는지 확인
+  const existingProductIndex = cartItems.findIndex(item => item.name === productInfo.name);
+
+  if (existingProductIndex === -1) {
+    // 카트에 존재하지 않는 경우, 새로운 아이템으로 추가
+    cartItems.push(productInfo);
+    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+    alert('상품이 장바구니에 추가되었습니다!');
+  } else {
+    // 카트에 이미 존재하는 경우, 수량 업데이트
+    cartItems[existingProductIndex].quantity += productInfo.quantity;
+    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+    alert('장바구니에 있는 상품의 수량이 업데이트되었습니다!');
+  }
+}
 
 async function updateProductInfo() {
   const productInfoElement = document.querySelector(
@@ -84,17 +104,17 @@ async function updateProductInfo() {
       quantityInput.textContent = ++quantity;
     });
 
-  // 여기서 ADD TO CART 버튼에 이벤트 리스너를 직접 등록
-  document.querySelector('.cartBtn').addEventListener('click', function () {
-    const productInfo = {
-      name: product.title,
-      price: product.price,
-      quantity: parseInt(document.querySelector('.quantityInput').textContent),
-      img: product.img_url,
-    };
-    saveProductToLocalStorage(productInfo);
-    alert('상품이 장바구니에 추가되었습니다!');
-    window.location.reload();
+  // ADD TO CART 버튼에 이벤트 리스너 등록
+document.querySelector('.cartBtn').addEventListener('click', function () {
+  const productInfo = {
+    name: product.title,
+    price: product.price,
+    quantity: parseInt(document.querySelector('.quantityInput').textContent),
+    img: product.img_url,
+  };
+  saveProductToLocalStorage(productInfo);
+
+  window.location.reload();
   });
 }
 
@@ -103,11 +123,8 @@ function getProductIdFromUrl() {
   return url.searchParams.get('id');
 }
 
-function saveProductToLocalStorage(productInfo) {
-  let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-  cartItems.push(productInfo);
-  localStorage.setItem('cartItems', JSON.stringify(cartItems));
-}
+
+
 
 window.addEventListener('load', updateProductInfo);
 
@@ -143,7 +160,7 @@ async function renderRecommendsList() {
       const productItem = document.createElement('li');
       productItem.classList.add('Recommends-item');
       productItem.innerHTML = `
-        <a href="/src/views/detail/detail.html?id=${product._id}">
+        <a href="/detail?id=${product._id}">
         <div class="img-container"><img src="${
           product.img_url
         }" alt="제품 이미지"></div>

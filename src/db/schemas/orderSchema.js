@@ -19,7 +19,7 @@ const AddressSchema = new Schema(
   {
     postcode: { type: String },
     main: { type: String },
-    default: { type: String },
+    detail: { type: String },
   },
   { _id: false }
 );

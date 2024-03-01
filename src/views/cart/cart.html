@@ -16,6 +16,8 @@
     <link rel="shortcut icon" href="../common/img/favicon.io" />
 
     <!-- 커스텀 css -->
+    <link rel="preload" type="text/css"
+        href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
     <link rel="stylesheet" href="cart.css">
     <link rel="stylesheet" href="../common/css/reset.css">
     <link rel="stylesheet" href="../common/header/header.css">
@@ -85,51 +87,28 @@
                 <div class="totalPrice">
                     <div class="box shoping">
                         <p class="title">Shipping</p>
-                        <p class="price">₩3,000</p>
+                        <p class="price">₩ 0</p>
                     </div>
                     <div class="box total">
                         <p class="title">Total</p>
-                        <p class="price">₩3,000</p>
+                        <p class="price">₩ 0</p>
                     </div>
                 </div>
             </div>
 
             <div class="buttonBox">
-                <button type="button" id="removeBtn">REMOVE</button>
-
+                <div class="leftBox">
+                    <button type="button" id="removeBtn">REMOVE</button>
+                    <button type="button" id="removeallBtn">REMOVE ALL</button>
+                </div>
                 <div class="rightBox">
                     <!-- <button type="button" id="quantityBtn">QUANTITY EDIT</button> -->
                     <a class="continue-shopping" href='/'>CONTINUE SHOPPING</a>
-                    <button type="button" class="checkout" onclick="location.href='/order'">CHECK OUT</button>
+                    <button type="button" class="checkout">CHECK OUT</button>
                 </div>
             </div>
         </div>
     </div>
-    <!-- 수량 수정
-    <div class="modal-container" id="myModal1">
-        <div class="modal">
-            <div class="modal-content">
-                모달 내용
-                <p>카테고리 수정</p>
-                추가 모달 내용
-                <input type="text" placeholder="Quantity(수량)을 입력해주세요." id="categoryInput">
-                <button type="button" id="save-Btn1">저장</button>
-            </div>
-        </div>
-    </div> -->
-    <!-- <script>
-        const quantityInput = document.getElementById('quantity-input');
-
-        // 초기 수량 설정
-        let quantity = parseInt(localStorage.getItem('quantity')) || 1;
-        quantityInput.value = quantity;
-
-        // 수량 변경 이벤트
-        quantityInput.addEventListener('change', function() {
-            quantity = parseInt(this.value) || 1;
-            localStorage.setItem('quantity', quantity);
-        });
-    </script> -->
 
     <!-- footer -->
     <footer data-load-html="../common/footer/footer.html"></footer>

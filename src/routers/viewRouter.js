@@ -16,7 +16,7 @@ router.use('/mypage', servestatic('mypage'));
 router.use('/login', servestatic('login'));
 router.use('/join', servestatic('join'));
 router.use('/upload', servestatic('upload'));
-
+router.use('/ordertrack', servestatic('ordertrack'));
 
 
 function servestatic (resource) {
