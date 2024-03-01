@@ -49,8 +49,8 @@ async function submitOrder() {
     showOrderCompletion(order.data._id, order.data.createdAt); // 주문 완료 화면 주문번호와 주문번호시간 출력
 
     // 주문 완료 후 장바구니 비우기
-    localStorage.removeItem('cartItems'); 
-  
+    localStorage.removeItem('cartItems');
+
     // 선택된 상품 데이터도 삭제
     localStorage.removeItem('selectedItemsForOrder');
   } catch (error) {
@@ -105,7 +105,7 @@ function collectOrderData() {
       address: {
         postcode: postcodeInput.value,
         main: mainAddressInput.value,
-        default: detailAddressInput.value || '', // 'default'가 아니라 'detail'이 될 가능성도 확인 필요
+        detail: detailAddressInput.value,
       },
     },
     // message: selectedMessage,
@@ -141,7 +141,8 @@ function loadOrderSummary() {
 
   // 장바구니에서 사고싶은것만 상품선택한것을 배열로만들어 로컬스토리지에 새로운값으로 selectedItemsForOrder 에담은것을 꺼내기
   // 'selectedItemsForOrder' 키를 사용하여 로컬 스토리지에서 선택된 상품 정보 불러오기
-  const selectedCartItems = JSON.parse(localStorage.getItem('selectedItemsForOrder')) || [];
+  const selectedCartItems =
+    JSON.parse(localStorage.getItem('selectedItemsForOrder')) || [];
   const productsListElement = document.querySelector('.products'); // 주문 상품 리스트 컨테이너
   const subTotalElement = document.querySelector('.subTotal .price'); // 소계 가격 표시 요소
   const totalElement = document.querySelector('.total .price'); // 총 가격 표시 요소
@@ -150,17 +151,10 @@ function loadOrderSummary() {
   // 기존에 표시된 상품 목록 초기화
   productsListElement.innerHTML = '';
 
-  // const cartItemEmpty = document.querySelector('.cart-empty-message'); // 상품 없음 안내 메시지
-  // if (cartItems.length === 0) {
-  //   cartItemEmpty.classList.add('active');
-  // } else {
-  //   cartItemEmpty.classList.remove('active');
-  // }
-
   // cartItems.forEach((item) => {
   //   const productPrice = parseInt(item.price) * parseInt(item.quantity);
   //   subTotalPrice += productPrice; // 소계 가격 계산
-    selectedCartItems.forEach((item) => {
+  selectedCartItems.forEach((item) => {
     const productPrice = parseInt(item.price) * parseInt(item.quantity);
     subTotalPrice += productPrice; // 소계 가격 계산
 

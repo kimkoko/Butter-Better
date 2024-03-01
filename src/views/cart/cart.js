@@ -8,13 +8,13 @@ function loadCartItems() {
 
   cartList.innerHTML = ''; // 기존 목록 초기화
 
-  // // 장바구니 비었을 경우, 안내 메시지
-  // const cartItemEmpty = document.querySelector('.cart-empty-message'); // 상품 없음 안내 메시지
-  // if (cartItems.length === 0) {
-  //   cartItemEmpty.classList.add('active');
-  // } else {
-  //   cartItemEmpty.classList.remove('active');
-  // }
+  // 장바구니 비었을 경우, 안내 메시지
+  const cartItemEmpty = document.querySelector('.cart-empty-message'); // 상품 없음 안내 메시지
+  if (cartItems.length === 0) {
+    cartItemEmpty.classList.add('active');
+  } else {
+    cartItemEmpty.classList.remove('active');
+  }
 
   cartItems.forEach((item, index) => {
     const price = parseInt(item.price);
@@ -68,15 +68,22 @@ function loadCartItems() {
 
 function updateTotalAndShipping() {
   const totalPriceElement = document.querySelector('.totalPrice .total .price');
-  const shippingPriceElement = document.querySelector('.totalPrice .shoping .price');
+  const shippingPriceElement = document.querySelector(
+    '.totalPrice .shoping .price'
+  );
 
   let totalProductPrice = 0; // 선택된 상품들의 총 상품 가격
   const selectedItems = document.querySelectorAll('.ck:checked'); // 선택된 상품 체크박스들
 
   selectedItems.forEach((checkbox) => {
-    const index = checkbox.closest('tr').querySelector('.quantity input').dataset.index;
-    const quantity = parseInt(checkbox.closest('tr').querySelector('.quantity input').value);
-    const price = parseInt(JSON.parse(localStorage.getItem('cartItems'))[index].price);
+    const index = checkbox.closest('tr').querySelector('.quantity input')
+      .dataset.index;
+    const quantity = parseInt(
+      checkbox.closest('tr').querySelector('.quantity input').value
+    );
+    const price = parseInt(
+      JSON.parse(localStorage.getItem('cartItems'))[index].price
+    );
     totalProductPrice += quantity * price;
   });
 
@@ -99,7 +106,6 @@ function updateTotalAndShipping() {
   totalElement.textContent = `₩${finalTotalPrice.toLocaleString()}`;
 }
 
-
 document.addEventListener('DOMContentLoaded', function () {
   // 전체 선택 체크박스
   const selectAllCheckbox = document.querySelector('.ck-all');
@@ -113,48 +119,50 @@ document.addEventListener('DOMContentLoaded', function () {
   const checkoutButton = document.querySelector('.checkout');
 
   // 주문하기 버튼 클릭 이벤트 리스너
-  checkoutButton.addEventListener('click', function() {
+  checkoutButton.addEventListener('click', function () {
     // 체크박스로 선택된 모든 상품 찾기
     const selectedCheckboxes = document.querySelectorAll('.ck:checked');
-  
+
     // 선택된 상품이 없으면 알림 띄우기
     if (selectedCheckboxes.length === 0) {
       if (!this.alertShown) {
         alert('주문하실 상품을 선택해주세요.');
-        this.alertShown = true; 
+        this.alertShown = true;
       }
       return;
     }
     this.alertShown = false;
-    
+
     // 선택된 상품 정보를 담을 배열
     const selectedItemsForOrder = [];
-  
-    selectedCheckboxes.forEach(checkbox => {
+
+    selectedCheckboxes.forEach((checkbox) => {
       const productRow = checkbox.closest('tr');
       const index = productRow.querySelector('.quantity input').dataset.index; // 상품 인덱스
       const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
       const selectedItem = cartItems[index];
-    
+
       // 선택된 상품 정보를 배열에 추가
       if (selectedItem) {
         selectedItemsForOrder.push(selectedItem);
       }
     });
-  
+
     // 선택된 상품 정보를 로컬 스토리지에 'selectedItemsForOrder' 키로 저장
-    localStorage.setItem('selectedItemsForOrder', JSON.stringify(selectedItemsForOrder));
-  
+    localStorage.setItem(
+      'selectedItemsForOrder',
+      JSON.stringify(selectedItemsForOrder)
+    );
+
     // 주문 페이지로 이동
     window.location.href = '/order'; // 주문 페이지로 이동
   });
-  
-    
+
   // "REMOVE ALL" 버튼 클릭 이벤트 리스너
-  removeAllButton.addEventListener('click', function() {
+  removeAllButton.addEventListener('click', function () {
     // 로컬 스토리지에서 'cartItems' 항목 삭제
     localStorage.removeItem('cartItems');
-    
+
     // 페이지 새로고침으로 장바구니 목록 업데이트
     window.location.reload();
   });

@@ -123,7 +123,7 @@
   margin-bottom: 60px;
 }
 .mainBox .buttonBox #removeallBtn {
-  margin-left: 10px;
+  margin-left: 12px;
 }
 .mainBox .buttonBox button,
 .mainBox .buttonBox a {
@@ -139,11 +139,8 @@
 .mainBox .buttonBox a:hover {
   box-shadow: 6px 8px 30px rgba(136, 108, 75, 0.3);
 }
-.mainBox .buttonBox a.continue-shopping {
-  margin-left: 32px;
-}
 .mainBox .buttonBox button.checkout {
-  margin-left: 32px;
+  margin-left: 12px;
   background: var(--orange-500);
   color: var(--bg-color);
   border: none;
