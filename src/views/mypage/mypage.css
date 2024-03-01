@@ -98,6 +98,7 @@
   color: var(--camel-500);
   font-weight: 400;
   display: none;
+
 }
 .order .table__body--bottom .btn-order-edit.active {
   display: block;
@@ -354,6 +355,15 @@
   border: 1px solid var(--camel-500);
 }
 .modal__edit-orderer .btn-save {
+  width: 100%;
+  padding: 18px 0;
+  box-sizing: border-box;
+  border-radius: 4px;
+  font-size: 20px;
+  color: var(--bg-color);
+  background: var(--camel-500);
+}
+.modal__edit-orderer .btn-save1 {
   width: 100%;
   padding: 18px 0;
   box-sizing: border-box;

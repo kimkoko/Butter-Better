@@ -1,5 +1,9 @@
 import { API_HOST } from '/src/views/common/api.js';
 
+window.addEventListener('DOMContentLoaded', () => {
+  renderOrderHistory();
+  ButtonEvents();
+});
 
 // Order History
 async function renderOrderHistory() {
@@ -10,7 +14,7 @@ async function renderOrderHistory() {
     const response = await fetch(`${API_HOST}/api/orders/user`);
     const result = await response.json();
     const orders = result.data
-    const order = result.orderer
+
 
     // 주문 목록 리스트
     const orderList = document.querySelector('.container');
@@ -41,7 +45,7 @@ async function renderOrderHistory() {
           </div>
           <div class="table__body--bottom"> 
               <div class='products'>
-                <span class="order-title">${order.products[0].name}</span> 외 ${order.products.length}종
+                <span class="order-title">${order.products[0].name}</span> 외 ${order.products.length-1}종
               </div>
               <div class='total-price'>${order.total_price.toLocaleString()}</div>
               <div class='status'>${order.order_status}<button class="${btnOrderEditClass}" type='button'>주문 수정</button>
@@ -49,62 +53,58 @@ async function renderOrderHistory() {
           </div>
         `;
 
-          // 상품 리스트에 상품 추가
-          orderList.appendChild(orderContent); 
+        // 상품 리스트에 상품 추가
+        orderList.appendChild(orderContent); 
+        ButtonEvents()
+
+
+        // 주문자 정보 받아오기
+        const nameInput = document.querySelector('#edit-orderer input[placeholder="이름"]');
+        const emailInput = document.querySelector('#edit-orderer input[placeholder="이메일"]');
+        const phoneInput = document.querySelector('#edit-orderer input[placeholder="휴대 전화"]');
+        const postInput = document.querySelector('#edit-orderer input[placeholder="우편번호"]');
+        const addressInput = document.querySelector('#edit-orderer input[placeholder="기본 주소"]');
+        const detailInput = document.querySelector('#edit-orderer input[placeholder="나머지 주소 (선택)"]');
+        console.log(detailInput)
+        
+        nameInput.value = order.orderer.name;
+        emailInput.value = order.orderer.email;
+        phoneInput.value = order.orderer.phone;
+        postInput.value = order.orderer.address.postcode;
+        addressInput.value = order.orderer.address.main;
+        detailInput.value = order.orderer.address.default;
 
       } else {
+
         const noSync = document.querySelector(".none")
         noSync.style.display = "block"
       }
 
 
-      // 주문자 정보 받아오기
-      const nameInput = document.querySelector('#edit-orderer input[placeholder="이름"]');
-      const emailInput = document.querySelector('#edit-orderer input[placeholder="이메일"]');
-      const phoneInput = document.querySelector('#edit-orderer input[placeholder="휴대 전화"]');
-      const postInput = document.querySelector('#edit-orderer input[placeholder="우편번호"]');
-      const addressInput = document.querySelector('#edit-orderer input[placeholder="기본 주소"]');
-      const detailInput = document.querySelector('#edit-orderer input[placeholder="나머지 주소 (선택)"]');
-      
-      nameInput.value = order.orderer.name;
-      emailInput.value = order.orderer.email;
-      phoneInput.value = order.orderer.phone;
-      postInput.value = order.orderer.address.postcode;
-      addressInput.value = order.orderer.address.main;
-      detailInput.value = order.orderer.address.detail;
-
 
 
     } 
-
 
   } catch (error) {
     console.error('주문 정보를 렌더링하는 중 오류가 발생했습니다:', error);
   }
 }
 
-renderOrderHistory()
-  
+
 
 // 주문자 정보
-function buttons() {
-  const editBtn = document.querySelectorAll('.btn-order-edit .active');
-  const submitBtn = document.querySelector('.btn-save');
+function ButtonEvents() {
+  // 수정 버튼은 NodeList이므로 forEach를 사용하여 각각에 이벤트를 바인딩
+  const editBtns = document.querySelectorAll('.btn-order-edit.active');
+  const submitBtn = document.querySelector('.btn-save1');
   const editModal = document.querySelector('#edit-orderer');
-  console.log(editBtn)
-  
 
-  // 유저 정보 가져오기 및 수정 모달 열기
-  function openEditModal() {
-    editModal.style.display = 'flex';
-  }
-
-  // 수정 버튼 클릭 이벤트
-  editBtn.addEventListener('click', function () {
-    if (editModal) {
-      openEditModal();
-    }
+  editBtns.forEach(function (editBtn) {
+    editBtn.addEventListener('click', function () {
+      editModal.style.display = 'flex';
+    });
   });
+
 
   // 수정 모달 닫기 이벤트
   editModal.addEventListener("mousedown", function (e) {
@@ -114,11 +114,10 @@ function buttons() {
 
   // 저장 버튼 클릭 이벤트
   submitBtn.addEventListener('click', function () {
+
   });
 
 };
-
-
 
 
 
