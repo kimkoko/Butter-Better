@@ -35,6 +35,13 @@ async function getBestSellersList() {
                     </a>
                 `;
 
+        // 상품 재고가 0일 경우, sold-out 태그
+        if (product.quantity === 0) {
+          productItem.classList.add('sold-out');
+        } else {
+          productItem.classList.remove('sold-out');
+        }
+
         // 리스트에 상품 아이템 추가
         bestSellersListElement.appendChild(productItem);
         productsShown++; // 표시된 상품 개수 증가

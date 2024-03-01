@@ -75,16 +75,31 @@
   border-radius: 100px;
   text-align: center;
   min-height: 60px;
+  color: var(--orange-500);
 }
 .mainBox .inner .topBox .quantityButton span {
   font-size: 24px;
-  color: var(--orange-500);
   display: inline-block;
   width: 20px;
 }
-h3.price {
+.mainBox .inner .topBox .price {
   font-size: 24px;
+  position: relative;
 }
+.mainBox .inner .topBox .price.sold-out {
+  text-decoration: line-through;
+}
+.mainBox .inner .topBox .price.sold-out::after {
+  content: 'Sold Out';
+  padding: 4px 6px;
+  border-radius: 2px;
+  color: var(--camel-500);
+  font-size: 18px;
+  margin-left: 12px;
+  position: absolute;
+  white-space: nowrap;
+}
+
 .mainBox .inner .topBox .quantityButton button {
   font-size: 32px;
   color: var(--orange-500);
@@ -111,6 +126,10 @@ h3.price {
   text-align: center;
   min-height: 60px;
   letter-spacing: 0.5px;
+}
+.mainBox .inner .topBox .priceButton .cartBtn.inactive {
+  pointer-events: none;
+  background: var(--camel-500);
 }
 /* 
 .mainBox .inner .topBox .priceButton button{
