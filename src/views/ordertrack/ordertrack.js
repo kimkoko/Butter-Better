@@ -1,6 +1,6 @@
 import { API_HOST } from '/src/views/common/api.js';
 
-const orderIdstring = JSON.parse(localStorage.getItem('order_Id'));
+const orderIdstring = JSON.parse(localStorage.getItem('order_Id'));
 const orderId = orderIdstring;
 
 // 비회원 주문 조회 함수를 정의합니다.
