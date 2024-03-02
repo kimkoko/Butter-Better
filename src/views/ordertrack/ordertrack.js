@@ -4,8 +4,6 @@ const orderIdstring = JSON.parse(localStorage.getItem('order_Id'))
 const orderId = orderIdstring.toString()
 
 
-
-
 // 비회원 주문 조회 함수를 정의합니다.
 function fetchOrderDetails(orderId) {
   // Fetch API를 사용하여 주문 정보를 조회합니다.
@@ -75,8 +73,7 @@ function fetchOrderDetails(orderId) {
       </div>
     `;
 
-    
-
+  
     // 상품 리스트에 상품 추가
     orderList.appendChild(orderContent);
 
@@ -153,7 +150,7 @@ function renderingOrderer(order) {
   phoneInput.value = order.orderer.phone;
   postInput.value = order.orderer.address.postcode;
   addressInput.value = order.orderer.address.main;
-  detailInput.value = order.orderer.address.default;
+  detailInput.value = order.orderer.address.detail;
 }
 
 fetchOrderDetails(orderId)
