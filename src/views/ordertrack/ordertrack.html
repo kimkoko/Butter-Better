@@ -14,6 +14,7 @@
     <link rel="icon" type="image/png" sizes="64x64" href="../common/img/faviconx64.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="../common/img/faviconx32.png" />
     <link rel="shortcut icon" href="../common/img/favicon.io" />
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
     <!-- 커스텀 css -->
     <link rel="preload" type="text/css"
@@ -42,40 +43,14 @@
                         <p>주문 금액</p>
                         <p>진행 상태</p>
                     </div>
-                    <div class="table__body">
-                        <div class="table__body--top">
-                            <span>주문 일자</span>
-                            <b class='date'>${order.createAt}</b>
-                            <span>주문 번호</span>
-                            <b class="order-id">${order._id}</b>
-                        </div>
-                        <div class="table__body--bottom">
-                            <div class='products'>title 외 1종</div>
-                            <!-- ${order.products[0].name} 외 ${order.products.length - 1}종 -->
-                            <div class='total-price'>20000</div>
-                            <!-- ${order.total_price} -->
-                            <div class='status'>${order.status}<button class="btn-order-edit" type='button'>주문
-                                    수정</button>
-                            </div>
-                            <!-- 주문 상태가 '주문 완료'일 경우, 배송 .btn-order-edit에 클래스명 active 추가 / 그 외 비활성화 -->
-                        </div>
-                    </div>
+                    <!-- 리스트 영역 -->
                 </div>
             </section>
 
-            <section class="account">
-                <div class="container">
-                    <ul class='info-box'>
-                        <li><span>Name</span><span class='name'>최세영</span></li>
-                        <li><span>Email</span><span class='email'>butter@better.com</span></li>
-                        <li><span>Phone</span><span class='phone'>010-1234-5678</span></li>
-                        <li><span>Address</span><span class='address'>서울특별시 성동구 성수2가제3동 광나루로6길 49</span></li>
-                    </ul>
-                </div>
-            </section>
+
 
             <!-- ******** 회원 정보 수정 모달 BELOW ******** -->
-            <div class="modal-container" id="edit-account">
+            <div class="modal-container" id="edit-orderer">
                 <div class="modal">
                     <div class="modal__edit-account">
                         <p>Edit Account Details</p>
@@ -91,7 +66,7 @@
                         </div>
                         <div class="form">
                             <label for="phone">Phone *</label>
-                            <input type="text" id="phone" placeholder="휴대 전화, '-' 기호를 추가해 주세요.">
+                            <input type="text" id="phone" placeholder="휴대 전화">
                         </div>
 
                         <div class="form address">

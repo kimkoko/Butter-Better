@@ -65,6 +65,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const orderId = orderIdInput.value;
     if (orderId) {
       getOrderHistory(orderId);
+      localStorage.setItem('order_Id', JSON.stringify(orderId));
+      return
     }
   });
 });
