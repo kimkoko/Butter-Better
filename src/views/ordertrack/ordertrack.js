@@ -1,133 +1,162 @@
 import { API_HOST } from '/src/views/common/api.js';
 
-async function getOrderById(orderId) {
-  try {
-    // API로 주문 정보 가져오기
-    const response = await fetch(`${API_HOST}/api/orders/${orderId}`);
-    const orderInfo = await response.json();
-    const order = orderInfo.data;
+const orderIdstring = JSON.parse(localStorage.getItem('order_Id'))
+const orderId = orderIdstring.toString()
 
-    // 주문자 정보 받아오기
-    const nameInput = document.querySelector(
-      '#edit-orderer input[placeholder="이름"]'
-    );
-    const emailInput = document.querySelector(
-      '#edit-orderer input[placeholder="이메일"]'
-    );
-    const phoneInput = document.querySelector(
-      '#edit-orderer input[placeholder="휴대 전화"]'
-    );
-    const postInput = document.querySelector(
-      '#edit-orderer input[placeholder="우편번호"]'
-    );
-    const addressInput = document.querySelector(
-      '#edit-orderer input[placeholder="기본 주소"]'
-    );
-    const detailInput = document.querySelector(
-      '#edit-orderer input[placeholder="나머지 주소 (선택)"]'
-    );
 
-    nameInput.value = order.orderer.name;
-    emailInput.value = order.orderer.email;
-    phoneInput.value = order.orderer.phone;
-    postInput.value = order.orderer.address.postcode;
-    addressInput.value = order.orderer.address.main;
-    detailInput.value = order.orderer.address.detail;
 
-    const orderId = order._id;
-    ButtonEvents(orderId);
-  } catch (error) {
-    console.error('주문 정보를 가져오는 중 오류 발생:', error);
-    return null;
-  }
-}
 
-getOrderById(orderId)
-  .then((order) => {
-    if (order) {
-      console.log('주문 정보:', order);
-
-      // 여기에서 주문 정보를 사용할 수 있습니다.
-
-      // 주문 목록 리스트
-      const orderList = document.querySelector('.container');
-
-      // 주문 상태가 "주문 완료"인 경우에만 클래스 추가
-      const isOrderCompleted = order.data.order_status === '주문 완료';
-      const btnOrderEditClass = isOrderCompleted
-        ? 'btn-order-edit active'
-        : 'btn-order-edit';
-
-      // 리스트 생성
-      const orderContent = document.createElement('div');
-      orderContent.classList.add('table__body');
-
-      // 주문 일자 한국식 시간으로 변환
-      // 서버로부터 받은 ISO 문자열 형태의 날짜를 보기 좋은 형태로 변환
-      const date = new Date(order.createdAt);
-      const formattedDate = date.toLocaleString('ko-KR'); // 'YYYY/MM/DD, HH:MM:SS' 형태로 변환
-
-      // 주문 상품 한개 이상일 경우
-      const itemOverOne =
-        order.products.length > 1 ? `외 ${order.products.length - 1}종` : '';
-
-      orderContent.innerHTML = `
-        <div class="table__body--top">
-          <span>주문 일자</span>
-          <b class='date'>${formattedDate}</b> |
-          <span>주문 번호</span>
-          <b class="order-id">${order.data._id}</b>
-        </div>
-        <div class="table__body--bottom"> 
-          <div class='products'>
-          <span class="order-title">${
-            order.data.products[0].name
-          }</span> ${itemOverOne}
-          </div>
-          <div class='total-price'>${order.data.total_price.toLocaleString()}</div>
-          <div class='status'>${
-            order.data.order_status
-          }<button class="${btnOrderEditClass}" type='button'>주문 수정</button>
-          </div>
-        </div>
-      `;
-
-      // 상품 리스트에 상품 추가
-      orderList.appendChild(orderContent);
-      ButtonEvents();
-    } else {
-      console.log('주문 정보를 가져올 수 없습니다.');
+// 비회원 주문 조회 함수를 정의합니다.
+function fetchOrderDetails(orderId) {
+  // Fetch API를 사용하여 주문 정보를 조회합니다.
+  fetch(`${API_HOST}/api/orders/${orderId}`, {
+    method: 'GET', // HTTP 메서드를 GET으로 설정합니다.
+    headers: {
+      'Content-Type': 'application/json',
+      "Authorization": "Bearer YOUR_ACCESS_TOKEN_HERE"
     }
   })
-  .catch((error) => {
-    console.error('주문 정보를 가져오는 중 오류 발생:', error);
-  });
+  .then(response => {
+    // 응답이 성공적인지 확인합니다.
+    if (!response.ok) {
+      console.log(response)
+    }
+    
+    return response.json();
+  })
+  .then(orders => {
+    // 조회된 주문 정보를 처리합니다.
+    
+    const order = orders.data
+    const orderId = order._id
+    console.log(orderId)
+    
+    // 리스트
+    // 주문 목록 리스트
+    const orderList = document.querySelector('.container');
 
-// 버튼
-// 주문자 정보
-function ButtonEvents() {
-  // 수정 버튼은 NodeList이므로 forEach를 사용하여 각각에 이벤트를 바인딩
-  const editBtns = document.querySelector('.btn-order-edit.active');
-  const submitBtn = document.querySelector('.btn-save');
-  const editModal = document.querySelector('#edit-orderer');
+    // 주문 상태가 "주문 완료"인 경우에만 클래스 추가
+    const isOrderCompleted = order.order_status === '주문 완료';
+    const btnOrderEditClass = isOrderCompleted
+      ? 'btn-order-edit active'
+      : 'btn-order-edit';
 
-  editBtns.addEventListener('click', function () {
-    editModal.style.display = 'flex';
-  });
-  console.log(editBtns);
+    // 리스트 생성
+    const orderContent = document.createElement('div');
+    orderContent.classList.add('table__body');
 
-  // 수정 모달 닫기 이벤트
-  editModal.addEventListener('mousedown', function (e) {
-    if (e.target !== editModal) return;
-    editModal.style.display = 'none';
-  });
+    // 주문 일자 한국식 시간으로 변환
+    // 서버로부터 받은 ISO 문자열 형태의 날짜를 보기 좋은 형태로 변환
+    const date = new Date(order.createdAt);
+    const formattedDate = date.toLocaleString('ko-KR'); // 'YYYY/MM/DD, HH:MM:SS' 형태로 변환
 
-  // 저장 버튼 클릭 이벤트
-  submitBtn.addEventListener('click', function () {
-    updateOrderer(orderId);
-    editModal.style.display = 'none';
+    // 주문 상품 한개 이상일 경우
+    const itemOverOne =
+      order.products.length > 1 ? `외 ${order.products.length - 1}종` : '';
+
+    orderContent.innerHTML = `
+      <div class="table__body--top">
+        <span>주문 일자</span>
+        <b class='date'>${formattedDate}</b> |
+        <span>주문 번호</span>
+        <b class="order-id">${order._id}</b>
+      </div>
+      <div class="table__body--bottom"> 
+        <div class='products'>
+        <span class="order-title">${
+          order.products[0].name
+        }</span> ${itemOverOne}
+        </div>
+        <div class='total-price'>${order.total_price.toLocaleString()}</div>
+        <div class='status'>${
+          order.order_status
+        }<button class="${btnOrderEditClass}" type='button'>주문 수정</button>
+        </div>
+      </div>
+    `;
+
+    
+
+    // 상품 리스트에 상품 추가
+    orderList.appendChild(orderContent);
+
+
+
+    // buttonEvents
+    // 수정 버튼이 여러 개 있을 수 있으므로 querySelectorAll을 사용합니다.
+    const editBtns = document.querySelectorAll('.btn-order-edit.active'); // 모든 활성화된 수정 버튼을 선택
+    console.log(editBtns);
+    const submitBtn = document.querySelector('.btn-save');
+    const editModal = document.querySelector('#edit-orderer');
+    
+
+
+    editBtns.forEach(btn => {
+      btn.addEventListener('click', function() {
+        
+        editModal.style.display = 'flex';
+        renderingOrderer(order);
+      });
+    });
+
+    
+
+
+    // 수정 모달 닫기 이벤트
+    if (editModal) { // editModal이 존재하는지 확인
+      editModal.addEventListener('mousedown', function (e) {
+        if (e.target !== editModal) return;
+        editModal.style.display = 'none';
+      });
+    }
+
+    // 저장 버튼 클릭 이벤트
+    if (submitBtn) { // submitBtn이 존재하는지 확인
+      submitBtn.addEventListener('click', function () {
+        updateOrderer(orderId);
+        editModal.style.display = 'none';
+      });
+    }
+
+  })
+  .catch(error => {
+    // 에러 처리를 합니다.
+    console.error('There was a problem with your fetch operation:', error);
   });
 }
+
+
+
+function renderingOrderer(order) {
+  // 주문자 정보 받아오기
+  const nameInput = document.querySelector(
+    '#edit-orderer input[placeholder="이름"]'
+  );
+  const emailInput = document.querySelector(
+    '#edit-orderer input[placeholder="이메일"]'
+  );
+  const phoneInput = document.querySelector(
+    '#edit-orderer input[placeholder="휴대 전화"]'
+  );
+  const postInput = document.querySelector(
+    '#edit-orderer input[placeholder="우편번호"]'
+  );
+  const addressInput = document.querySelector(
+    '#edit-orderer input[placeholder="기본 주소"]'
+  );
+  const detailInput = document.querySelector(
+    '#edit-orderer input[placeholder="나머지 주소 (선택)"]'
+  );
+
+  nameInput.value = order.orderer.name;
+  emailInput.value = order.orderer.email;
+  phoneInput.value = order.orderer.phone;
+  postInput.value = order.orderer.address.postcode;
+  addressInput.value = order.orderer.address.main;
+  detailInput.value = order.orderer.address.default;
+}
+
+fetchOrderDetails(orderId)
 
 // patch
 
@@ -176,6 +205,7 @@ function updateOrderer(orderId) {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
+      "Authorization": "Bearer YOUR_ACCESS_TOKEN_HERE"
     },
     body: JSON.stringify(newUser),
   })
