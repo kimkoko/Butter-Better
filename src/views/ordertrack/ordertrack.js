@@ -1,7 +1,7 @@
 import { API_HOST } from '/src/views/common/api.js';
 
 const orderIdstring = JSON.parse(localStorage.getItem('order_Id'))
-const orderId = orderIdstring.toString()
+const orderId = orderIdstring
 
 
 
