@@ -1,10 +1,7 @@
 import { API_HOST } from '/src/views/common/api.js';
 
-const orderIdstring = JSON.parse(localStorage.getItem('order_Id'))
-const orderId = orderIdstring.toString()
-
-
-
+const orderIdstring = JSON.parse(localStorage.getItem('order_Id'));
+const orderId = orderIdstring;
 
 // 비회원 주문 조회 함수를 정의합니다.
 function fetchOrderDetails(orderId) {
@@ -13,48 +10,48 @@ function fetchOrderDetails(orderId) {
     method: 'GET', // HTTP 메서드를 GET으로 설정합니다.
     headers: {
       'Content-Type': 'application/json',
-      "Authorization": "Bearer YOUR_ACCESS_TOKEN_HERE"
-    }
+      Authorization: 'Bearer YOUR_ACCESS_TOKEN_HERE',
+    },
   })
-  .then(response => {
-    // 응답이 성공적인지 확인합니다.
-    if (!response.ok) {
-      console.log(response)
-    }
-    
-    return response.json();
-  })
-  .then(orders => {
-    // 조회된 주문 정보를 처리합니다.
-    
-    const order = orders.data
-    const orderId = order._id
-    console.log(orderId)
-    
-    // 리스트
-    // 주문 목록 리스트
-    const orderList = document.querySelector('.container');
+    .then((response) => {
+      // 응답이 성공적인지 확인합니다.
+      if (!response.ok) {
+        console.log(response);
+      }
 
-    // 주문 상태가 "주문 완료"인 경우에만 클래스 추가
-    const isOrderCompleted = order.order_status === '주문 완료';
-    const btnOrderEditClass = isOrderCompleted
-      ? 'btn-order-edit active'
-      : 'btn-order-edit';
+      return response.json();
+    })
+    .then((orders) => {
+      // 조회된 주문 정보를 처리합니다.
 
-    // 리스트 생성
-    const orderContent = document.createElement('div');
-    orderContent.classList.add('table__body');
+      const order = orders.data;
+      const orderId = order._id;
+      console.log(orderId);
 
-    // 주문 일자 한국식 시간으로 변환
-    // 서버로부터 받은 ISO 문자열 형태의 날짜를 보기 좋은 형태로 변환
-    const date = new Date(order.createdAt);
-    const formattedDate = date.toLocaleString('ko-KR'); // 'YYYY/MM/DD, HH:MM:SS' 형태로 변환
+      // 리스트
+      // 주문 목록 리스트
+      const orderList = document.querySelector('.container');
 
-    // 주문 상품 한개 이상일 경우
-    const itemOverOne =
-      order.products.length > 1 ? `외 ${order.products.length - 1}종` : '';
+      // 주문 상태가 "주문 완료"인 경우에만 클래스 추가
+      const isOrderCompleted = order.order_status === '주문 완료';
+      const btnOrderEditClass = isOrderCompleted
+        ? 'btn-order-edit active'
+        : 'btn-order-edit';
 
-    orderContent.innerHTML = `
+      // 리스트 생성
+      const orderContent = document.createElement('div');
+      orderContent.classList.add('table__body');
+
+      // 주문 일자 한국식 시간으로 변환
+      // 서버로부터 받은 ISO 문자열 형태의 날짜를 보기 좋은 형태로 변환
+      const date = new Date(order.createdAt);
+      const formattedDate = date.toLocaleString('ko-KR'); // 'YYYY/MM/DD, HH:MM:SS' 형태로 변환
+
+      // 주문 상품 한개 이상일 경우
+      const itemOverOne =
+        order.products.length > 1 ? `외 ${order.products.length - 1}종` : '';
+
+      orderContent.innerHTML = `
       <div class="table__body--top">
         <span>주문 일자</span>
         <b class='date'>${formattedDate}</b> |
@@ -75,57 +72,46 @@ function fetchOrderDetails(orderId) {
       </div>
     `;
 
-    
+      // 상품 리스트에 상품 추가
+      orderList.appendChild(orderContent);
 
-    // 상품 리스트에 상품 추가
-    orderList.appendChild(orderContent);
+      // buttonEvents
+      // 수정 버튼이 여러 개 있을 수 있으므로 querySelectorAll을 사용합니다.
+      const editBtns = document.querySelectorAll('.btn-order-edit.active'); // 모든 활성화된 수정 버튼을 선택
+      console.log(editBtns);
+      const submitBtn = document.querySelector('.btn-save');
+      const editModal = document.querySelector('#edit-orderer');
 
-
-
-    // buttonEvents
-    // 수정 버튼이 여러 개 있을 수 있으므로 querySelectorAll을 사용합니다.
-    const editBtns = document.querySelectorAll('.btn-order-edit.active'); // 모든 활성화된 수정 버튼을 선택
-    console.log(editBtns);
-    const submitBtn = document.querySelector('.btn-save');
-    const editModal = document.querySelector('#edit-orderer');
-    
-
-
-    editBtns.forEach(btn => {
-      btn.addEventListener('click', function() {
-        
-        editModal.style.display = 'flex';
-        renderingOrderer(order);
+      editBtns.forEach((btn) => {
+        btn.addEventListener('click', function () {
+          editModal.style.display = 'flex';
+          renderingOrderer(order);
+        });
       });
+
+      // 수정 모달 닫기 이벤트
+      if (editModal) {
+        // editModal이 존재하는지 확인
+        editModal.addEventListener('mousedown', function (e) {
+          if (e.target !== editModal) return;
+          editModal.style.display = 'none';
+        });
+      }
+
+      // 저장 버튼 클릭 이벤트
+      if (submitBtn) {
+        // submitBtn이 존재하는지 확인
+        submitBtn.addEventListener('click', function () {
+          updateOrderer(orderId);
+          editModal.style.display = 'none';
+        });
+      }
+    })
+    .catch((error) => {
+      // 에러 처리를 합니다.
+      console.error('There was a problem with your fetch operation:', error);
     });
-
-    
-
-
-    // 수정 모달 닫기 이벤트
-    if (editModal) { // editModal이 존재하는지 확인
-      editModal.addEventListener('mousedown', function (e) {
-        if (e.target !== editModal) return;
-        editModal.style.display = 'none';
-      });
-    }
-
-    // 저장 버튼 클릭 이벤트
-    if (submitBtn) { // submitBtn이 존재하는지 확인
-      submitBtn.addEventListener('click', function () {
-        updateOrderer(orderId);
-        editModal.style.display = 'none';
-      });
-    }
-
-  })
-  .catch(error => {
-    // 에러 처리를 합니다.
-    console.error('There was a problem with your fetch operation:', error);
-  });
 }
-
-
 
 function renderingOrderer(order) {
   // 주문자 정보 받아오기
@@ -156,7 +142,7 @@ function renderingOrderer(order) {
   detailInput.value = order.orderer.address.default;
 }
 
-fetchOrderDetails(orderId)
+fetchOrderDetails(orderId);
 
 // patch
 
@@ -205,7 +191,7 @@ function updateOrderer(orderId) {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
-      "Authorization": "Bearer YOUR_ACCESS_TOKEN_HERE"
+      Authorization: 'Bearer YOUR_ACCESS_TOKEN_HERE',
     },
     body: JSON.stringify(newUser),
   })
