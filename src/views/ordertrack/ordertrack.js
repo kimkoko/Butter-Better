@@ -139,7 +139,7 @@ function renderingOrderer(order) {
   phoneInput.value = order.orderer.phone;
   postInput.value = order.orderer.address.postcode;
   addressInput.value = order.orderer.address.main;
-  detailInput.value = order.orderer.address.default;
+  detailInput.value = order.orderer.address.detail;
 }
 
 fetchOrderDetails(orderId);
